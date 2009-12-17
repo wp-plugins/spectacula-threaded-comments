@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: interconnectit
+Contributors: interconnectit, spectacula
 Donate link: https://spectacu.la/signup/signup.php
 Tags: comments, jQuery,
 Requires at least: 2.7.0
