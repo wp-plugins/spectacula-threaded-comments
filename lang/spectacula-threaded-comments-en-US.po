@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Spectacu.la threaded comments\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-12-15 16:02-0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Interconnect IT <admin@interconnectit.com>\n"
+"Language-Team: Interconnect IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED KINGDOM\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: T:\\hosts\\wordpress\\wordpress.28\\wp-content\\plugins\n"
+"X-Poedit-SearchPath-0: spec-comments\n"
+
+#: spec-comments/commenting.php:87
+msgid "Show trackbacks"
+msgstr "Show trackbacks"
+
+#: spec-comments/commenting.php:88
+msgid "Hide trackbacks"
+msgstr "Hide trackbacks"
+
+#: spec-comments/commenting.php:89
+msgid "Hide %count% replies to %name% comment"
+msgstr "Hide %count% replies to %name% comment"
+
+#: spec-comments/commenting.php:90
+msgid "View %count% replies to %name% comment"
+msgstr "View %count% replies to %name% comment"
+
+#: spec-comments/commenting.php:91
+msgid "Hide the reply to %name% comment"
+msgstr "Hide the reply to %name% comment"
+
+#: spec-comments/commenting.php:92
+msgid "View the reply to %name% comment"
+msgstr "View the reply to %name% comment"
+
+#: spec-comments/commenting.php:222
+#: spec-comments/template/comments.php:187
+#: spec-comments/template/comments.php:195
+msgid "Comments"
+msgstr "Comments"
+
+#: spec-comments/commenting.php:251
+msgid "Threaded comment options"
+msgstr "Threaded comment options"
+
+#: spec-comments/commenting.php:259
+msgid "Rollup Depth"
+msgstr "Rollup Depth"
+
+#: spec-comments/commenting.php:270
+msgid "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
+msgstr "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
+
+#: spec-comments/commenting.php:276
+msgid "Save"
+msgstr "Save"
+
+#: spec-comments/commenting.php:282
+msgid "Toggles"
+msgstr "Toggles"
+
+#: spec-comments/commenting.php:285
+msgid "Use the stylesheet that came with this plug-in. "
+msgstr "Use the stylesheet that came with this plug-in. "
+
+#: spec-comments/commenting.php:290
+msgid "Use the dark theme CSS file. "
+msgstr "Use the dark theme CSS file. "
+
+#: spec-comments/commenting.php:296
+msgid "Use the included javaScript. "
+msgstr "Use the included javaScript. "
+
+#: spec-comments/commenting.php:303
+msgid "Show our credit link at the bottom of the comments form."
+msgstr "Show our credit link at the bottom of the comments form."
+
+#: spec-comments/commenting.php:305
+msgid "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
+msgstr "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
+
+#: spec-comments/template/comments.php:146
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s at %2$s"
+
+#: spec-comments/template/comments.php:147
+msgid "Comment in moderation."
+msgstr "Comment in moderation."
+
+#: spec-comments/template/comments.php:148
+msgid "Edit"
+msgstr "Edit"
+
+#: spec-comments/template/comments.php:180
+msgid "Trackbacks"
+msgstr "Trackbacks"
+
+#: spec-comments/template/comments.php:211
+#: spec-comments/template/comments.php:213
+msgid "Leave a Comment"
+msgstr "Leave a Comment"
+
+#: spec-comments/template/comments.php:211
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr "Leave a Reply to %s"
+
+#: spec-comments/template/comments.php:218
+msgid "You must be logged in to comment."
+msgstr "You must be logged in to comment."
+
+#: spec-comments/template/comments.php:225
+msgid "Logged in as"
+msgstr "Logged in as"
+
+#: spec-comments/template/comments.php:226
+msgid "Log out of this account"
+msgstr "Log out of this account"
+
+#: spec-comments/template/comments.php:226
+msgid "Log Out"
+msgstr "Log Out"
+
+#: spec-comments/template/comments.php:232
+msgid "Name"
+msgstr "Name"
+
+#: spec-comments/template/comments.php:232
+#: spec-comments/template/comments.php:238
+msgid "(required)"
+msgstr "(required)"
+
+#: spec-comments/template/comments.php:238
+msgid "Mail (will not be published)"
+msgstr "Mail (will not be published)"
+
+#: spec-comments/template/comments.php:244
+msgid "Website"
+msgstr "Website"
+
+#: spec-comments/template/comments.php:253
+msgid "Post your comment"
+msgstr "Post your comment"
+
