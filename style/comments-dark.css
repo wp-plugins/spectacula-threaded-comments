@@ -302,7 +302,7 @@ a.next:hover {
 .ie6 .trackbackToggle,
 .ie6 #trackbackList,
 .ie6 li.comment,
-.ie6 #comments { height: 1px}
+.ie6 #comments { display: inline-block}
 /* classed added by jQuery only to ie6 */
 .ie6 #commentlist li.first-child {margin-top:0}
 .ie6 #commentlist div.bypostauthor img.avatar{border:solid 2px;	padding:1px}
