@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Spectacu.la threaded comments\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-15 16:02-0000\n"
+"POT-Creation-Date: 2010-04-06 12:30-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Interconnect IT <admin@interconnectit.com>\n"
 "Language-Team: Interconnect IT\n"
@@ -13,78 +13,82 @@ msgstr ""
 "X-Poedit-Country: UNITED KINGDOM\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: _e;__\n"
-"X-Poedit-Basepath: T:\\hosts\\wordpress\\wordpress.28\\wp-content\\plugins\n"
+"X-Poedit-Basepath: T:\\hosts\\wordpress\\wordpress.29\\wp-content\\plugins\n"
 "X-Poedit-SearchPath-0: spec-comments\n"
 
-#: spec-comments/commenting.php:87
+#: spec-comments/commenting.php:86
 msgid "Show trackbacks"
 msgstr "Show trackbacks"
 
-#: spec-comments/commenting.php:88
+#: spec-comments/commenting.php:87
 msgid "Hide trackbacks"
 msgstr "Hide trackbacks"
 
-#: spec-comments/commenting.php:89
+#: spec-comments/commenting.php:88
 msgid "Hide %count% replies to %name% comment"
 msgstr "Hide %count% replies to %name% comment"
 
-#: spec-comments/commenting.php:90
+#: spec-comments/commenting.php:89
 msgid "View %count% replies to %name% comment"
 msgstr "View %count% replies to %name% comment"
 
-#: spec-comments/commenting.php:91
+#: spec-comments/commenting.php:90
 msgid "Hide the reply to %name% comment"
 msgstr "Hide the reply to %name% comment"
 
-#: spec-comments/commenting.php:92
+#: spec-comments/commenting.php:91
 msgid "View the reply to %name% comment"
 msgstr "View the reply to %name% comment"
 
-#: spec-comments/commenting.php:222
+#: spec-comments/commenting.php:221
 #: spec-comments/template/comments.php:187
 #: spec-comments/template/comments.php:195
 msgid "Comments"
 msgstr "Comments"
 
-#: spec-comments/commenting.php:251
+#: spec-comments/commenting.php:250
 msgid "Threaded comment options"
 msgstr "Threaded comment options"
 
-#: spec-comments/commenting.php:259
+#: spec-comments/commenting.php:258
 msgid "Rollup Depth"
 msgstr "Rollup Depth"
 
-#: spec-comments/commenting.php:270
+#: spec-comments/commenting.php:269
 msgid "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
 msgstr "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
 
-#: spec-comments/commenting.php:276
+#: spec-comments/commenting.php:275
 msgid "Save"
 msgstr "Save"
 
-#: spec-comments/commenting.php:282
+#: spec-comments/commenting.php:281
 msgid "Toggles"
 msgstr "Toggles"
 
-#: spec-comments/commenting.php:285
+#: spec-comments/commenting.php:284
 msgid "Use the stylesheet that came with this plug-in. "
 msgstr "Use the stylesheet that came with this plug-in. "
 
-#: spec-comments/commenting.php:290
+#: spec-comments/commenting.php:289
 msgid "Use the dark theme CSS file. "
 msgstr "Use the dark theme CSS file. "
 
-#: spec-comments/commenting.php:296
+#: spec-comments/commenting.php:295
 msgid "Use the included javaScript. "
 msgstr "Use the included javaScript. "
 
-#: spec-comments/commenting.php:303
+#: spec-comments/commenting.php:302
 msgid "Show our credit link at the bottom of the comments form."
 msgstr "Show our credit link at the bottom of the comments form."
 
-#: spec-comments/commenting.php:305
+#: spec-comments/commenting.php:304
 msgid "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
 msgstr "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
+
+#: spec-comments/template/comments.php:144
+msgid "Reply"
+msgstr "Reply"
 
 #: spec-comments/template/comments.php:146
 #, php-format

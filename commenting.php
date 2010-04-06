@@ -3,7 +3,7 @@
  Plugin Name: Spectacu.la Threaded comments
  Plugin URI: http://spectacu.la/
  Description: Make it easy to add threaded comments to any theme.
- Version: 1.0.1
+ Version: 1.0.2
  Author: James R Whitehead
  Author URI: http://www.interconnectit.com/
 */

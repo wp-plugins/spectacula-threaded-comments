@@ -141,7 +141,7 @@ if (!function_exists('comment_layout')) {
 				<?php comment_text();?>
 
 				<div class="comment-meta commentmetadata">
-					<?php function_exists('comment_reply_link') ? comment_reply_link(array_merge($args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $max_depth))) : '';?>
+					<?php function_exists('comment_reply_link') ? comment_reply_link(array_merge($args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $max_depth, 'reply_text' => __('Reply', SPEC_COMMENT_DOM)))) : '';?>
 					<?php //comment_type(__('comment', SPEC_COMMENT_DOM), __('trackback', SPEC_COMMENT_DOM), __('trackback', SPEC_COMMENT_DOM)) ?>
 					<a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php printf(__('%1$s at %2$s', SPEC_COMMENT_DOM), get_comment_date(),  get_comment_time()) ?></a>
 					<?php $comment->comment_approved == 0 ? printf('<em>|&nbsp;%s</em>', __('Comment in moderation.', SPEC_COMMENT_DOM)) : ''; ?>
