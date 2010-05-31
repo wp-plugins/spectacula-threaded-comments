@@ -4,7 +4,7 @@ Donate link: https://spectacu.la/signup/signup.php
 Tags: comments, jQuery,
 Requires at least: 2.7.0
 Tested up to: 2.9.2
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 This plug-in will add threaded comments to most themes without any need for you
 to dig into that themes code.
@@ -125,6 +125,9 @@ theme developer to change their theme.
 
 == Changelog ==
 
+= 1.0.3 =
+*	Moved the javascript to the footer and removed an unneeded script.
+
 = 1.0.2 =
 *	Added the reply link text to the translation fields for this plug-in rather
 	than use WP's own reply to make it a little easier for people to translate
@@ -141,6 +144,10 @@ theme developer to change their theme.
 * Internal version.
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+* Moved the javascript to the footer and removed an unneeded script. Nothing
+serious, just tweaks.
 
 = 1.0.2 =
 * Not really required that you upgrade. Just added a single element to make it

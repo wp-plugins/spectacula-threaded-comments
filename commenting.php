@@ -3,7 +3,7 @@
  Plugin Name: Spectacu.la Threaded comments
  Plugin URI: http://spectacu.la/
  Description: Make it easy to add threaded comments to any theme.
- Version: 1.0.2
+ Version: 1.0.3
  Author: James R Whitehead
  Author URI: http://www.interconnectit.com/
 */
@@ -81,6 +81,8 @@ if (!class_exists('spec_commenting')) {
 		 @return null;
 		*/
 		function before_headers(){
+			wp_deregister_script( 'comment-reply' ); // dealt with by the included jQuery
+
 			if(function_exists('wp_list_comments') && is_singular()) {
 				$localisation = array(
 					'trackbackShowText' => __('Show trackbacks', SPEC_COMMENT_DOM),
@@ -93,7 +95,7 @@ if (!class_exists('spec_commenting')) {
 
 				$localisation = array_merge((array)apply_filters('spec_comment_local_js', $localisation), array('nestDepth' => $this->options['comments_nest_depth']));
 
-				wp_enqueue_script('commenting', apply_filters('spec_comment_js', SPEC_COMMENT_URL . '/js/commenting.min.js'), array('jquery'));
+				wp_enqueue_script('commenting', apply_filters('spec_comment_js', SPEC_COMMENT_URL . '/js/commenting.min.js'), array('jquery'), '1.0.3', true );
 				wp_localize_script('commenting', 'commentingL10n', $localisation );
 			}
 		}
@@ -145,7 +147,7 @@ if (!class_exists('spec_commenting')) {
 
 
 		/*
-		 Sniffs the browser sig and add useful stiff to the array if not already
+		 Sniffs the browser sig and add useful stuff to the array if not already
 		 in there. Really simple sniffer only need it to ident IE really and
 		 even then nothing critical should be hanging off of a class attached to
 		 the body.
