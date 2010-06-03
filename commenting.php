@@ -3,7 +3,7 @@
  Plugin Name: Spectacu.la Threaded comments
  Plugin URI: http://spectacu.la/
  Description: Make it easy to add threaded comments to any theme.
- Version: 1.0.3
+ Version: 1.0.4
  Author: James R Whitehead
  Author URI: http://www.interconnectit.com/
 */
@@ -13,8 +13,8 @@ if (!class_exists('spec_commenting')) {
 	define('SPEC_COMMENT_DOM', 'spectacula-threaded-comments');
 	define('SPEC_COMMENT_VER', '2.7'); // Min version of wordpress this will work with.
 	define('SPEC_COMMENT_OPT', 'spectacula_threaded_comments');
-	define('SPEC_COMMENT_URL', plugins_url(plugin_basename(dirname(__FILE__))));
-	define('SPEC_COMMENT_TMP', dirname(__FILE__) . '/template/comments.php');
+	define('SPEC_COMMENT_URL', plugins_url( '', __FILE__ ) );
+	define('SPEC_COMMENT_TMP', dirname( __FILE__ ) . '/template/comments.php');
 
 	//delete_option(SPEC_COMMENT_OPT);
 
@@ -62,6 +62,14 @@ if (!class_exists('spec_commenting')) {
 			add_action('comment_form', array(&$this, 'our_credit'));
 			add_action('admin_menu', array(&$this, 'add_options_page'));
 			add_filter('comments_template', array(&$this, 'comment_template_hijack'));
+			//add_filter( 'comment_reply_link', array( &$this, 'remove_inline_js') );
+		}
+
+
+		function remove_inline_js ( $comment_reply_link = '' ) {
+			//return  preg_replace( '/(^.*<a\s[^>]*?)(onclick=(\'|")[^\3]*?\3)(.*$)/is', '\1\4', $comment_reply_link );
+
+			return $comment_reply_link;
 		}
 
 
@@ -95,7 +103,9 @@ if (!class_exists('spec_commenting')) {
 
 				$localisation = array_merge((array)apply_filters('spec_comment_local_js', $localisation), array('nestDepth' => $this->options['comments_nest_depth']));
 
-				wp_enqueue_script('commenting', apply_filters('spec_comment_js', SPEC_COMMENT_URL . '/js/commenting.min.js'), array('jquery'), '1.0.3', true );
+				$prefix = ! defined( 'SCRIPT_DEBUG' ) || ( defined( 'SCRIPT_DEBUG' ) && !SCRIPT_DEBUG ) ? '.min' : '';
+
+				wp_enqueue_script('commenting', apply_filters('spec_comment_js', SPEC_COMMENT_URL . "/js/commenting$prefix.js"), array( 'jquery', 'jquery-form' ), '1.0.3', true );
 				wp_localize_script('commenting', 'commentingL10n', $localisation );
 			}
 		}
