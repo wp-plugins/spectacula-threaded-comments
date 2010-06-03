@@ -6,27 +6,59 @@
 */
 
 addComment = {
+
+	replying: false,
+	replyForm: '',
+	replyFormParent: '',
+	belowID: '',
+
 	moveForm: function( belowID, commentID, formID, postID ) {
 
 		jQuery( function( $ ) {
-			var replyForm = $( '#' + formID ).clone( true ),
-				replyFormParent = $( '#' + formID ).parent( );
+			if ( addComment.replying ) {
+				addComment.cancelReply( );
+			}
+
+			// Set our toggle
+			addComment.replying = true;
+
+			// Set the location of the form so we can get back there later.
+			addComment.belowID = belowID;
+
+			// Clone the form
+			addComment.replyForm = $( '#' + formID ).clone( true );
+
+			// Make sure we know where to put it back
+			addComment.replyFormParent = $( '#' + formID ).parent( );
+
+			// Destroy the original form.
 			$( '#' + formID ).remove( );
 
+			// Hide the reply link on this comment
 			$( '#' + belowID ).find( '.comment-reply-link' ).hide( );
 
-			replyForm.insertAfter( '#' + belowID ).find( '#cancel-comment-reply-link' ).css( { display:'inline' } ).click( function( ){
-				$( '#' + belowID ).find( '.comment-reply-link' ).show( );
+			// Set the value of the reply to comment
+			$( 'input#comment_parent' ).attr( { value:commentID } );
 
-				$( this ).parents( '#' + formID ).remove( );
-				replyFormParent.append( replyForm ).find( '#cancel-comment-reply-link' ).css( { display:'none' } );
-				$( 'input#comment_parent' ).attr( { value:0 } );
+			// Insert the new form and attach a function to the cancel link.
+			addComment.replyForm.insertAfter( '#' + belowID ).find( '#cancel-comment-reply-link' ).css( { display:'inline' } ).click( function( ){
+				addComment.cancelReply( );
 				return false;
 			} );
-
-			$( 'input#comment_parent' ).attr( { value:commentID } );
 		} );
 		return false;
+	},
+
+	cancelReply: function( ) {
+		// Set our toggle back.
+		addComment.replying = false;
+		// We've clicked cancel so we need to see the reply link again.
+		jQuery( '#commentlist' ).find( '.comment-reply-link' ).show( );
+		// Add the form back to where it should be.
+		addComment.replyFormParent.append( addComment.replyForm ).find( '#cancel-comment-reply-link' ).css( { display:'none' } );
+		// Make sure to set the reply to value to 0;
+		jQuery( 'input#comment_parent' ).attr( { value:0 } );
+
 	}
 }
 
