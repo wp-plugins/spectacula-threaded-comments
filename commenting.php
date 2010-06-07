@@ -3,7 +3,7 @@
  Plugin Name: Spectacu.la Threaded comments
  Plugin URI: http://spectacu.la/
  Description: Make it easy to add threaded comments to any theme.
- Version: 1.0.4
+ Version: 2.0.0
  Author: James R Whitehead
  Author URI: http://www.interconnectit.com/
 */
@@ -154,7 +154,7 @@ class spec_commenting {
 	*/
 	function css( ){
 		if ( is_singular( ) ) {
-			?><link rel="stylesheet" href="<?php echo apply_filters( 'spec_comment_css', SPEC_COMMENT_URL . '/style/comments.css' ); ?>" type="text/css" media="screen" /><?php
+			?><link rel="stylesheet" href="<?php echo apply_filters( 'spec_comment_css', SPEC_COMMENT_URL . '/style/comments.css?ver=2.0.0' ); ?>" type="text/css" media="screen" /><?php
 		}
 	}
 
@@ -168,7 +168,7 @@ class spec_commenting {
 	 @return string The new stylesheet.
 	*/
 	function dark_css( $incomming ) {
-		return SPEC_COMMENT_URL . '/style/comments-dark.css';
+		return SPEC_COMMENT_URL . '/style/comments-dark.css?ver=2.0.0';
 	}
 
 
@@ -286,7 +286,7 @@ class spec_commenting {
 							<h3><?php _e( 'Rollup Depth', SPEC_COMMENT_DOM );?></h3>
 							<div class="inside" id="<?php echo SPEC_COMMENT_OPT;?>_rollup">
 								<p>
-								<select name="<?php echo SPEC_COMMENT_OPT;?>[ comments_nest_depth ]" id="<?php echo SPEC_COMMENT_OPT;?>_comments_nest_depth" style="width:200px;"><?php
+								<select name="<?php echo SPEC_COMMENT_OPT;?>[comments_nest_depth]" id="<?php echo SPEC_COMMENT_OPT;?>_comments_nest_depth" style="width:200px;"><?php
 								for ( $i = 1; $i  <= 10; $i++ ) {
 									echo '<option value="' . $i . '"' . ( intval( $options[ 'comments_nest_depth' ] ) == $i ? ' selected="selected"' : '' ) . '>' . $i . '</option>';
 								}?>
@@ -310,25 +310,25 @@ class spec_commenting {
 							<div class="inside">
 								<p>
 									<label for="<?php echo SPEC_COMMENT_OPT;?>_load_css"><?php _e( 'Use the stylesheet that came with this plug-in. ', SPEC_COMMENT_DOM );?></label>
-									<input onchange="specFieldToggle( '#<?php echo SPEC_COMMENT_OPT;?>_load_css', '#<?php echo SPEC_COMMENT_OPT;?>_dark_theme' );" type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[ load_css ]" id="<?php echo SPEC_COMMENT_OPT;?>_load_css"<?php echo $options[ 'load_css' ] ? ' checked="checked"' : '';?>/>
+									<input onchange="specFieldToggle( '#<?php echo SPEC_COMMENT_OPT;?>_load_css', '#<?php echo SPEC_COMMENT_OPT;?>_dark_theme' );" type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[load_css]" id="<?php echo SPEC_COMMENT_OPT;?>_load_css"<?php echo $options[ 'load_css' ] ? ' checked="checked"' : '';?>/>
 								</p>
 
 								<p id="<?php echo SPEC_COMMENT_OPT;?>_dark_theme" style="padding-left:30px;">
 									<label for="<?php echo SPEC_COMMENT_OPT;?>_load_dark"><?php _e( 'Use the dark theme CSS file. ', SPEC_COMMENT_DOM );?></label>
-									<input type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[ load_dark ]" id="<?php echo SPEC_COMMENT_OPT;?>_load_dark"<?php echo $options[ 'load_dark' ] ? ' checked="checked"' : '';?>/>
+									<input type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[load_dark]" id="<?php echo SPEC_COMMENT_OPT;?>_load_dark"<?php echo $options[ 'load_dark' ] ? ' checked="checked"' : '';?>/>
 								</p>
 								<br/>
 
 								<p>
 									<label for="<?php echo SPEC_COMMENT_OPT;?>_load_js"><?php _e( 'Use the included javaScript. ', SPEC_COMMENT_DOM );?></label>
-									<input onchange="specFieldToggle( '#<?php echo SPEC_COMMENT_OPT;?>_load_js', '#<?php echo SPEC_COMMENT_OPT;?>_rollup' );" type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[ load_js ]" id="<?php echo SPEC_COMMENT_OPT;?>_load_js"<?php echo $options[ 'load_js' ] ? ' checked="checked"' : '';?>/>
+									<input onchange="specFieldToggle( '#<?php echo SPEC_COMMENT_OPT;?>_load_js', '#<?php echo SPEC_COMMENT_OPT;?>_rollup' );" type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[load_js]" id="<?php echo SPEC_COMMENT_OPT;?>_load_js"<?php echo $options[ 'load_js' ] ? ' checked="checked"' : '';?>/>
 									<br/><em>Disabling javaScript will cause problems for ie6 as jQuery is used to add classes to items that would otherwise be inaccessible to the CSS.</em>
 								</p>
 
 								<br/>
 								<p>
 									<label for="<?php echo SPEC_COMMENT_OPT;?>_credit"><?php _e( 'Show our credit link at the bottom of the comments form.', SPEC_COMMENT_DOM );?></label>
-									<input type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[ credit ]" id="<?php echo SPEC_COMMENT_OPT;?>_credit"<?php echo $options[ 'credit' ] ? ' checked="checked"' : '';?>/>
+									<input type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[credit]" id="<?php echo SPEC_COMMENT_OPT;?>_credit"<?php echo $options[ 'credit' ] ? ' checked="checked"' : '';?>/>
 									<br/><?php _e( 'If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work.' );?> <img src="<?php bloginfo( 'home' )?>/wp-includes/images/smilies/icon_cry.gif" alt=":( "/><br/><a href="https://spectacu.la/signup/signup.php">Spectacu.la</a>
 								</p>
 							</div>

@@ -41,6 +41,14 @@
 	margin: 0 10px 0 0;
 }
 
+#comments ul#commentlist div.toggle {
+	cursor: pointer;
+}
+
+#comments ul#commentlist div.toggle:hover {
+	background-color: #efefef;
+}
+
 .with-avatar #comment-form,
 .with-avatar .comment-content {
 	margin-left: 76px;
