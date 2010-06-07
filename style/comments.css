@@ -26,13 +26,29 @@
 #comments ul#commentlist li .comment-body {
 	padding: 9px;
 	border: solid 1px #dfdfdf;
-	margin-bottom: 10px;
+	margin-bottom: 11px;
 	background-color: #fff;
 	color: #333;
 	overflow: auto;
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+}
+
+.comment-body .moderation,
+#comment-form .error {
+	background-color: #FFFFE0;
+	border: solid 1px #E6DB55;
+	margin-top: 5px;
+	color: #333;
+	padding: 5px;
+	font-size: 10px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.comment-body .moderation {
+	display: block;
+	margin-bottom: 3px;
 }
 
 #commentlist .comment-author-avatar {
@@ -43,6 +59,11 @@
 
 #comments ul#commentlist div.toggle {
 	cursor: pointer;
+}
+
+#comments div.toggle .poster-name {
+	font-weight: bold;
+	font-style: italic;
 }
 
 #comments ul#commentlist div.toggle:hover {

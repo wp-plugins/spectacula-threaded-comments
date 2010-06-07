@@ -9,7 +9,7 @@ function spec_comments_form( ) {
 
 		$commenter = wp_get_current_commenter( );
 
-		if ( function_exists( 'get_avatar' ) && get_option( 'show_avatars' ) ){
+		if ( function_exists( 'get_avatar' ) && get_option( 'show_avatars' ) ) {
 			$avatar = get_avatar( $current_user->user_email ? $current_user->user_email : $commenter[ 'comment_author_email' ] , 64 );
 		} ?>
 
@@ -22,9 +22,10 @@ function spec_comments_form( ) {
 					echo ' '; // Adding this here rather than the string above so translations will still work from the old version
 					wp_loginout( get_permalink( ) );
 
-				} else {
-					echo '<div class="comment-author-avatar">' . $avatar . '</div>';
-					?>
+				} else {?>
+					<div class="comment-author-avatar">
+						<?php echo $current_user->user_email || $commenter[ 'comment_author_email' ] ? '<a href="http://gravatar.com/site/login" title="' . __( 'Change Your Avatar', SPEC_COMMENT_DOM ) . '">' . $avatar . '</a>' : $avatar; ?>
+					</div>
 
 					<form action="<?php echo get_option( 'siteurl' )?>/wp-comments-post.php" method="post" id="comment-form">
 						<fieldset><?php
@@ -36,8 +37,6 @@ function spec_comments_form( ) {
 
 							<?php
 						} else {
-							// Not logged in.
-
 							$req = get_option( 'require_name_email' ); ?>
 
 							<div>
@@ -110,9 +109,17 @@ if ( ( comments_open( ) || get_comments_number( ) > 0 ) && ( is_single( ) || is_
 			<strong class="comment-title"><?php _e( 'Comments', SPEC_COMMENT_DOM )?></strong>
 			<ul id="commentlist">
 				<?php
-				wp_list_comments( array( 'type' => ( commenting_by_type( ) ? 'comment' : 'all' ), 'callback' => 'spec_comment_layout' ) );
-				spec_comments_form( ); ?>
+				$order = get_option( 'comment_order' );
 
+				if ( $order == 'desc' )
+					spec_comments_form( );
+
+				wp_list_comments( array( 'type' => ( commenting_by_type( ) ? 'comment' : 'all' ), 'callback' => 'spec_comment_layout' ) );
+
+				if ( $order != 'desc' )
+					spec_comments_form( );
+
+				?>
 			</ul>
 			<div id="comment-pagination">
 				<?php paginate_comments_links( array( 'next_text'=> '&raquo;', 'prev_text' => '&laquo;' ) );?>

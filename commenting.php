@@ -111,13 +111,14 @@ class spec_commenting {
 			$localisation = array(
 				'trackbackShowText' => __( 'Show trackbacks', SPEC_COMMENT_DOM ),
 				'trackbackHideText' => __( 'Hide trackbacks', SPEC_COMMENT_DOM ),
-				'replyHideMany' => __( 'Hide %count% replies to %name% comment', SPEC_COMMENT_DOM ),
-				'replyShowMany' => __( 'View %count% replies to %name% comment', SPEC_COMMENT_DOM ),
-				'replyHideOne' => __( 'Hide the reply to %name% comment', SPEC_COMMENT_DOM ),
-				'replyShowOne' => __( 'View the reply to %name% comment', SPEC_COMMENT_DOM ),
+				'replyHideMany' => __( "Hide %count% replies to %name%'s comment", SPEC_COMMENT_DOM ),
+				'replyShowMany' => __( "View %count% replies to %name%'s comment", SPEC_COMMENT_DOM ),
+				'replyHideOne' => __( "Hide the reply to %name%'s comment", SPEC_COMMENT_DOM ),
+				'replyShowOne' => __( "View the reply to %name%'s comment", SPEC_COMMENT_DOM ),
+				'order' => get_option( 'comment_order' )
 			);
 
-			$localisation = array_merge( ( array )apply_filters( 'spec_comment_local_js', $localisation ), array( 'nestDepth' => $this->options[ 'comments_nest_depth' ] ) );
+			$localisation = array_merge( ( array ) apply_filters( 'spec_comment_local_js', $localisation ), array( 'nestDepth' => $this->options[ 'comments_nest_depth' ] ) );
 
 			$prefix = ! defined( 'SCRIPT_DEBUG' ) || ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) ? '.min' : '';
 

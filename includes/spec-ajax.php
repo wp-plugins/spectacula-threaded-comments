@@ -50,8 +50,12 @@ class spectacula_ajax {
 			$html = ob_get_contents( );
 		ob_end_clean( );
 
-		$json = ( array ) $comment;
+		$json = array ( );
 		$json[ 'html' ] = $html;
+		$json[ 'comment_ID' ] = $comment->comment_ID;
+		$json[ 'comment_parent' ] = $comment->comment_parent;
+		$json[ 'comment_post_ID' ] = $comment->comment_post_ID;
+		$json[ 'comment_approved' ] = $comment->comment_approved;
 
 		die( json_encode( $json ) );
 	}
