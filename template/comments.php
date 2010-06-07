@@ -3,7 +3,7 @@ if ( __FILE__ == basename( $_SERVER[ 'SCRIPT_FILENAME' ] ) )
 	die ( "Please don't do that." );
 
 function spec_comments_form( ) {
-	global $withcomments, $post, $req, $id, $comment, $user_login, $user_ID, $user_identity, $overridden_cpage, $current_user;
+	global $post, $id, $comment, $user_ID, $current_user, $user_identity;
 
 	if ( comments_open( ) ) {
 
@@ -24,7 +24,6 @@ function spec_comments_form( ) {
 
 				} else {
 					echo '<div class="comment-author-avatar">' . $avatar . '</div>';
-
 					?>
 
 					<form action="<?php echo get_option( 'siteurl' )?>/wp-comments-post.php" method="post" id="comment-form">
@@ -42,19 +41,19 @@ function spec_comments_form( ) {
 							$req = get_option( 'require_name_email' ); ?>
 
 							<div>
-								<input type="text" name="author" id="author" value="<?php echo $comment_author; ?>" size="30" tabindex="1"<?php echo ( $req ? ' class="vital"' : '' )?>/>
+								<input type="text" name="author" id="author" value="<?php echo esc_attr( $commenter[ 'comment_author' ] ); ?>" size="30" tabindex="1"<?php echo ( $req ? ' class="vital"' : '' )?>/>
 								<label for="author">
 									<small><?php _e( 'Name', SPEC_COMMENT_DOM )?> <?php if ( $req ) _e( '(required)', SPEC_COMMENT_DOM )?></small>
 								</label>
 							</div>
 							<div>
-								<input type="text" name="email" id="email" value="<?php echo $comment_author_email; ?>" size="30" tabindex="2"<?php echo ( $req ? ' class="vital"' : '' )?>/>
+								<input type="text" name="email" id="email" value="<?php echo esc_attr( $commenter[ 'comment_author_email' ] ); ?>" size="30" tabindex="2"<?php echo ( $req ? ' class="vital"' : '' )?>/>
 								<label for="email">
 									<small><?php _e( 'Mail (will not be published)', SPEC_COMMENT_DOM )?> <?php if ( $req ) _e( '(required)', SPEC_COMMENT_DOM )?></small>
 								</label>
 							</div>
 							<div>
-								<input type="text" name="url" id="url" value="<?php echo $comment_author_url; ?>" size="30" tabindex="3" />
+								<input type="text" name="url" id="url" value="<?php echo esc_attr( $commenter[ 'comment_author_url' ] ); ?>" size="30" tabindex="3" />
 								<label for="url">
 									<small><?php _e( 'Website', SPEC_COMMENT_DOM )?> </small>
 								</label>
@@ -69,7 +68,7 @@ function spec_comments_form( ) {
 								<?php cancel_comment_reply_link( __( 'Cancel reply', SPEC_COMMENT_DOM ) );
 
 								if ( $user_ID ) { ?>
-								<a class="comment-button" href="<?php echo admin_url( 'profile.php' ); ?>"><?php _e( 'edit profile' );?> </a>
+								<a class="comment-button" href="<?php echo admin_url( 'profile.php' ); ?>"><?php _e( 'Edit profile' );?> </a>
 								<a class="comment-button" href="<?php echo wp_logout_url( $_SERVER[ 'REQUEST_URI' ] );?>" title="<?php _e( 'Log out of this account', SPEC_COMMENT_DOM ) ?>"><?php _e( 'Log Out', SPEC_COMMENT_DOM )?></a>
 
 								<?php } ?>
@@ -80,7 +79,7 @@ function spec_comments_form( ) {
 							if ( function_exists( 'comment_id_fields' ) ) {
 								comment_id_fields( );
 							}
-							do_action( 'comment_form', $post->ID ); ?>
+							do_action( 'comment_form', $post->ID );?>
 						</fieldset>
 					</form><?php
 				}?>

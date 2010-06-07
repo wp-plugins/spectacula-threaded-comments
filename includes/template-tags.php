@@ -148,16 +148,14 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 					</div>
 
 					<?php comment_text( ); ?>
-
-					<div class="comment-buttons"><?php
-						if ( function_exists( 'comment_reply_link' ) )
-							comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $max_depth, 'reply_text' => __( 'Reply', SPEC_COMMENT_DOM ) ) ) );
-
-						edit_comment_link( __( 'Edit', SPEC_COMMENT_DOM ), '', '' ); ?>
-						<a class="comment-button" href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php _e( 'Link', SPEC_COMMENT_DOM ) ?></a>
-					</div>
-
 					<?php $comment->comment_approved == 0 ? printf( '<span class="moderation">%s</span>', __( 'Comment in moderation.', SPEC_COMMENT_DOM ) ) : ''; ?>
+				<div class="comment-buttons"><?php
+					if ( function_exists( 'comment_reply_link' ) )
+						comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $max_depth, 'reply_text' => __( 'Reply', SPEC_COMMENT_DOM ) ) ) );
+
+					edit_comment_link( __( 'Edit', SPEC_COMMENT_DOM ), '', '' ); ?>
+					<a class="comment-button" href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php _e( 'Link', SPEC_COMMENT_DOM ) ?></a>
+				</div>
 				</div>
 
 			</div>

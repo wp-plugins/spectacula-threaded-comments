@@ -5,7 +5,7 @@
  comment reply code. Also alows me to animate things should I want to.
 */
 
-addComment = {
+( addComment = {
 
 	replying: 0,
 
@@ -16,6 +16,9 @@ addComment = {
 		if ( addComment.replying ) {
 			addComment.cancelReply( );
 		}
+
+		alert( jQuery( '#' + belowID + ' > .comment-body .comment-meta' ).next().text() );
+		alert( jQuery( '#' + belowID + ' > .comment-body cite.fn' ).text() );
 
 		addComment.replying = commentID;
 		jQuery( '#comment-form input#comment_parent' ).attr( { value: commentID } );
@@ -32,7 +35,7 @@ addComment = {
 			jQuery( '#comment-form #cancel-comment-reply-link' ).hide( );
 			jQuery( '#commentlist' ).find( '.comment-reply-link' ).show( );
 		}
-
+		// Make sure the submit button is still around.
 		jQuery( '#comment-form .submit' ).attr( { disabled: '' } ).removeClass( 'disabled' );
 	},
 
@@ -116,23 +119,47 @@ addComment = {
 
 				addComment.cancelReply( );
 				addComment.clearReplyLink( );
+				addComment.addCollapse( );
+
 				jQuery( '#comment-form #comment' ).val( '' ); // Blank the comment field
 				jQuery( 'ul#commentlist' ).find( '.rolledup' ).slideDown( ).removeClass( 'rolledup' );
-
-				//alert( d.html );
-
-				//var data = jQuery( r ).find( '#commentlist' );
-				//
-				//jQuery( '#commentlist' ).replaceWith( data );
-				////console.log( data );
 			}
 		} );
 
 		return false;
 	},
 
-	addCollapse: function( ){
+	// Scan through looking for missing toggles and add them.
+	addCollapse: function( hidden ){
+		jQuery( '#commentlist li.depth-' + commentingL10n.nestDepth + ' > ul.children' ).each( function( ) {
+			var posterName = jQuery( this ).prev( 'div.comment-body' ).find( 'cite.fn' ).text( ),
+				replyQuant = jQuery( this ).find( 'li.comment' ).length,
+				replyText,
+				replyTextHide;
 
+
+			if( ! jQuery( this ).prev( 'div.toggle' ).length ) {
+				jQuery( this ).before( '<div class="toggle"></div>' );
+			}
+
+			if ( replyQuant == 1 ) {
+				replyText 		= '<span class="switch"></span><span class="toggle-text">' + commentingL10n.replyShowOne.replace( '%name%','<span class="poster-name">' + posterName + "'s</span>" ).replace( '%count%',replyQuant ) + '</span>';
+				replyTextHide 	= '<span class="switch"></span><span class="toggle-text">' + commentingL10n.replyHideOne.replace( '%name%','<span class="poster-name">' + posterName + "'s</span>" ).replace( '%count%',replyQuant ) + '</span>';
+			} else {
+				replyText 		= '<span class="switch"></span><span class="toggle-text">' + commentingL10n.replyShowMany.replace( '%name%','<span class="poster-name">' + posterName + "'s</span>" ).replace( '%count%',replyQuant ) + '</span>';
+				replyTextHide 	= '<span class="switch"></span><span class="toggle-text">' + commentingL10n.replyHideMany.replace( '%name%','<span class="poster-name">' + posterName + "'s</span>" ).replace( '%count%',replyQuant ) + '</span>';
+			}
+
+			if ( hidden === true ) {
+				jQuery( this ).prev( 'div.toggle' ).html( replyText ).addClass( 'hidden' );
+				jQuery( this ).hide( );
+			} else {
+				jQuery( this ).prev( 'div.toggle' ).html( replyTextHide ).removeClass( 'hidden' );
+			}
+
+
+
+		} );
 	},
 
 	_init: function( ) {
@@ -148,9 +175,24 @@ addComment = {
 			return false;
 		} );
 
+		addComment.addCollapse( true );
+
 		addComment.clearReplyLink( );
+
+		jQuery( '#commentlist div.toggle' ).live( 'click', function( ) {
+			if ( jQuery( this ).hasClass( 'hidden' ) ) {
+				jQuery( this ).removeClass( 'hidden' ).next( 'ul.children' ).slideDown( 'fast', function( ) {
+					// For some reason, don't ask me why, this stops IE8 from messing around with the margins.
+					jQuery( this ).prev( 'div.toggle' ).css( { backgroundColor: '#fffffe' } )
+				} );
+			} else {
+				jQuery( this ).addClass( 'hidden' ).next( 'ul.children' ).slideUp( 'fast', function( ) {
+					jQuery( this ).prev( 'div.toggle' ).css( { backgroundColor: '#ffffff' } )
+				} );
+			}
+		} );
 	}
-};
+} );
 
 addComment._init();
 
@@ -216,51 +258,7 @@ jQuery( document ).ready( function( $ ) {
 		} );
 	} );
 
-	// Stop you from hitting submit on comments until all important fields are filled.
-	$( '#comment-form' ).live( 'submit', function( ) {
-		var blankFields = false,
-			theButton = this;
 
-		$( this ).find( '.vital' ).each( function( ){
-			var value = $( this ).attr( 'value' );
-			if ( value === undefined || value ===  '' ) {
-				blankFields = true;
-				$( this ).css( { borderColor: '#f00' } ).fadeOut( 250 ).fadeIn( 250 );
-			} else {
-				$( this ).css( { borderColor: '#ccc' } );
-			}
-		} );
-
-		if ( blankFields ) {
-			return false;
-		} else {
-			$( this ).ajaxSubmit( {
-				beforeSubmit: function( r ) {
-					$( '#comment-form .submit' ).attr( { disabled: 'disabled' } ).addClass( 'disabled' );
-				},
-				error: function( r ) {
-
-				},
-				success: function( r ) {
-					try {
-						var data = $( r ).find( '#commentlist' );
-
-						$( '#commentlist' ).replaceWith( data );
-						//console.log( data );
-						addComment.cancelReply();
-						$( '#comment-form .submit' ).attr( { disabled: '' } ).removeClass( 'disabled' );
-						$( '#comment-form #comment' ).val( '' );
-
-					} catch ( e ){
-						addComment.cancelReply( );
-						$( '#comment-form .submit' ).attr( { disabled: '' } ).removeClass( 'disabled' );
-						//console.log( e );
-					}
-				}
-			} );
-			return false;
-		}
-	} );
 
 	// Fix some IE 6 problems. The sooner ie6 dies the better
 	$.each( $.browser, function( i, val ) {
