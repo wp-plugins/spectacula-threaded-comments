@@ -9,67 +9,36 @@ addComment = {
 
 	replying: 0,
 
-	replyForm: '', // Store the form here for dropping in as an when needed.
-
-	replyFormParent: '',
-
+	// We won't move the form to under the comment, it's messy and I don't like
+	// it. Instead we'll take some content from the comment we're replying to
+	// And show that next to the form.
 	moveForm: function( belowID, commentID, formID, postID ) {
 		if ( addComment.replying ) {
 			addComment.cancelReply( );
 		}
 
-		// Set the toggle
 		addComment.replying = commentID;
-
-		// Set the value of the reply to comment
-		addComment.replyForm.find( 'input#comment_parent' ).attr( { value: commentID } );
-
-		// Destroy the original form.
-		//jQuery( '#respond' ).remove( );
-
-		// Hide the reply link on this comment
+		jQuery( '#comment-form input#comment_parent' ).attr( { value: commentID } );
 		jQuery( '#' + belowID + ' > .comment-body ' ).find( '.comment-reply-link' ).hide( );
+		jQuery( '#comment-form #cancel-comment-reply-link' ).show( );
 
-		// Insert a UL if needed
-		//if ( ! jQuery( 'ul#commentlist li#comment-' + commentID + ' > ul.children' ).length )
-		//	jQuery( 'ul#commentlist li#comment-' + commentID + ' > div.comment-body' ).after( '<ul class="children"></ul>' );
-
-		// Insert the new form.
-		//jQuery( 'ul#commentlist li#comment-' + commentID + ' > ul.children' ).prepend( addComment.replyForm )
-		//	// Show the cancel link
-		//	.find( '#cancel-comment-reply-link' )
-		//	.css( { display:'inline' } );
-
-		//jQuery( '#respond' )
-		//	// Strip existing depth-?? class from the li, bit hackish but it works; :D
-		//	.removeClass( 'depth-1 depth-2 depth-3 depth-4 depth-5 depth-6 depth-7 depth-8 depth-9 depth-10' )
-		//	.addClass( 'depth-' + ( addComment.commentDepth( commentID ) + 1 ) ) ;
-
-		return false;
+		return true;
 	},
 
 	cancelReply: function( ) {
-		var id = addComment.replying;
-
-		if ( id !== 0 ) {
+		if ( addComment.replying !== 0 ) {
 			addComment.replying = 0;
 			jQuery( '#comment-form input#comment_parent' ).attr( { value: 0 } );
 			jQuery( '#comment-form #cancel-comment-reply-link' ).hide( );
 			jQuery( '#commentlist' ).find( '.comment-reply-link' ).show( );
-
-			//// Get rid of any empty children
-			//if ( ! jQuery( 'ul#commentlist li#comment-' + id + ' > ul.children' ).children( ).length )
-			//	jQuery( 'ul#commentlist li#comment-' + id + ' > ul.children' ).remove( );
-
-			// Show all the reply links again
-
-			//jQuery( '#respond' )
-			//	// Strip existing depth-?? class from the li, bit hackish but it works; :D
-			//	.removeClass( 'depth-2 depth-3 depth-4 depth-5 depth-6 depth-7 depth-8 depth-9 depth-10' )
-			//	.addClass( 'depth-1' ) ;
 		}
 
 		jQuery( '#comment-form .submit' ).attr( { disabled: '' } ).removeClass( 'disabled' );
+	},
+
+	clearReplyLink: function( ) {
+		// Change the reply anchor to point to just #respond.
+		jQuery( '.comment-reply-link' ).attr( { href: '#respond' } );
 	},
 
 	// Take the depth class assigned to the comment and turn into an int.
@@ -78,18 +47,24 @@ addComment = {
 		if ( id ) {
 			c = jQuery( 'li#comment-' + id ).attr( 'class' ).match( /\bdepth-(\d+)\b/i );
 			return [ 1 ] !== undefined && parseInt( c[ 1 ], 10 ) > 0 ? parseInt( c[ 1 ], 10 ) : 1;
-		} else
-			return 1;
+		} else {
+			// No id passed then we have no comment so 0 is good.
+			return 0;
+		}
 	},
 
 	submit: function( v ) {
-		var blankFields = false, dpth = 0, c, commlist;
+		var blankFields = false;
 
 		jQuery( v ).find( '.vital' ).each( function( ){
 			var value = jQuery( this ).attr( 'value' );
 			if ( value === undefined || value ===  '' ) {
 				blankFields = true;
 				jQuery( this ).css( { borderColor: '#f00' } ).fadeOut( 250 ).fadeIn( 250 );
+				setTimeout( function( ) {
+					jQuery( '#comment-form .vital' ).css( { borderColor: '#ccc' } );
+				}, 10000 );
+
 			} else {
 				jQuery( this ).css( { borderColor: '#ccc' } );
 			}
@@ -99,14 +74,6 @@ addComment = {
 		if ( blankFields )
 			return false;
 
-		if ( addComment.replying !== 0 ) {
-			c = jQuery( 'li#comment-' + addComment.replying ).attr( 'class' ).match( /depth-(\d+)/i );
-			dpth = c[ 1 ] !== undefined || parseInt( c[ 1 ], 10 ) > 0 ? parseInt( c[ 1 ], 10 ) : 0;
-		}
-
-
-
-//		console.log( v );
 		jQuery( v ).ajaxSubmit( {
 
 			beforeSubmit: function( r ) {
@@ -119,7 +86,7 @@ addComment = {
 				// Add a trigger so we know we're doing this ajaxicaly.
 				_spec_ajax: 'Why are you looking at this POST data?',
 				action: 'new_comment_added',
-				depth: dpth
+				depth: addComment.commentDepth( addComment.replying )
 			},
 			//dataType: 'json', // Not 100% it will always be so need to parse it myself.
 
@@ -147,7 +114,8 @@ addComment = {
 					jQuery( 'li#respond' ).before( jQuery( d.html ).hide( ).addClass( 'rolledup' ) );
 				}
 
-				addComment.cancelReply();
+				addComment.cancelReply( );
+				addComment.clearReplyLink( );
 				jQuery( '#comment-form #comment' ).val( '' ); // Blank the comment field
 				jQuery( 'ul#commentlist' ).find( '.rolledup' ).slideDown( ).removeClass( 'rolledup' );
 
@@ -169,9 +137,6 @@ addComment = {
 
 	_init: function( ) {
 
-		// Make sure we know where to put it back
-		addComment.replyFormParent = jQuery( '#respond' ).parent( );
-
 		// Add the submit action
 		jQuery( '#comment-form' ).live( 'submit', function( ) {
 			addComment.submit( this );
@@ -183,10 +148,7 @@ addComment = {
 			return false;
 		} );
 
-		// Clone the form
-		addComment.replyForm = jQuery( '#respond' ).clone( true );
-
-
+		addComment.clearReplyLink( );
 	}
 };
 

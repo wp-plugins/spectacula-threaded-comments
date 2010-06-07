@@ -5,9 +5,15 @@ if ( __FILE__ == basename( $_SERVER[ 'SCRIPT_FILENAME' ] ) )
 function spec_comments_form( ) {
 	global $withcomments, $post, $req, $id, $comment, $user_login, $user_ID, $user_identity, $overridden_cpage, $current_user;
 
-	if ( comments_open( ) ) { ?>
+	if ( comments_open( ) ) {
 
-		<li class="depth-1" id="respond">
+		$commenter = wp_get_current_commenter( );
+
+		if ( function_exists( 'get_avatar' ) && get_option( 'show_avatars' ) ){
+			$avatar = get_avatar( $current_user->user_email ? $current_user->user_email : $commenter[ 'comment_author_email' ] , 64 );
+		} ?>
+
+		<li class="depth-1<?php echo $avatar ? ' with-avatar' : ''?>" id="respond">
 			<div class="comment-body"><?php
 				// Not logged in, then you're not getting the form.
 				if ( get_option( 'comment_registration' ) && ! $user_ID ) {
@@ -17,25 +23,23 @@ function spec_comments_form( ) {
 					wp_loginout( get_permalink( ) );
 
 				} else {
-					$commenter = wp_get_current_commenter( );
+					echo '<div class="comment-author-avatar">' . $avatar . '</div>';
 
-					if ( function_exists( 'get_avatar' ) && get_option( 'show_avatars' ) && ( $avatar = get_avatar( $current_user->user_email ? $current_user->user_email : $commenter[ 'comment_author_email' ] , 64 ) ) ) {
-						echo '<div class="comment-author-avatar">' . $avatar . '</div>';
-					} ?>
+					?>
 
 					<form action="<?php echo get_option( 'siteurl' )?>/wp-comments-post.php" method="post" id="comment-form">
 						<fieldset><?php
 
-						if ( $user_ID ) { ?>
-
-							<?php _e( 'Logged in as', SPEC_COMMENT_DOM )?> <a href="<?php echo get_option( 'siteurl' )?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>.
-
-							<a href="<?php echo wp_logout_url( $_SERVER[ 'REQUEST_URI' ] );?>" title="<?php _e( 'Log out of this account', SPEC_COMMENT_DOM ) ?>"><?php _e( 'Log Out', SPEC_COMMENT_DOM )?></a>
+						if ( $user_ID ) {?>
+							<div class="comment-meta">
+								<cite class="fn"><?php echo $user_identity; ?></cite>
+							</div>
 
 							<?php
-
 						} else {
-							// Not logged in. ?>
+							// Not logged in.
+
+							$req = get_option( 'require_name_email' ); ?>
 
 							<div>
 								<input type="text" name="author" id="author" value="<?php echo $comment_author; ?>" size="30" tabindex="1"<?php echo ( $req ? ' class="vital"' : '' )?>/>
@@ -56,12 +60,20 @@ function spec_comments_form( ) {
 								</label>
 							</div><?php
 						}?>
-
-							<textarea name="comment" id="comment" cols="50" rows="3" tabindex="4" class="vital"></textarea>
+							<div class="textarea-border">
+								<textarea name="comment" id="comment" cols="50" rows="3" tabindex="4" class="vital"></textarea>
+							</div>
 
 							<div class="comment-buttons">
 								<input name="submit" type="submit" tabindex="5" value="<?php _e( 'Post your comment', SPEC_COMMENT_DOM ); ?>" class="submit" />
-								<?php cancel_comment_reply_link( __( 'Cancel reply', SPEC_COMMENT_DOM ) ); ?>
+								<?php cancel_comment_reply_link( __( 'Cancel reply', SPEC_COMMENT_DOM ) );
+
+								if ( $user_ID ) { ?>
+								<a class="comment-button" href="<?php echo admin_url( 'profile.php' ); ?>"><?php _e( 'edit profile' );?> </a>
+								<a class="comment-button" href="<?php echo wp_logout_url( $_SERVER[ 'REQUEST_URI' ] );?>" title="<?php _e( 'Log out of this account', SPEC_COMMENT_DOM ) ?>"><?php _e( 'Log Out', SPEC_COMMENT_DOM )?></a>
+
+								<?php } ?>
+
 							</div>
 
 							<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" /><?php

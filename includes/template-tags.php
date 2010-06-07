@@ -141,7 +141,7 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 			<div id="div-comment-<?php comment_ID( ) ?>" class="comment-body">
 				<?php
 				echo $avatar ? '<div class="comment-author-avatar">' . $avatar . '</div>' : ''; ?>
-				<div class="comment-author vcard">
+				<div class="comment-content">
 					<div class="comment-meta">
 						<cite class="fn"><?php comment_author_link( ); ?></cite>
 						<span class="date"><?php printf( __( '%1$s at %2$s', SPEC_COMMENT_DOM ), get_comment_date( ),  get_comment_time( ) ) ?></span>
@@ -157,7 +157,7 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 						<a class="comment-button" href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php _e( 'Link', SPEC_COMMENT_DOM ) ?></a>
 					</div>
 
-					<?php $comment->comment_approved == 0 ? printf( '<span class="moderation">|&nbsp;%s</span>', __( 'Comment in moderation.', SPEC_COMMENT_DOM ) ) : ''; ?>
+					<?php $comment->comment_approved == 0 ? printf( '<span class="moderation">%s</span>', __( 'Comment in moderation.', SPEC_COMMENT_DOM ) ) : ''; ?>
 				</div>
 
 			</div>
