@@ -31,7 +31,15 @@ require_once( dirname( __FILE__ ) . '/includes/template-tags.php' );
 class spec_commenting {
 
 	// Defaults
-	var $default_options = array( 'comments_nest_depth' => 1, 'load_css' => 1, 'load_js' => 1, 'load_dark' => 0, 'credit' => 1 );
+	var $default_options = array(
+								 'comments_nest_depth' => 1,
+								 'load_css' => 1,
+								 'load_js' => 1,
+								 'load_dark' => 0,
+								 'credit' => 1,
+								 'title' => 'Comments',
+								 'trackback' => 'Trackbacks'
+								 );
 
 	/*
 	 PHP4 constructor. Adds the css, js, config menu and the template hijack
@@ -62,7 +70,6 @@ class spec_commenting {
 
 		// Merge the defalts with those chosen.
 		$this->options = array_merge( $this->default_options, ( array )get_option( SPEC_COMMENT_OPT ) );
-
 
 		// If we're requesting ajax stuff we'll hand over control to spec ajax then die.
 		if ( isset( $_REQUEST[ '_spec_ajax' ] ) || isset( $_POST[ '_spec_ajax' ] ) )
@@ -265,6 +272,9 @@ class spec_commenting {
 		$outgoing[ 'load_css' ] = $options[ 'load_css' ] == 1 ? 1 : 0;
 		$outgoing[ 'credit' ] = $options[ 'credit' ] == 1 ? 1 : 0;
 
+		$outgoing[ 'title' ] = strip_tags( $options[ 'title' ] );
+		$outgoing[ 'trackback' ] = strip_tags( $options[ 'trackback' ] );
+
 		return $outgoing;
 	}
 
@@ -283,6 +293,21 @@ class spec_commenting {
 				<?php $options = $this->options; ?>
 				<div id="poststuff" class="metabox-holder">
 					<div id="post-body-content">
+
+						<div class="stuffbox">
+							<h3><?php _e( 'Titles', SPEC_COMMENT_DOM );?></h3>
+							<div class="inside">
+								<p>
+									<label for="<?php echo SPEC_COMMENT_OPT;?>_title"><?php _e( 'Comments', SPEC_COMMENT_DOM );?></label>
+									<input type="text" name="<?php echo SPEC_COMMENT_OPT;?>[title]" id="<?php echo SPEC_COMMENT_OPT;?>_title" value="<?php echo esc_attr( $options[ 'title' ] ); ?>" class="widefat" />
+								</p>
+								<p>
+									<label for="<?php echo SPEC_COMMENT_OPT;?>_trackback"><?php _e( 'Trackbacks', SPEC_COMMENT_DOM );?></label>
+									<input type="text" name="<?php echo SPEC_COMMENT_OPT;?>[trackback]" id="<?php echo SPEC_COMMENT_OPT;?>_trackback" value="<?php echo esc_attr( $options[ 'trackback' ] ); ?>" class="widefat" />
+								</p>
+							</div>
+						</div>
+
 						<div class="stuffbox">
 							<h3><?php _e( 'Rollup Depth', SPEC_COMMENT_DOM );?></h3>
 							<div class="inside" id="<?php echo SPEC_COMMENT_OPT;?>_rollup">

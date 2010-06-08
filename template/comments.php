@@ -96,17 +96,22 @@ if ( ( comments_open( ) || get_comments_number( ) > 0 ) && ( is_single( ) || is_
 	<div id="comments"<?php echo $section_class;?>>
 		<?php
 		if ( have_comments( ) || comments_open( ) ) {
+			$comment_options = get_option( SPEC_COMMENT_OPT );
 
 			// Trackbacks if apart from comments.
-			if ( commenting_by_type( ) && ( $comments_by_type[ 'pingback' ] || $comments_by_type[ 'trackback' ] ) ) { ?>
-				<strong class="comment-title"><?php _e( 'Trackbacks', SPEC_COMMENT_DOM )?></strong>
+			if ( commenting_by_type( ) && ( $comments_by_type[ 'pingback' ] || $comments_by_type[ 'trackback' ] ) ) {
+				if ( ! empty( $comment_options[ 'trackback' ] ) ) {
+					echo '<strong class="comment-title">' . $comment_options[ 'trackback' ] . '</strong>';
+				} ?>
 				<ul id="trackback-list">
 					<?php wp_list_comments( array( 'max_depth' => 0, type => 'pings' ) );?>
 				</ul>
 				<?php
-			}?>
+			}
 
-			<strong class="comment-title"><?php _e( 'Comments', SPEC_COMMENT_DOM )?></strong>
+			if ( ! empty( $comment_options[ 'title' ] ) ) {
+				echo '<strong class="comment-title">' . $comment_options[ 'title' ] . '</strong>';
+			}?>
 			<ul id="commentlist">
 				<?php
 				$order = get_option( 'comment_order' );

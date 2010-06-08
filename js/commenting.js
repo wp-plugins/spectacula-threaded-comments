@@ -161,9 +161,9 @@ addComment = {
 						jQuery( 'li#respond' ).before( jQuery( d.html ).hide( ).addClass( 'rolledup' ) );
 				}
 
-				if ( typeof console == 'object' ) {
-					console.log( d );
-				}
+				//if ( typeof console == 'object' ) {
+				//	console.log( d );
+				//}
 
 				addComment.cancelReply( );
 				addComment.clearReplyLink( );

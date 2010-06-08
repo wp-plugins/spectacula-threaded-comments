@@ -12,7 +12,7 @@ class spectacula_ajax {
 
 		if ( ( isset( $_REQUEST[ '_spec_ajax' ] ) || isset( $_POST[ '_spec_ajax' ] ) ) && ( isset( $_GET[ 'action' ] ) || isset( $_POST[ 'action' ] ) ) ) {
 			$action = isset( $_GET[ 'action' ] ) ? $_GET[ 'action' ] : $_POST[ 'action' ];
-			if ( $action && method_exists( $this, $action ) && is_callable( array( $this, $action ) ) ) {
+			if ( $action && $action != __FUNCTION__ && method_exists( $this, $action ) && is_callable( array( $this, $action ) ) ) {
 				call_user_func( array( &$this, $action ) );
 			} else {
 				die( '-1' );
@@ -39,8 +39,6 @@ class spectacula_ajax {
 	 lets just do the minimum required. :D
 	*/
 	function redirect_new_comment( $location = '', $comment = '' ) {
-		// @todo: Need to sort out depth. Likely figure out which it is a reply to in the JS and take it's depth + 1 and send as $_POST whith the other stuff.
-
 		$GLOBALS[ 'comment_depth' ] = $depth = intval( $_POST[ 'depth' ] ) + 1; // This is a bit of a cheat but it works.
 
 		ob_start( );
@@ -59,6 +57,4 @@ class spectacula_ajax {
 
 		die( json_encode( $json ) );
 	}
-
-
 }?>
