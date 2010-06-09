@@ -252,6 +252,38 @@ addComment = {
 				addComment.toggleToggleText( jQuery( this ) );
 			} );
 
+			// Hide trackbacks from view if they take up too much space. Too much is 400px in my opinion but then I don't really like them. :P
+			if ( $( '#trackback-list' ).height( ) > 400 ) {
+				$( '#trackback-list' )
+					//.css( { height: $( '#trackback-list' ).height( ) } )
+					.hide( )
+					.before( '<div class="trackback-toggle"><span class="toggle-text">' + commentingL10n.trackbackShowText + '</span></div>' )
+					.prev( '.trackback-toggle' )
+					.click( function( ){
+						$( this ).toggleClass( 'active' ).next( '#trackback-list' ).slideToggle( 'fast', function( ){
+							$( this )
+								.prev( '.trackback-toggle' )
+								.children( '.toggle-text' )
+								.text( $( this ).css( 'display' ) === 'none' ? commentingL10n.trackbackShowText : commentingL10n.trackbackHideText );
+						} );
+					} );
+			}
+
+			// Hide trackbacks that show up in the comment stream.
+			// This is done as a one shot deal at load time as I'll not be collecting them after first load unlike comments.
+			$( '#commentlist li.pingback > .comment-body, #commentlist li.trackback > .comment-body' ).each( function( ){
+				var from = 'Trackback from %s'.replace( '%s', $( this ).find( 'cite.fn' ).text( ) ); // Translatify
+				$( this )
+					.hide( )
+					.before( '<div class="trackback-toggle"></div>' )
+					.prev( '.trackback-toggle' )
+					.text( from )
+					.click( function( ){
+						$( this ).next( '.comment-body' ).slideToggle( 'fast' );
+					} );
+			} );
+
+			// Change the link button to a pop up element that has the link in it. WIP.
 			//$( '#commentlist .comment-link' ).live( 'click', function( ) {
 			//	var val = $( this ).attr( 'href' ),
 			//		box = $( '<div class="comment-link-display"><input type="text" value="' + val + '" /></div>' )
@@ -272,25 +304,3 @@ addComment = {
 };
 
 addComment._init( );
-
-jQuery( document ).ready( function( $ ) {
-	return false;
-
-	var trackbackShowText	= commentingL10n.trackbackShowText,
-		trackbackHideText	= commentingL10n.trackbackHideText,
-		trackbackHeight 	= $( '#trackbackList' ).height( );
-
-	// Hide trackbacks from view if they take up too much space. Too much is 250px in my opinion but then I don't really like them. :P
-	if ( trackbackHeight > 250 ) {
-		$( '#trackback-list' ).css( { height: trackbackHeight } ).hide( ).after( '<strong class="trackback-toggle"><span class="switch"></span><span class="toggle-text">' + trackbackShowText + '</span></strong>' ).next( '.trackbackToggle' ).live( 'click', function( ){
-			$( this ).toggleClass( 'active' ).prev( '#trackback-list' ).slideToggle( '500',function( ){
-				if ( $( this ).css( 'display' ) === 'none' ){
-					$( this ).next( '.trackback-toggle' ).children( '.toggle-text' ).html( trackbackShowText );
-				} else {
-					$( this ).next( '.trackback-toggle' ).children( '.toggle-text' ).html( trackbackHideText );
-				}
-			} );
-		} );
-	}
-
-} );

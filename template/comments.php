@@ -98,17 +98,6 @@ if ( ( comments_open( ) || get_comments_number( ) > 0 ) && ( is_single( ) || is_
 		if ( have_comments( ) || comments_open( ) ) {
 			$comment_options = get_option( SPEC_COMMENT_OPT );
 
-			// Trackbacks if apart from comments.
-			if ( commenting_by_type( ) && ( $comments_by_type[ 'pingback' ] || $comments_by_type[ 'trackback' ] ) ) {
-				if ( ! empty( $comment_options[ 'trackback' ] ) ) {
-					echo '<strong class="comment-title">' . $comment_options[ 'trackback' ] . '</strong>';
-				} ?>
-				<ul id="trackback-list">
-					<?php wp_list_comments( array( 'max_depth' => 0, type => 'pings' ) );?>
-				</ul>
-				<?php
-			}
-
 			if ( ! empty( $comment_options[ 'title' ] ) ) {
 				echo '<strong class="comment-title">' . $comment_options[ 'title' ] . '</strong>';
 			}?>
@@ -126,6 +115,19 @@ if ( ( comments_open( ) || get_comments_number( ) > 0 ) && ( is_single( ) || is_
 
 				?>
 			</ul>
+
+			<?php
+			// Trackbacks if apart from comments.
+			if ( commenting_by_type( ) && ( $comments_by_type[ 'pingback' ] || $comments_by_type[ 'trackback' ] ) ) {
+				if ( ! empty( $comment_options[ 'trackback' ] ) ) {
+					echo '<strong class="comment-title">' . $comment_options[ 'trackback' ] . '</strong>';
+				} ?>
+				<ul id="trackback-list">
+					<?php wp_list_comments( array( 'max_depth' => 0, type => 'pings', 'callback' => 'spec_comment_layout' ) );?>
+				</ul>
+				<?php
+			}?>
+
 			<div id="comment-pagination">
 				<?php paginate_comments_links( array( 'next_text'=> '&raquo;', 'prev_text' => '&laquo;' ) );?>
 			</div>

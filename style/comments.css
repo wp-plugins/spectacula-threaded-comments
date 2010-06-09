@@ -1,6 +1,8 @@
 /* Comments*/
 
 /* Quick and crude reset */
+#comments ul#trackback-list,
+#comments ul#trackback-list li,
 #comments ul#commentlist,
 #comments ul#commentlist ul,
 #comments ul#commentlist li {
@@ -22,6 +24,7 @@
 	margin-left: 20px;
 }
 
+#comments .trackback-toggle,
 #comments ul#commentlist div.toggle,
 #comments ul#commentlist li .comment-body {
 	padding: 9px;
@@ -57,6 +60,7 @@
 	margin: 0 10px 0 0;
 }
 
+#comments .trackback-toggle,
 #comments ul#commentlist div.toggle {
 	cursor: pointer;
 }
@@ -65,7 +69,7 @@
 	font-weight: bold;
 	font-style: italic;
 }
-
+#comments .trackback-toggle:hover,
 #comments ul#commentlist div.toggle:hover {
 	background-color: #efefef;
 }
@@ -84,6 +88,7 @@
 	overflow: hidden;
 }
 
+.comment-reply-login,
 .comment-button,
 .comment-buttons .submit,
 #cancel-comment-reply-link,
@@ -118,6 +123,9 @@
 .comment-buttons .submit:active,
 .comment-buttons .submit:focus,
 .comment-buttons .submit:hover,
+.comment-reply-login:active,
+.comment-reply-login:hover,
+.comment-reply-login:focus,
 .comment-reply-link:active,
 .comment-reply-link:focus,
 .comment-reply-link:hover,
@@ -269,4 +277,30 @@ a.next:hover {
 	font-weight: normal;
 	margin-bottom: 0.5em;
 
+}
+ul#trackback-list {
+	margin: 0;
+	padding: 0;
+}
+
+#trackback-list li {
+	margin-bottom: 20px;
+}
+#commentlist .pingback cite.fn,
+#commentlist .trackback cite.fn,
+#trackback-list cite.fn {
+	display:block;
+}
+
+#commentlist .pingback span.date,
+#commentlist .trackback span.date,
+#trackback-list span.date {
+	font-style: italic;
+	color: #666;
+}
+
+#trackback-list .comment-body {
+	padding-bottom: 10px;
+	margin-bottom: 15px;
+	border-bottom: solid 1px #DFDFDF;
 }
