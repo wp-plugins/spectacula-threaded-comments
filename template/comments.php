@@ -99,7 +99,7 @@ if ( ( comments_open( ) || get_comments_number( ) > 0 ) && ( is_single( ) || is_
 			$comment_options = get_option( SPEC_COMMENT_OPT );
 
 			if ( ! empty( $comment_options[ 'title' ] ) ) {
-				echo '<strong class="comment-title">' . $comment_options[ 'title' ] . '</strong>';
+				echo '<div class="comment-title">' . $comment_options[ 'title' ] . '</div>';
 			}?>
 			<ul id="commentlist">
 				<?php
@@ -120,7 +120,7 @@ if ( ( comments_open( ) || get_comments_number( ) > 0 ) && ( is_single( ) || is_
 			// Trackbacks if apart from comments.
 			if ( commenting_by_type( ) && ( $comments_by_type[ 'pingback' ] || $comments_by_type[ 'trackback' ] ) ) {
 				if ( ! empty( $comment_options[ 'trackback' ] ) ) {
-					echo '<strong class="comment-title">' . $comment_options[ 'trackback' ] . '</strong>';
+					echo '<div class="comment-title">' . $comment_options[ 'trackback' ] . '</div>';
 				} ?>
 				<ul id="trackback-list">
 					<?php wp_list_comments( array( 'max_depth' => 0, type => 'pings', 'callback' => 'spec_comment_layout' ) );?>
