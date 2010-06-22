@@ -10,7 +10,7 @@ class spectacula_ajax {
 		define( 'DOING_AJAX', true );
 		@header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
 
-		if ( ( isset( $_REQUEST[ '_spec_ajax' ] ) || isset( $_POST[ '_spec_ajax' ] ) ) && ( isset( $_GET[ 'action' ] ) || isset( $_POST[ 'action' ] ) ) ) {
+		if ( isset( $_REQUEST[ '_spec_ajax' ] ) && isset( $_REQUEST[ 'action' ] ) ) {
 			$action = isset( $_GET[ 'action' ] ) ? $_GET[ 'action' ] : $_POST[ 'action' ];
 			if ( $action && $action != __FUNCTION__ && method_exists( $this, $action ) && is_callable( array( $this, $action ) ) ) {
 				call_user_func( array( &$this, $action ) );
@@ -39,21 +39,24 @@ class spectacula_ajax {
 	 lets just do the minimum required. :D
 	*/
 	function redirect_new_comment( $location = '', $comment = '' ) {
-		$GLOBALS[ 'comment_depth' ] = $depth = intval( $_POST[ 'depth' ] ) + 1; // This is a bit of a cheat but it works.
+		$GLOBALS[ 'comment_depth' ] = $depth = intval( $_REQUEST[ 'depth' ] ) + 1; // This is a bit of a cheat but it works.
+		$post_id = intval( $_REQUEST[ 'comment_post_ID' ] );
 
 		ob_start( );
 			// Render the content using the same function as we would normally.
-			$args = array( 'avatar_size' => 32, 'tag' => 'li' );
+			$args = array( 'avatar_size' => 32, 'tag' => 'li', 'post_id' => $post_id );
 			spec_comment_layout( $comment, $args, $depth );
 			$html = ob_get_contents( );
 		ob_end_clean( );
 
 		$json = array ( );
-		$json[ 'html' ] = $html;
+		$json[ 'depth' ] = $depth;
+		$json[ 'post' ] = $post_id;
 		$json[ 'comment_ID' ] = $comment->comment_ID;
 		$json[ 'comment_parent' ] = $comment->comment_parent;
 		$json[ 'comment_post_ID' ] = $comment->comment_post_ID;
 		$json[ 'comment_approved' ] = $comment->comment_approved;
+		$json[ 'html' ] = $html;
 
 		die( json_encode( $json ) );
 	}

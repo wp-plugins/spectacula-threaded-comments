@@ -60,6 +60,16 @@ if( function_exists( 'comment_reply_link' ) && version_compare( $wpmu_version, '
 	}
 }
 
+
+
+if ( ! function_exists ( 'esc_attr' ) ) {
+	function esc_attr( $text ) {
+		$safe_text = wp_check_invalid_utf8( $text );
+		//$safe_text = _wp_specialchars( $safe_text, ENT_QUOTES );
+		return apply_filters( 'attribute_escape', $safe_text, $text );
+	}
+}
+
 /*
  Quick interpretation of the WP27 function comment_class for <= WP26
  @param $class array of strings to be added to the returned class
@@ -154,7 +164,8 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 
 					if ( ! $tb ) { ?>
 					<div class="comment-buttons"><?php
-						comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $max_depth, 'reply_text' => __( 'Reply', SPEC_COMMENT_DOM ) ) ) );
+						comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $max_depth, 'reply_text' => __( 'Reply', SPEC_COMMENT_DOM ) ) ), null, intval( $args[ 'post_id' ] ) ? intval( $args[ 'post_id' ] ) : null );
+
 						edit_comment_link( __( 'Edit', SPEC_COMMENT_DOM ), '', '' ); ?>
 						<a class="comment-button comment-link" href="<?php echo htmlspecialchars( get_comment_link( ) ) ?>"><?php _e( 'Link', SPEC_COMMENT_DOM ) ?></a>
 					</div><?php

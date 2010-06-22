@@ -20,6 +20,10 @@
 	z-index: 100;
 }
 
+#comments p {
+	margin: 0 0 1em 0;
+}
+
 #comments ul#commentlist ul li {
 	margin-left: 20px;
 }
@@ -291,6 +295,17 @@ ul#trackback-list {
 	display:block;
 }
 
+/*
+ For RPX openid plug-in and
+ anyone else who sticks a
+ small image next to the
+ name.
+*/
+#commentlist cite.fn img {
+	vertical-align: text-top;
+	float: right;
+}
+
 #commentlist .pingback span.date,
 #commentlist .trackback span.date,
 #trackback-list span.date {
@@ -302,4 +317,19 @@ ul#trackback-list {
 	padding-bottom: 10px;
 	margin-bottom: 15px;
 	border-bottom: solid 1px #DFDFDF;
+}
+
+#comment-form blockquote {
+	border-left:0.325em solid #EFEFEF;
+	font-style:italic;
+	margin:0 6% 1.3em;
+	padding-left:0.65em;
+}
+
+
+#comment-form fieldset {
+	border: 0 none;
+	padding: 0;
+	margin: 0;
+	
 }

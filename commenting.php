@@ -13,8 +13,13 @@
  to this file located in a subfolder of your theme and you can easily integrate
  this with your theme.
 */
-if ( ! defined( 'SPEC_COMMENT_URL' ) )
-	define( 'SPEC_COMMENT_URL', plugins_url( '', __FILE__ ) );
+if ( ! defined( 'SPEC_COMMENT_URL' ) ) {
+	if ( version_compare( $GLOBALS[ 'wp_version' ], '2.8', 'ge' ) ) {
+		define( 'SPEC_COMMENT_URL', plugins_url( '', __FILE__ ) );
+	} else {
+		define( 'SPEC_COMMENT_URL', plugins_url( 'spectacula-threaded-comments' ) );
+	}
+}
 
 define( 'SPEC_COMMENT_DOM', 'spectacula-threaded-comments' ); // Translation domain
 define( 'SPEC_COMMENT_VER', '2.7' ); // Min version of wordpress this will work with.
@@ -23,6 +28,7 @@ define( 'SPEC_COMMENT_TMP', dirname( __FILE__ ) . '/template/comments.php' );
 
 if ( ! function_exists ( 'json_encode' ) )
 	require_once( dirname( __FILE__ ) . '/includes/JSON.php' );
+
 require_once( dirname( __FILE__ ) . '/includes/spec-ajax.php' );
 require_once( dirname( __FILE__ ) . '/includes/template-tags.php' );
 
@@ -65,8 +71,11 @@ class spec_commenting {
 	function _init ( ) {
 
 		// Load the translation stuff
-		$abs_rel_path = trim( trim( str_replace( trim( ABSPATH, '/' ), '', dirname( __FILE__ ) ), '/' ), '\\' ) . '/lang/';
-		load_plugin_textdomain( SPEC_COMMENT_DOM, $abs_rel_path );
+		//$abs_rel_path = trim( trim( str_replace( trim( ABSPATH, '/' ), '', dirname( __FILE__ ) ), '/' ), '\\' ) . '/lang/';
+		/*
+		 @todo: Sort this so we can load from within a theme if we're in an include folder or something like that.
+		*/
+		load_plugin_textdomain( SPEC_COMMENT_DOM, false, '/lang/' );
 
 		// Merge the defalts with those chosen.
 		$this->options = array_merge( $this->default_options, ( array )get_option( SPEC_COMMENT_OPT ) );
@@ -111,10 +120,22 @@ class spec_commenting {
 
 	 @return null;
 	*/
-	function before_headers( ){
-		wp_deregister_script( 'comment-reply' ); // dealt with by the included jQuery
+	function before_headers( ) {
+		global $wp_scripts;
 
 		if( function_exists( 'wp_list_comments' ) && is_singular( ) ) {
+
+			wp_register_script( 'json2', SPEC_COMMENT_URL . "/js/json2.js", array( ), '20090817', true );
+			wp_register_script( 'scrollto', SPEC_COMMENT_URL . "/js/jquery.scrollTo-1.4.2-min.js", array( 'jquery' ), '1.4.2', true );
+
+			// Make sure we have jQuery version 1.3.2 or better
+			if ( isset( $wp_scripts->registered[ 'jquery' ]->ver ) && version_compare( $wp_scripts->registered[ 'jquery' ]->ver, '1.3.2', '<' ) ){
+				wp_deregister_script( 'jquery' );
+				wp_register_script( 'jquery', SPEC_COMMENT_URL . "/js/jquery.js", array( ), '1.3.2', true );
+			}
+
+			wp_deregister_script( 'comment-reply' ); // dealt with by the included jQuery
+
 			$localisation = array(
 				'trackbackShowText' => __( 'Show trackbacks', SPEC_COMMENT_DOM ),
 				'trackbackHideText' => __( 'Hide trackbacks', SPEC_COMMENT_DOM ),
@@ -129,7 +150,7 @@ class spec_commenting {
 
 			$prefix = ! defined( 'SCRIPT_DEBUG' ) || ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) ? '.min' : '';
 
-			wp_enqueue_script( 'commenting', apply_filters( 'spec_comment_js', SPEC_COMMENT_URL . "/js/commenting$prefix.js" ), array( 'jquery', 'jquery-form' ), '1.0.3', true );
+			wp_enqueue_script( 'commenting', apply_filters( 'spec_comment_js', SPEC_COMMENT_URL . "/js/commenting$prefix.js" ), array( 'jquery', 'jquery-form', 'json2', 'scrollto' ), '1.0.3', true );
 			wp_localize_script( 'commenting', 'commentingL10n', $localisation );
 		}
 	}
@@ -194,7 +215,7 @@ class spec_commenting {
 	 @param array $class Called by apply_filters( 'body_class' ) which should
 	 pass in an array of classes.
 	 @return array Our changed version of the array that should now contain
-	 something to ident the browse.
+	 something to ident the browser.
 	*/
 	function get_agent_body_class( $class = array( ) ) {
 
@@ -403,5 +424,4 @@ class spec_commenting {
 
 
 new spec_commenting( );
-
 ?>

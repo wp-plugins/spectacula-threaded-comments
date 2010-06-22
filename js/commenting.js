@@ -30,7 +30,12 @@ addComment = {
 		jQuery( '#' + belowID + ' > .comment-body ' ).find( '.comment-reply-link' ).hide( );
 		jQuery( '#comment-form #cancel-comment-reply-link' ).show( );
 
-		return true;
+		try {
+			jQuery.scrollTo( jQuery( '#respond' ), { duration: 500 } );
+		} catch ( e ) {
+		}
+
+		return false;
 	},
 
 	cancelReply: function( ) {
@@ -43,11 +48,6 @@ addComment = {
 		}
 		// Make sure the submit button is still around.
 		jQuery( '#comment-form .submit' ).attr( { disabled: '' } ).removeClass( 'disabled' );
-	},
-
-	clearReplyLink: function( ) {
-		// Change the reply anchor to point to just #respond.
-		jQuery( '.comment-reply-link' ).attr( { href: '#respond' } );
 	},
 
 	// Take the depth class assigned to the comment and turn into an int.
@@ -66,7 +66,7 @@ addComment = {
 		if ( typeof msg !== 'string' )
 			return false;
 
-		jQuery( '#comment-form .textarea-border' ).after( jQuery( '<div class="error">' + msg + '</div>' ).hide( ) ).next( '.error' ).fadeTo( 'slow', 1, function( ) {
+		jQuery( '#comment-form .textarea-border' ).after( jQuery( '<div class="error">' + msg + '</div>' ).hide( ) ).next( '.error' ).slideDown( 'slow', function( ) {
 			var a = jQuery( this );
 			// Kill the filter for IE as it makes the text unreadable.
 			jQuery( this ).css( 'FILTER', '' );
@@ -133,7 +133,11 @@ addComment = {
 					}
 					addComment.error( msg );
 				} else {
-					addComment.error( e );
+					if ( typeof e === 'string' ) {
+						addComment.error( e );
+					} else {
+						addComment.error( 'Oops!' );
+					}
 				}
 
 				addComment.cancelReply( );
@@ -142,9 +146,13 @@ addComment = {
 			success: function( r ) {
 				var d;
 				try {
-					d = jQuery.parseJSON( r );
+					d = JSON.parse( r );
 				} catch ( e ) {
-					addComment.error( e );
+					if ( typeof r === 'string' ) {
+						addComment.error( r );
+					} else {
+						addComment.error( 'Oops!' );
+					}
 					addComment.cancelReply( );
 					return;
 				}
@@ -161,16 +169,14 @@ addComment = {
 						jQuery( 'li#respond' ).before( jQuery( d.html ).hide( ).addClass( 'rolledup' ) );
 				}
 
-				//if ( typeof console == 'object' ) {
-				//	console.log( d );
-				//}
-
 				addComment.cancelReply( );
-				addComment.clearReplyLink( );
 				addComment.addToggles( );
 
 				jQuery( '#comment-form #comment' ).val( '' ); // Blank the comment field
 				jQuery( 'ul#commentlist' ).find( '.rolledup' ).slideDown( ).removeClass( 'rolledup' );
+
+				if ( typeof jQuery.scrollTo == 'function' && d.comment_ID > 0 )
+					jQuery.scrollTo( jQuery( '#comment-' + d.comment_ID ), { duration: 500 } );
 			}
 		} );
 
@@ -182,8 +188,8 @@ addComment = {
 		jQuery( '#commentlist li.depth-' + commentingL10n.nestDepth + ' > ul.children' ).each( function( ) {
 
 			if( ! jQuery( this ).prev( 'div.toggle' ).length ) {
-				jQuery( this ).before( jQuery( '<div class="toggle"></div>' ).hide( ) );
-				jQuery( this ).prev( 'div.toggle' ).fadeTo( 'slow', 1, function( ){
+				jQuery( this ).before( jQuery( '<div class="toggle"></div>' ).hide( ).css( { opacity: 0 } ) );
+				jQuery( this ).prev( 'div.toggle' ).show().fadeTo( 'slow', 1, function( ){
 					// Kill the filter for IE as it makes the text unreadable.
 					jQuery( this ).css( 'FILTER', '' );
 					jQuery( this )[ 0 ].style.filter = '';
@@ -234,8 +240,6 @@ addComment = {
 			} );
 
 			addComment.addToggles( true );
-
-			addComment.clearReplyLink( );
 
 			$( '#commentlist div.toggle' ).live( 'click', function( ) {
 				if ( $( this ).hasClass( 'hidden' ) ) {
