@@ -25,15 +25,13 @@ addComment = {
 
 		addComment.replying = commentID;
 
-		jQuery( '#comment-form #comment' ).before( '<blockquote class="reply-quote"><cite>' + to + '</cite><p>' + ( str.length > 130 ? str.substring( 0, 129 ) + '&hellip;' : str ) + '</p></blockquote>' );
+		jQuery( '#comment-form #comment' ).before( jQuery( '<blockquote class="reply-quote"><cite>' + to + '</cite><p>' + ( str.length > 130 ? str.substring( 0, 129 ) + '&hellip;' : str ) + '</p></blockquote>' ).hide( ) ).prev( '.reply-quote' ).slideDown( );
 		jQuery( '#comment-form input#comment_parent' ).attr( { value: commentID } );
 		jQuery( '#' + belowID + ' > .comment-body ' ).find( '.comment-reply-link' ).hide( );
 		jQuery( '#comment-form #cancel-comment-reply-link' ).show( );
 
-		try {
+		if ( typeof jQuery.scrollTo == 'function' )
 			jQuery.scrollTo( jQuery( '#respond' ), { duration: 500 } );
-		} catch ( e ) {
-		}
 
 		return false;
 	},
@@ -41,7 +39,9 @@ addComment = {
 	cancelReply: function( ) {
 		if ( addComment.replying !== 0 ) {
 			addComment.replying = 0;
-			jQuery( '#comment-form .reply-quote' ).remove( );
+			jQuery( '#comment-form .reply-quote' ).slideUp( 500, function( ) {
+				jQuery( this ).remove( );
+			} );
 			jQuery( '#comment-form input#comment_parent' ).attr( { value: 0 } );
 			jQuery( '#comment-form #cancel-comment-reply-link' ).hide( );
 			jQuery( '#commentlist' ).find( '.comment-reply-link' ).show( );
@@ -83,6 +83,44 @@ addComment = {
 		return true;
 	},
 
+	newComment: function( html, comment_ID, parent_ID ) {
+		// We're replying so we have to do something different
+		if ( parent_ID > 0 ) {
+			// Check there is a child UL to attach stuff to.
+			if ( ! jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).length )
+				jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > div.comment-body' ).after( '<ul class="children"></ul>' );
+
+			// Attach the comment.
+			jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+
+			// Check to see if our comment has been added to a rolled up UL
+			if ( jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ).hasClass( 'hidden' ) ) {
+				// If it has roll it down
+				jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ).removeClass( 'hidden' ).next( 'ul.children' ).slideDown( 'fast', function( ) {
+					jQuery( this ).prev( 'div.toggle' ).css( { backgroundPosition: 'bottom right' } ); // FIXES IE8.
+				} );
+			}
+
+			// Change the toggle text to the correct
+			addComment.toggleToggleText( jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ) );
+		} else {
+			if ( commentingL10n.order === 'desc'  )
+				jQuery( 'li#respond' ).after( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+			else
+				jQuery( 'li#respond' ).before( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+		}
+
+		addComment.cancelReply( );
+		addComment.addToggles( );
+
+		jQuery( '#comment-form #comment' ).val( '' ); // Blank the comment field
+		jQuery( 'ul#commentlist' ).find( '.rolledup' ).slideDown( ).removeClass( 'rolledup' );
+
+		// Our comment is in place, now let us scroll to it.
+		if ( typeof jQuery.scrollTo == 'function' && comment_ID > 0 )
+			jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500 } );
+	},
+
 	// Send the comment to WP for processing
 	submit: function( v ) {
 		var blankFields = false;
@@ -103,7 +141,7 @@ addComment = {
 
 		// Form not filled out then no point going on.
 		if ( blankFields ) {
-			addComment.error( 'Missing some fields' ); // Add to translation
+			addComment.error( 'Missing some fields' ); /* @todo: Add to translation */
 			return false;
 		}
 
@@ -157,26 +195,7 @@ addComment = {
 					return;
 				}
 
-				if ( addComment.replying ) {
-					if ( ! jQuery( 'ul#commentlist li#comment-' + addComment.replying + ' > ul.children' ).length )
-						jQuery( 'ul#commentlist li#comment-' + addComment.replying + ' > div.comment-body' ).after( '<ul class="children"></ul>' );
-
-					jQuery( 'ul#commentlist li#comment-' + addComment.replying + ' > ul.children' ).append( jQuery( d.html ).hide( ).addClass( 'rolledup' ) );
-				} else {
-					if ( commentingL10n.order === 'desc'  )
-						jQuery( 'li#respond' ).after( jQuery( d.html ).hide( ).addClass( 'rolledup' ) );
-					else
-						jQuery( 'li#respond' ).before( jQuery( d.html ).hide( ).addClass( 'rolledup' ) );
-				}
-
-				addComment.cancelReply( );
-				addComment.addToggles( );
-
-				jQuery( '#comment-form #comment' ).val( '' ); // Blank the comment field
-				jQuery( 'ul#commentlist' ).find( '.rolledup' ).slideDown( ).removeClass( 'rolledup' );
-
-				if ( typeof jQuery.scrollTo == 'function' && d.comment_ID > 0 )
-					jQuery.scrollTo( jQuery( '#comment-' + d.comment_ID ), { duration: 500 } );
+				addComment.newComment( d.html, d.comment_ID, d.comment_parent );
 			}
 		} );
 
@@ -276,7 +295,7 @@ addComment = {
 			// Hide trackbacks that show up in the comment stream.
 			// This is done as a one shot deal at load time as I'll not be collecting them after first load unlike comments.
 			$( '#commentlist li.pingback > .comment-body, #commentlist li.trackback > .comment-body' ).each( function( ){
-				var from = 'Trackback from %s'.replace( '%s', $( this ).find( 'cite.fn' ).text( ) ); // Translatify
+				var from = 'Trackback from %s'.replace( '%s', $( this ).find( 'cite.fn' ).text( ) ); /* @todo: Translatify */
 				$( this )
 					.hide( )
 					.before( '<div class="trackback-toggle"></div>' )

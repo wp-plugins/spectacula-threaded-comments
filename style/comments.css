@@ -1,14 +1,21 @@
 /* Comments*/
 
 /* Quick and crude reset */
-#comments ul#trackback-list,
-#comments ul#trackback-list li,
-#comments ul#commentlist,
-#comments ul#commentlist ul,
-#comments ul#commentlist li {
+#comments fieldset, #comments cite, #comments input, #comments textarea,
+#comments form, #comments p, #comments img, #comments blockquote, #comments ul,
+#comments li {
+	background-color: transparent;
+	color: #333;
 	border: 0 none;
 	padding: 0;
 	margin: 0;
+	list-style: none outside;
+	font-style: inherit;
+	font-weight: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	text-decoration: none;
+	line-height: inherit;
 }
 
 #comments {
@@ -17,11 +24,7 @@
 	overflow: auto;
 	min-height: 1px;
 	position: relative;
-	z-index: 100;
-}
-
-#comments p {
-	margin: 0 0 1em 0;
+	z-index: 10;
 }
 
 #comments ul#commentlist ul li {
@@ -31,12 +34,12 @@
 #comments .trackback-toggle,
 #comments ul#commentlist div.toggle,
 #comments ul#commentlist li .comment-body {
-	padding: 9px;
-	border: solid 1px #dfdfdf;
-	margin-bottom: 11px;
 	background-color: #fff;
+	border: solid 1px #dfdfdf;
 	color: #333;
+	padding: 9px;
 	overflow: auto;
+	margin-bottom: 11px;
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -50,9 +53,11 @@
 	color: #333;
 	padding: 5px;
 	font-size: 10px;
+
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
+
 .comment-body .moderation {
 	display: block;
 	margin-bottom: 3px;
@@ -69,10 +74,11 @@
 	cursor: pointer;
 }
 
+#comments cite.fn,
 #comments div.toggle .poster-name {
 	font-weight: bold;
-	font-style: italic;
 }
+
 #comments .trackback-toggle:hover,
 #comments ul#commentlist div.toggle:hover {
 	background-color: #efefef;
@@ -87,31 +93,34 @@
 	margin-left: 44px;
 }
 
-.comment-buttons {
-	margin-top: 5px;
+#comments .comment-buttons {
+	margin-top: 9px;
 	overflow: hidden;
 }
 
-.comment-reply-login,
-.comment-button,
-.comment-buttons .submit,
-#cancel-comment-reply-link,
-.comment-edit-link,
-.comment-reply-link {
+#comments .comment-reply-login,
+#comments .comment-button,
+#comments .comment-buttons .submit,
+#comments #cancel-comment-reply-link,
+#comments .comment-edit-link,
+#comments .comment-reply-link {
 	border: 0 none;
 	cursor: pointer;
 	margin:  0 0 0 5px;
 	float: right;
-	padding: 3px 5px;
+	padding: 0 5px;
 	background-color: #666;
 	color: #fff;
 	font-size: 10px;
+	height: 18px;
+	line-height: 18px;
+
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
 
-.comment-button,
-.comment-edit-link {
+#comments .comment-button,
+#comments .comment-edit-link {
 	float: left;
 	margin: 0 5px 0 0;
 }
@@ -166,10 +175,6 @@
 }
 .textarea-border {
 	padding: 5px;
-}
-
-li#respond {
-	margin-top: 60px;
 }
 
 #comment {
@@ -289,9 +294,10 @@ ul#trackback-list {
 #trackback-list li {
 	margin-bottom: 20px;
 }
-#commentlist .pingback cite.fn,
-#commentlist .trackback cite.fn,
-#trackback-list cite.fn {
+
+#comment #commentlist .pingback cite.fn,
+#comment #commentlist .trackback cite.fn,
+#comment #trackback-list cite.fn {
 	display:block;
 }
 
@@ -322,14 +328,10 @@ ul#trackback-list {
 #comment-form blockquote {
 	border-left:0.325em solid #EFEFEF;
 	font-style:italic;
-	margin:0 6% 1.3em;
+	margin:0 6%;
 	padding-left:0.65em;
 }
 
-
-#comment-form fieldset {
-	border: 0 none;
-	padding: 0;
-	margin: 0;
-	
+#comments .comment-text p {
+	margin-bottom: 0.75em;
 }

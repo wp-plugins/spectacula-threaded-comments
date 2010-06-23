@@ -157,11 +157,15 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 					<div class="comment-meta">
 						<cite class="fn"><?php comment_author_link( ); ?></cite>
 						<span class="date"><?php printf( __( '%1$s at %2$s', SPEC_COMMENT_DOM ), get_comment_date( ),  get_comment_time( ) ) ?></span>
-					</div><?php
+					</div>
 
-					comment_text( );
-					$comment->comment_approved == 0 ? printf( '<span class="moderation">%s</span>', __( 'Comment in moderation.', SPEC_COMMENT_DOM ) ) : '';
+					<div class="comment-text">
+						<?php
+						comment_text( );
+						$comment->comment_approved == 0 ? printf( '<span class="moderation">%s</span>', __( 'Comment in moderation.', SPEC_COMMENT_DOM ) ) : '';?>
+					</div>
 
+					<?php
 					if ( ! $tb ) { ?>
 					<div class="comment-buttons"><?php
 						comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $max_depth, 'reply_text' => __( 'Reply', SPEC_COMMENT_DOM ) ) ), null, intval( $args[ 'post_id' ] ) ? intval( $args[ 'post_id' ] ) : null );
