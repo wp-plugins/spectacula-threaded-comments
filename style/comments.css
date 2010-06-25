@@ -1,9 +1,11 @@
-/* Comments*/
+/*
+ comment style: Default style
+*/
 
 /* Quick and crude reset */
 #comments fieldset, #comments cite, #comments input, #comments textarea,
 #comments form, #comments p, #comments img, #comments blockquote, #comments ul,
-#comments li {
+#comments #commentlist li, #comments .comment-buttons *, #comments #respond {
 	background-color: transparent;
 	color: #333;
 	border: 0 none;
@@ -15,13 +17,20 @@
 	font-family: inherit;
 	font-size: inherit;
 	text-decoration: none;
+	text-transform: none;
 	line-height: inherit;
+}
+
+#comments img.avatar {
+	border: 0 none !important;
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
 #comments {
 	display: block;
 	clear: both;
-	overflow: auto;
+	overflow: hidden;
 	min-height: 1px;
 	position: relative;
 	z-index: 10;
@@ -69,6 +78,11 @@
 	margin: 0 10px 0 0;
 }
 
+#commentlist li.bypostauthor > div.comment-body .comment-author-avatar {
+	padding-bottom: 5px;
+	border-bottom: solid 5px #dddd00;
+}
+
 #comments .trackback-toggle,
 #comments ul#commentlist div.toggle {
 	cursor: pointer;
@@ -93,23 +107,26 @@
 	margin-left: 44px;
 }
 
+#comments .comment-meta {
+	margin-bottom: 5px;
+}
+
+/* Comment buttons */
+
 #comments .comment-buttons {
 	margin-top: 9px;
 	overflow: hidden;
 }
 
-#comments .comment-reply-login,
-#comments .comment-button,
-#comments .comment-buttons .submit,
-#comments #cancel-comment-reply-link,
-#comments .comment-edit-link,
-#comments .comment-reply-link {
+#comments .comment-buttons .comment-button,
+#comments .comment-buttons a ,
+#comments .comment-buttons input {
 	border: 0 none;
 	cursor: pointer;
 	margin:  0 0 0 5px;
 	float: right;
 	padding: 0 5px;
-	background-color: #666;
+	background: none #666;
 	color: #fff;
 	font-size: 10px;
 	height: 18px;
@@ -119,62 +136,88 @@
 	-webkit-border-radius: 3px;
 }
 
-#comments .comment-button,
-#comments .comment-edit-link {
+#comments .comment-buttons a.comment-button,
+#comments .comment-buttons a.comment-edit-link {
 	float: left;
 	margin: 0 5px 0 0;
 }
 
-#cancel-comment-reply-link:active,
-#cancel-comment-reply-link:focus,
-#cancel-comment-reply-link:hover {
-	text-decoration:none;
+#comments #cancel-comment-reply-link:active,
+#comments #cancel-comment-reply-link:focus,
+#comments #cancel-comment-reply-link:hover {
 	background-color: #933;
 	color: #fff
 }
 
-.comment-buttons .submit:active,
-.comment-buttons .submit:focus,
-.comment-buttons .submit:hover,
-.comment-reply-login:active,
-.comment-reply-login:hover,
-.comment-reply-login:focus,
-.comment-reply-link:active,
-.comment-reply-link:focus,
-.comment-reply-link:hover,
-.comment-edit-link:active,
-.comment-edit-link:focus,
-.comment-edit-link:hover,
-.comment-button:active,
-.comment-button:focus,
-.comment-button:hover {
-	text-decoration:none;
+#comments .comment-buttons input:active, #comments .comment-buttons input:focus,
+#comments .comment-buttons input:hover, #comments .comment-buttons a:active, #comments .comment-buttons a:focus,
+#comments .comment-buttons a:hover, #comments .comment-button:active,
+#comments .comment-button:focus, #comments .comment-button:hover {
 	background-color: #333;
 	color: #fff
 }
 
-.comment-buttons .disabled,
-.comment-buttons .disabled:active,
-.comment-buttons .disabled:focus,
-.comment-buttons .disabled:hover {
+#comments .comment-buttons .disabled,
+#comments .comment-buttons .disabled:active,
+#comments .comment-buttons .disabled:focus,
+#comments .comment-buttons .disabled:hover {
 	background-color: #ddd;
 	cursor: wait;
-	text-decoration: none;
 	color: #fff;
 }
 
-.comment-meta {
-	margin-bottom: 5px;
+/* End Comment buttons */
+
+#comments .comment-form-row {
+	overflow: auto;
+	margin-bottom: 10px;
+	width: 100%;
 }
 
-#comment-form .textarea-border,
-#author, #email, #url {
+#comments .comment-form-row input,
+#comment-form .textarea-border {
 	border: solid 1px #ccc;
+	background-color: #f8f8f8;
+
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
+
+#comments .comment-form-row label {
+	float: left;
+	width: 18%;
+}
+
+#comments .comment-form-row input {
+	width: 80%;
+	float: right;
+	margin: 0;
+	padding: 3px 2px 2px
+}
+
+#comments .comment-form-row label sup {
+	vertical-align: 0.4em;
+	font-size: smaller;
+	color: #900;
+}
+
 .textarea-border {
 	padding: 5px;
+}
+
+#comment-form span.required {
+	display: block;
+	text-align: right;
+	font-size: small;
+	color: #999;
+}
+
+#comment-form .oops {
+	background: url( exclamation.png ) no-repeat 98% center;
+}
+
+#comment-form textarea.oops {
+	background-position: right top;
 }
 
 #comment {
@@ -326,7 +369,7 @@ ul#trackback-list {
 }
 
 #comment-form blockquote {
-	border-left:0.325em solid #EFEFEF;
+	border-left:0.325em solid #dfdfdf;
 	font-style:italic;
 	margin:0 6%;
 	padding-left:0.65em;
@@ -334,4 +377,8 @@ ul#trackback-list {
 
 #comments .comment-text p {
 	margin-bottom: 0.75em;
+}
+
+#comments .reply-quote cite {
+	font-weight: 700;
 }

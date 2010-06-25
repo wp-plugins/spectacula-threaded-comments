@@ -114,11 +114,13 @@ addComment = {
 		addComment.addToggles( );
 
 		jQuery( '#comment-form #comment' ).val( '' ); // Blank the comment field
-		jQuery( 'ul#commentlist' ).find( '.rolledup' ).slideDown( ).removeClass( 'rolledup' );
+		jQuery( 'ul#commentlist' ).find( '.rolledup' ).slideDown( 500, function( ){
+			// Scroll once the thing finishes unrolling.
+			jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500 } );
+		} ).removeClass( 'rolledup' );
 
 		// Our comment is in place, now let us scroll to it.
-		if ( typeof jQuery.scrollTo == 'function' && comment_ID > 0 )
-			jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500 } );
+		jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500 } );
 	},
 
 	// Send the comment to WP for processing
@@ -129,13 +131,13 @@ addComment = {
 			var value = jQuery( this ).attr( 'value' );
 			if ( value === undefined || value ===  '' ) {
 				blankFields = true;
-				jQuery( this ).css( { borderColor: '#f00' } ).fadeOut( 250 ).fadeIn( 250 );
+				jQuery( this ).addClass( 'oops' );
 				setTimeout( function( ) {
-					jQuery( '#comment-form .vital' ).css( { borderColor: '#ccc' } );
-				}, 10000 );
+					jQuery( '#comment-form .vital' ).removeClass( 'oops' );
+				}, 6000 );
 
 			} else {
-				jQuery( this ).css( { borderColor: '#ccc' } );
+				jQuery( this ).removeClass( 'oops' );
 			}
 		} );
 

@@ -20,33 +20,23 @@ if ( ! defined( 'SPEC_COMMENT_URL' ) ) {
 		define( 'SPEC_COMMENT_URL', plugins_url( 'spectacula-threaded-comments' ) );
 	}
 }
-
+define( 'SPEC_COMMENT_PTH', dirname( __FILE__ ) );
 define( 'SPEC_COMMENT_DOM', 'spectacula-threaded-comments' ); // Translation domain
 define( 'SPEC_COMMENT_VER', '2.7' ); // Min version of wordpress this will work with.
 define( 'SPEC_COMMENT_OPT', 'spectacula_threaded_comments' );
-define( 'SPEC_COMMENT_TMP', dirname( __FILE__ ) . '/template/comments.php' );
+define( 'SPEC_COMMENT_TMP', SPEC_COMMENT_PTH . '/includes/template.php' );
 
 if ( ! function_exists ( 'json_encode' ) )
-	require_once( dirname( __FILE__ ) . '/includes/JSON.php' );
+	require_once( SPEC_COMMENT_PTH . '/includes/JSON.php' );
 
-require_once( dirname( __FILE__ ) . '/includes/spec-ajax.php' );
-require_once( dirname( __FILE__ ) . '/includes/template-tags.php' );
+require_once( SPEC_COMMENT_PTH . '/includes/functions.php' );
+require_once( SPEC_COMMENT_PTH . '/includes/options-page.php' );
+require_once( SPEC_COMMENT_PTH . '/includes/spec-ajax.php' );
 
 //delete_option( SPEC_COMMENT_OPT );
 
 if ( ! class_exists( 'spec_commenting' ) ) {
 	class spec_commenting {
-
-		// Defaults
-		var $default_options = array(
-									 'comments_nest_depth' => 1,
-									 'load_css' => 1,
-									 'load_js' => 1,
-									 'load_dark' => 0,
-									 'credit' => 1,
-									 'title' => 'Comments',
-									 'trackback' => 'Trackbacks'
-									 );
 
 		/*
 		 PHP4 constructor. Adds the css, js, config menu and the template hijack
@@ -78,30 +68,15 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 			*/
 			load_plugin_textdomain( SPEC_COMMENT_DOM, false, '/lang/' );
 
-			// Merge the defalts with those chosen.
-			$this->options = array_merge( $this->default_options, ( array )get_option( SPEC_COMMENT_OPT ) );
-
 			// If we're requesting ajax stuff we'll hand over control to spec ajax then die.
 			if ( isset( $_REQUEST[ '_spec_ajax' ] ) || isset( $_POST[ '_spec_ajax' ] ) )
 				new spectacula_ajax( );
 
-
-			// Add the actions and filters.
-			if ( $this->options[ 'load_css' ] ) {
-				add_filter( 'body_class', array( &$this, 'get_agent_body_class' ) );
-
-				add_action( 'wp_head', array( &$this, 'css' ) );
-				if ( $this->options[ 'load_dark' ] ) {
-					add_filter( 'spec_comment_css', array( &$this, 'dark_css' ) );
-				}
-			}
-
-			if ( $this->options[ 'load_js' ] ) {
-				add_action( 'wp', array( &$this, 'before_headers' ) );
-			}
+			add_filter( 'body_class', array( &$this, 'get_agent_body_class' ) );
+			add_action( 'wp_head', array( &$this, 'css' ) );
+			add_action( 'wp', array( &$this, 'before_headers' ) );
 
 			add_action( 'comment_form', array( &$this, 'our_credit' ) );
-			add_action( 'admin_menu', array( &$this, 'add_options_page' ) );
 			add_filter( 'comments_template', array( &$this, 'comment_template_hijack' ) );
 		}
 
@@ -147,7 +122,7 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 					'order' => get_option( 'comment_order' )
 				);
 
-				$localisation = array_merge( ( array ) apply_filters( 'spec_comment_local_js', $localisation ), array( 'nestDepth' => $this->options[ 'comments_nest_depth' ] ) );
+				$localisation = array_merge( ( array ) apply_filters( 'spec_comment_local_js', $localisation ), array( 'nestDepth' => spec_comment_option( 'comments_nest_depth' ) ) );
 
 				$prefix = ! defined( 'SCRIPT_DEBUG' ) || ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) ? '.min' : '';
 
@@ -183,22 +158,9 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 		 @return null;
 		*/
 		function css( ){
-			if ( is_singular( ) ) {
-				?><link rel="stylesheet" href="<?php echo apply_filters( 'spec_comment_css', SPEC_COMMENT_URL . '/style/comments.css?ver=2.0.0' ); ?>" type="text/css" media="screen" /><?php
+			if ( is_singular( ) && spec_comment_option( 'stylesheet' ) != '' ) {
+				?><link rel="stylesheet" href="<?php echo apply_filters( 'spec_comment_css', spec_comment_option( 'stylesheet' ) . '?ver=2.0.0' ); ?>" type="text/css" media="screen" /><?php
 			}
-		}
-
-
-		/*
-		 Simply replace the stylesheet assigned above if someone wants the dark
-		 version of the comments. This is more to show you how to quickly
-		 replace the CSS from a plug-in rather than having to edit the plug-in.
-
-		 @param string $incomming The stylesheet url passed by apply_filters.
-		 @return string The new stylesheet.
-		*/
-		function dark_css( $incomming ) {
-			return SPEC_COMMENT_URL . '/style/comments-dark.css?ver=2.0.0';
 		}
 
 
@@ -213,7 +175,7 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 		 this all other browsers shouldn't need too much in the way of specific
 		 CSS and I only add geko and webkit because I can.
 
-		 @param array $class Called by apply_filters( 'body_class' ) which should
+		 @param array $class Called by apply_filters('body_class') which should
 		 pass in an array of classes.
 		 @return array Our changed version of the array that should now contain
 		 something to ident the browser.
@@ -271,149 +233,13 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 
 
 		/*
-		 Add the option page to wordpress' theme menu and register the settings
-		 @return null;
-		*/
-		function add_options_page( ) {
-			register_setting( SPEC_COMMENT_OPT, SPEC_COMMENT_OPT, array( &$this, 'validate_option' ) );
-			add_theme_page( __( 'Comments', SPEC_COMMENT_DOM ), __( 'Comments', SPEC_COMMENT_DOM ), 'manage_options', SPEC_COMMENT_DOM, array( &$this, 'options_page' ) );
-		}
-
-
-		/*
-		 The the processed return from the form page is checked here before
-		 returning the cleaned up version to WP for saving to our options var.
-
-		 @return array The parameters to save to our options.
-		*/
-		function validate_option( $options ) {
-			$outgoing[ 'comments_nest_depth' ] = intval( $options[ 'comments_nest_depth' ] ) > 0 || intval( $options[ 'comments_nest_depth' ] ) < 11 ? intval( $options[ 'comments_nest_depth' ] ) : 1;
-
-			$outgoing[ 'load_dark' ] = $options[ 'load_dark' ] == 1 ? 1 : 0;
-			$outgoing[ 'load_js' ] = $options[ 'load_js' ] == 1 ? 1 : 0;
-			$outgoing[ 'load_css' ] = $options[ 'load_css' ] == 1 ? 1 : 0;
-			$outgoing[ 'credit' ] = $options[ 'credit' ] == 1 ? 1 : 0;
-
-			$outgoing[ 'title' ] = strip_tags( $options[ 'title' ] );
-			$outgoing[ 'trackback' ] = strip_tags( $options[ 'trackback' ] );
-
-			return $outgoing;
-		}
-
-
-		/*
-		 The options page.
-
-		 @return null;
-		*/
-		function options_page( ) { ?>
-			<div class="wrap">
-				<h2><?php _e( 'Threaded comment options', SPEC_COMMENT_DOM )?></h2>
-				<form method="post" action="options.php">
-					<?php settings_fields( SPEC_COMMENT_OPT ); ?>
-
-					<?php $options = $this->options; ?>
-					<div id="poststuff" class="metabox-holder">
-						<div id="post-body-content">
-
-							<div class="stuffbox">
-								<h3><?php _e( 'Titles', SPEC_COMMENT_DOM );?></h3>
-								<div class="inside">
-									<p>
-										<label for="<?php echo SPEC_COMMENT_OPT;?>_title"><?php _e( 'Comments', SPEC_COMMENT_DOM );?></label>
-										<input type="text" name="<?php echo SPEC_COMMENT_OPT;?>[title]" id="<?php echo SPEC_COMMENT_OPT;?>_title" value="<?php echo esc_attr( $options[ 'title' ] ); ?>" class="widefat" />
-									</p>
-									<p>
-										<label for="<?php echo SPEC_COMMENT_OPT;?>_trackback"><?php _e( 'Trackbacks', SPEC_COMMENT_DOM );?></label>
-										<input type="text" name="<?php echo SPEC_COMMENT_OPT;?>[trackback]" id="<?php echo SPEC_COMMENT_OPT;?>_trackback" value="<?php echo esc_attr( $options[ 'trackback' ] ); ?>" class="widefat" />
-									</p>
-								</div>
-							</div>
-
-							<div class="stuffbox">
-								<h3><?php _e( 'Rollup Depth', SPEC_COMMENT_DOM );?></h3>
-								<div class="inside" id="<?php echo SPEC_COMMENT_OPT;?>_rollup">
-									<p>
-									<select name="<?php echo SPEC_COMMENT_OPT;?>[comments_nest_depth]" id="<?php echo SPEC_COMMENT_OPT;?>_comments_nest_depth" style="width:200px;"><?php
-									for ( $i = 1; $i  <= 10; $i++ ) {
-										echo '<option value="' . $i . '"' . ( intval( $options[ 'comments_nest_depth' ] ) == $i ? ' selected="selected"' : '' ) . '>' . $i . '</option>';
-									}?>
-									</select>
-									</p>
-									<p style="max-width:520px;">
-										<label for="<?php echo SPEC_COMMENT_OPT;?>_comments_nest_depth">
-										<?php _e( 'This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them.', SPEC_COMMENT_DOM );  ?>
-										</label>
-									</p>
-								</div>
-								<div id="major-publishing-actions">
-									<div id="publishing-action">
-									<input type="submit" class="button-primary" value="<?php _e( 'Save', SPEC_COMMENT_DOM ) ?>" /></div>
-									<div class="clear"></div>
-								</div>
-							</div>
-							<div class="stuffbox">
-
-								<h3><?php _e( 'Toggles', SPEC_COMMENT_DOM );?></h3>
-								<div class="inside">
-									<p>
-										<label for="<?php echo SPEC_COMMENT_OPT;?>_load_css"><?php _e( 'Use the stylesheet that came with this plug-in. ', SPEC_COMMENT_DOM );?></label>
-										<input onchange="specFieldToggle( '#<?php echo SPEC_COMMENT_OPT;?>_load_css', '#<?php echo SPEC_COMMENT_OPT;?>_dark_theme' );" type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[load_css]" id="<?php echo SPEC_COMMENT_OPT;?>_load_css"<?php echo $options[ 'load_css' ] ? ' checked="checked"' : '';?>/>
-									</p>
-
-									<p id="<?php echo SPEC_COMMENT_OPT;?>_dark_theme" style="padding-left:30px;">
-										<label for="<?php echo SPEC_COMMENT_OPT;?>_load_dark"><?php _e( 'Use the dark theme CSS file. ', SPEC_COMMENT_DOM );?></label>
-										<input type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[load_dark]" id="<?php echo SPEC_COMMENT_OPT;?>_load_dark"<?php echo $options[ 'load_dark' ] ? ' checked="checked"' : '';?>/>
-									</p>
-									<br/>
-
-									<p>
-										<label for="<?php echo SPEC_COMMENT_OPT;?>_load_js"><?php _e( 'Use the included javaScript. ', SPEC_COMMENT_DOM );?></label>
-										<input onchange="specFieldToggle( '#<?php echo SPEC_COMMENT_OPT;?>_load_js', '#<?php echo SPEC_COMMENT_OPT;?>_rollup' );" type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[load_js]" id="<?php echo SPEC_COMMENT_OPT;?>_load_js"<?php echo $options[ 'load_js' ] ? ' checked="checked"' : '';?>/>
-										<br/><em>Disabling javaScript will cause problems for ie6 as jQuery is used to add classes to items that would otherwise be inaccessible to the CSS.</em>
-									</p>
-
-									<br/>
-									<p>
-										<label for="<?php echo SPEC_COMMENT_OPT;?>_credit"><?php _e( 'Show our credit link at the bottom of the comments form.', SPEC_COMMENT_DOM );?></label>
-										<input type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT;?>[credit]" id="<?php echo SPEC_COMMENT_OPT;?>_credit"<?php echo $options[ 'credit' ] ? ' checked="checked"' : '';?>/>
-										<br/><?php _e( 'If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work.' );?> <img src="<?php bloginfo( 'home' )?>/wp-includes/images/smilies/icon_cry.gif" alt=":( "/><br/><a href="https://spectacu.la/signup/signup.php">Spectacu.la</a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<script type="text/javascript" language="JavaScript">
-						//<![ CDATA[
-						function specFieldToggle( trigger, target ) {
-							if( typeof jQuery != "undefined" ){
-								 if ( jQuery( trigger ).attr( 'checked' ) ){
-									jQuery( target ).css( { color:'#000' } ).find( 'input, select' ).attr( { disabled:'' } );
-								} else {
-									jQuery( target ).css( { color:'#ccc' } ).find( 'input, select' ).attr( { disabled:'disabled' } );
-								}
-							}
-						}
-
-						specFieldToggle( '#<?php echo SPEC_COMMENT_OPT;?>_load_css', '#<?php echo SPEC_COMMENT_OPT;?>_dark_theme' );
-						specFieldToggle( '#<?php echo SPEC_COMMENT_OPT;?>_load_js', '#<?php echo SPEC_COMMENT_OPT;?>_rollup' );
-						// ] ]>
-					</script>
-				</form>
-			</div>
-			<?php
-		}
-
-
-		/*
 		 This is attached to the comment_form action and just echos out our credit
 		 link. If you don't want to give us credit for this :( then you can hide the
 		 link from the admin page.
 		*/
 		function our_credit( ){
 
-			if ( $this->options[ 'credit' ] ) {
+			if ( spec_comment_option( 'credit' ) ) {
 				echo '<p class="spectacula-credit"><small>Threaded commenting powered by <a href="http://spectacu.la/">Spectacu.la</a> code.</small></p>';
 			} else {
 				// If you've unticked the show our credit link we'll just have it as an HTML comment instead.
