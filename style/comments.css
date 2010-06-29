@@ -5,7 +5,8 @@
 /* Quick and crude reset */
 #comments fieldset, #comments cite, #comments input, #comments textarea,
 #comments form, #comments p, #comments img, #comments blockquote, #comments ul,
-#comments #commentlist li, #comments .comment-buttons *, #comments #respond {
+#comments #commentlist li, #comments .comment-buttons *, #comments #respond,
+#comments div {
 	background-color: transparent;
 	color: #333;
 	border: 0 none;
@@ -62,6 +63,7 @@
 	color: #333;
 	padding: 5px;
 	font-size: 10px;
+	min-height: 1px; /* IE7 */
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -70,12 +72,13 @@
 .comment-body .moderation {
 	display: block;
 	margin-bottom: 3px;
+	clear: both;
 }
 
 #commentlist .comment-author-avatar {
 	display: inline;
 	float: left;
-	margin: 0 10px 0 0;
+	margin: 0 10px 10px 0;
 }
 
 #commentlist li.bypostauthor > div.comment-body .comment-author-avatar {
@@ -381,4 +384,9 @@ ul#trackback-list {
 
 #comments .reply-quote cite {
 	font-weight: 700;
+}
+
+
+.tb-from {
+	font-style: italic;
 }

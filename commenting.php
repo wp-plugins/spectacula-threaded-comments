@@ -20,22 +20,25 @@ if ( ! defined( 'SPEC_COMMENT_URL' ) ) {
 		define( 'SPEC_COMMENT_URL', plugins_url( 'spectacula-threaded-comments' ) );
 	}
 }
+
+define( 'SCRIPT_DEBUG', true );
 define( 'SPEC_COMMENT_PTH', dirname( __FILE__ ) );
 define( 'SPEC_COMMENT_DOM', 'spectacula-threaded-comments' ); // Translation domain
 define( 'SPEC_COMMENT_VER', '2.7' ); // Min version of wordpress this will work with.
 define( 'SPEC_COMMENT_OPT', 'spectacula_threaded_comments' );
 define( 'SPEC_COMMENT_TMP', SPEC_COMMENT_PTH . '/includes/template.php' );
 
-if ( ! function_exists ( 'json_encode' ) )
-	require_once( SPEC_COMMENT_PTH . '/includes/JSON.php' );
-
-require_once( SPEC_COMMENT_PTH . '/includes/functions.php' );
-require_once( SPEC_COMMENT_PTH . '/includes/options-page.php' );
-require_once( SPEC_COMMENT_PTH . '/includes/spec-ajax.php' );
-
 //delete_option( SPEC_COMMENT_OPT );
 
 if ( ! class_exists( 'spec_commenting' ) ) {
+
+	if ( ! function_exists ( 'json_encode' ) )
+		require_once( SPEC_COMMENT_PTH . '/includes/JSON.php' );
+
+	require_once( SPEC_COMMENT_PTH . '/includes/functions.php' );
+	require_once( SPEC_COMMENT_PTH . '/includes/options-page.php' );
+	require_once( SPEC_COMMENT_PTH . '/includes/spec-ajax.php' );
+
 	class spec_commenting {
 
 		/*
@@ -112,14 +115,21 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 
 				wp_deregister_script( 'comment-reply' ); // dealt with by the included jQuery
 
+				global $post;
+
 				$localisation = array(
-					'trackbackShowText' => __( 'Show trackbacks', SPEC_COMMENT_DOM ),
-					'trackbackHideText' => __( 'Hide trackbacks', SPEC_COMMENT_DOM ),
-					'replyHideMany' => __( "Hide %count% replies to %name%'s comment", SPEC_COMMENT_DOM ),
-					'replyShowMany' => __( "View %count% replies to %name%'s comment", SPEC_COMMENT_DOM ),
-					'replyHideOne' => __( "Hide the reply to %name%'s comment", SPEC_COMMENT_DOM ),
-					'replyShowOne' => __( "View the reply to %name%'s comment", SPEC_COMMENT_DOM ),
-					'order' => get_option( 'comment_order' )
+					'tb_show' => __( 'Show trackbacks', SPEC_COMMENT_DOM ),
+					'tb_hide' => __( 'Hide trackbacks', SPEC_COMMENT_DOM ),
+					'rpl_hide_2' => __( "Hide %count% replies to %name%'s comment", SPEC_COMMENT_DOM ),
+					'rpl_show_2' => __( "View %count% replies to %name%'s comment", SPEC_COMMENT_DOM ),
+					'rpl_hide_1' => __( "Hide the reply to %name%'s comment", SPEC_COMMENT_DOM ),
+					'rpl_show_1' => __( "View the reply to %name%'s comment", SPEC_COMMENT_DOM ),
+					'tb_from' => __( 'Trackback from: %s', SPEC_COMMENT_DOM ),
+					'order' => get_option( 'comment_order' ),
+					'polling' => spec_comment_option( 'polling' ),
+					'update' => spec_comment_option( 'update' ) ? 1 : 0,
+					'time' => gmdate('Y-m-d H:i:s'),
+					'post_id' => $post->ID
 				);
 
 				$localisation = array_merge( ( array ) apply_filters( 'spec_comment_local_js', $localisation ), array( 'nestDepth' => spec_comment_option( 'comments_nest_depth' ) ) );
@@ -198,13 +208,13 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 			elseif( preg_match( '!(applewebkit|konqueror)/[\d\.]+!i', $useragent ) && ! in_array( 'webkit', $class ) )
 				$class[ ] = 'webkit';
 
-			elseif ( preg_match( '!msie\s+(\d+\.\d+)!i', $useragent, $match ) ) {
+			elseif ( preg_match( '!msie\s+(\d+\.\d+)!i', $useragent, $match ) && ! in_array( 'ie', $class ) ) {
 				$version = floatval( $match[ 1 ] );
 
 				/* Add an identifier for IE versions. */
-				if ( ! in_array( 'ienew', $class ) && $version >= 9 ) {
+				if ( ! in_array( 'ie9', $class ) && $version >= 9 && $version < 10 ) {
 					$class[ ] = 'ie';
-					$class[ ] = 'ienew';
+					$class[ ] = 'ie9'; // Look forward to the day when this is the standard IE, shouldn't need this anymore then. :D
 				} elseif ( ! in_array( 'ie8', $class ) && $version >= 8 && $version < 9 ) {
 					$class[ ] = 'ie';
 					$class[ ] = 'ie8';
@@ -220,9 +230,9 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 				} elseif ( ! in_array( 'ie5', $class ) && $version >= 5 && $version < 5.5 ) {
 					$class[ ] = 'ie';
 					$class[ ] = 'ie5';
-				} elseif ( ! in_array( 'ieold', $class ) && $version < 5 ) {
+				} elseif ( ! in_array( 'ie-old', $class ) && $version < 5 ) {
 					$class[ ] = 'ie';
-					$class[ ] = 'ieold';
+					$class[ ] = 'ie-old';
 				} else { // Unknown IE.
 					$class[ ] = 'ie';
 					$class[ ] = 'iexx';

@@ -12,11 +12,13 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 		 %4$s == plugin_path.
 		*/
 		var $defaults = array(
-							'comments_nest_depth' => 1,
+							'comments_nest_depth' => 1, // The depth we start to roll up the comments from.
 							'stylesheet' => '%3$s/style/comments.css',
-							'credit' => 1,
+							'credit' => true,
 							'title' => 'Comments',
-							'trackback' => 'Trackbacks'
+							'trackback' => 'Trackbacks',
+							'polling' => 30, // Frequency to poll the server for new comments in seconds.
+							'update' => true, // Do we want to auto update or not.
 							);
 
 
@@ -26,11 +28,26 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 			$this->add_stuff_box( array( 'title' => __( 'Rollup Depth', SPEC_COMMENT_DOM ), 'callback' => 'comment_nest_depth' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Titles', SPEC_COMMENT_DOM ), 'callback' => 'titles' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Stylesheet', SPEC_COMMENT_DOM ), 'callback' => 'stylesheet' ) );
+			$this->add_stuff_box( array( 'title' => __( 'Comment update', SPEC_COMMENT_DOM ), 'callback' => 'polling' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Our credit', SPEC_COMMENT_DOM ), 'callback' => 'credit' ) );
 		}
 
+		function polling( $options = '' ) { ?>
+			<p>
+				<label for="<?php $this->item_attrib( 'update' ); ?>"><?php _e( 'Auto update comments', SPEC_COMMENT_DOM ); ?></label>
+				<input type="checkbox" value="1" <?php checked( $options[ 'update' ] );?> name="<?php $this->item_attrib( 'update', true ); ?>" id="<?php $this->item_attrib( 'update' ); ?>" />
+			</p>
 
-		function titles( $options ) {?>
+			<p>
+				<label for="<?php $this->item_attrib( 'polling' ); ?>"><?php _e( 'Frequency of comment update in seconds ( minimum 5 seconds )', SPEC_COMMENT_DOM ); ?></label>
+				<input style="vertical-align:middle" class="regular-text" size="3" maxlength="3" type="text" value="<?php echo esc_attr( $options[ 'polling' ] );?>" name="<?php $this->item_attrib( 'polling', true ); ?>" id="<?php $this->item_attrib( 'polling' ); ?>" />
+			</p>
+
+			<?php
+		}
+
+
+		function titles( $options = '' ) { ?>
 			<p><label for="<?php $this->item_attrib( 'title' ); ?>"><?php _e( 'Comments title', SPEC_COMMENT_DOM ); ?></label></p>
 			<p><input style="width:98%" class="regular-text" type="text" value="<?php echo esc_attr( $options[ 'title' ] );?>" name="<?php $this->item_attrib( 'title', true ); ?>" id="<?php $this->item_attrib( 'title' ); ?>" /></p>
 
@@ -40,7 +57,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 		}
 
 
-		function stylesheet( $options ) { ?>
+		function stylesheet( $options = '' ) { ?>
 
 			<p><label for="<?php $this->item_attrib( 'stylesheet', true ); ?>"><?php _e( 'Choose the stylesheet you want to use for the comments.', SPEC_COMMENT_DOM ) ?></label></p>
 			<p>
@@ -54,14 +71,14 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 
 				</select>
 			</p>
-			<p><?php _e( 'If you want to cusomise the look of the comments you can do, however avoid making changes to the original CSS files as changes could be wiped out by any update.
-						You can copy the comments.css from the style folder within this plugin to your theme folder, make changes to it there then select the "theme style" option from the
+			<p><?php _e( 'If you want to customise the look of the comments you can do, however avoid making changes to the original CSS files as changes could be wiped out by any update.
+						You can copy the comments.css from the style folder within this plug-in to your theme folder, make changes to it there then select the "theme style" option from the
 						drop down above. You can also make a copy of it in the style folder, change the comment "comment style: xxxxxx" at the top of the file and then select that name from
-						the drop down. You can aslo disable the inbuild style system if you want to roll your comment CSS into your theme CSS.', SPEC_COMMENT_DOM ); ?></p><?php
+						the drop down. You can also disable the inbuilt style system if you want to roll your comment CSS into your theme CSS.', SPEC_COMMENT_DOM ); ?></p><?php
 		}
 
 
-		function credit( $options ) { ?>
+		function credit( $options = '' ) { ?>
 			<p>
 				<label for="<?php $this->item_attrib( 'credit' ); ?>"><?php _e( 'Show our credit link at the bottom of the comments form.', SPEC_COMMENT_DOM ); ?></label>
 				<input type="checkbox" value="1" name="<?php $this->item_attrib( 'credit', true ); ?>" id="<?php $this->item_attrib( 'credit' ); ?>"<?php checked( intval( $options[ 'credit' ] ), 1 )?>/>
@@ -70,7 +87,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 		}
 
 
-		function comment_nest_depth( $options ) { ?>
+		function comment_nest_depth( $options = '' ) { ?>
 			<p>
 			<select name="<?php $this->item_attrib( 'comments_nest_depth', true ); ?>" id="<?php $this->item_attrib( 'comments_nest_depth', true ); ?>" style="width:200px;">
 				<option value="0"<?php selected( intval( $options[ 'comments_nest_depth' ] ), 0 ) ?>><?php _e( 'Disable', SPEC_COMMENT_DOM );?></option><?php
@@ -87,7 +104,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 		}
 
 
-		function validate_options( $options ) {
+		function validate_options( $options = '' ) {
 
 			do_action( 'spec_options_page_update' );
 
@@ -100,6 +117,8 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				$output[ 'trackback' ] = html_entity_decode( stripcslashes( $options[ 'trackback' ] ) );
 				$output[ 'credit' ] = intval( $options[ 'credit' ] ) == 1 ? true : false;
 				$output[ 'comments_nest_depth' ] = intval( $options[ 'comments_nest_depth' ] ) >= 0 && intval( $options[ 'comments_nest_depth' ] ) <= 10 ? intval( $options[ 'comments_nest_depth' ] ) : $this->defaults[ 'comments_nest_depth' ];
+				$output[ 'polling' ] = intval( $options[ 'polling' ] ) >= 5 && intval( $options[ 'polling' ] ) <= 999 ? intval( $options[ 'polling' ] ) : $this->defaults[ 'polling' ];
+				$output[ 'update' ] = intval( $options[ 'update' ] ) == 1 ? true : false;
 
 				$stylesheets = spec_stylesheet_find( );
 
@@ -128,9 +147,9 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 		}
 
 
-		function add_options_page( ) {
+		function add_options_pages( ) {
 			register_setting( SPEC_COMMENT_OPT, SPEC_COMMENT_OPT, array( &$this, 'validate_options' ) );
-			add_theme_page( __( 'Comments', SPEC_COMMENT_DOM ), __( 'Comments', SPEC_COMMENT_DOM ), 'manage_options', SPEC_COMMENT_OPT, array( &$this, 'options_page' ) );
+			add_options_page( __( 'Spectacu.la Comments', SPEC_COMMENT_DOM ), __( 'Ajax comments', SPEC_COMMENT_DOM ), 'manage_options', SPEC_COMMENT_OPT, array( &$this, 'options_page' ) );
 		}
 
 
@@ -151,7 +170,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 			$this->options = wp_parse_args( get_option( SPEC_COMMENT_OPT ), $this->defaults );
 
 			add_action( 'init', array( &$this, 'init' ) );
-			add_action( 'admin_menu', array( &$this, 'add_options_page' ) );
+			add_action( 'admin_menu', array( &$this, 'add_options_pages' ) );
 		}
 
 

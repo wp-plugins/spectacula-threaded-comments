@@ -8,10 +8,10 @@
 addComment = {
 
 	replying: 	0,
-	showOne: 	commentingL10n.replyShowOne.replace(  '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
-	hideOne: 	commentingL10n.replyHideOne.replace(  '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
-	showMany:	commentingL10n.replyShowMany.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
-	hideMany:	commentingL10n.replyHideMany.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
+	showOne: 	commentingL10n.rpl_show_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
+	hideOne: 	commentingL10n.rpl_hide_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
+	showMany:	commentingL10n.rpl_show_2.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
+	hideMany:	commentingL10n.rpl_hide_2.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
 
 	// We won't move the form to under the comment, it's messy and I don't like
 	// it. Instead we'll take some content from the comment we're replying to
@@ -247,21 +247,30 @@ addComment = {
 	},
 
 	_init: function( ) {
+
 		jQuery( document ).ready( function( $ ) {
 
+			$.ajaxSetup( {
+				cache: false,
+				timeout: ( commentingL10n.polling * 1000 ) - 2000 // Give myself 2 seconds before the next run to get everything in place.
+			} );
+
 			// Add the submit action
-			$( '#comment-form' ).live( 'submit', function( ) {
+			$( 'form#comment-form' ).submit( function( ) {
 				addComment.submit( this );
 				return false;
 			} );
 
+			// Make sure hte cancel comment button does what it should
 			$( '#cancel-comment-reply-link' ).live( 'click', function( ){
 				addComment.cancelReply( );
 				return false;
 			} );
 
+			// Add some toggles to hide comments
 			addComment.addToggles( true );
 
+			// Add some code to the toggles added above.
 			$( '#commentlist div.toggle' ).live( 'click', function( ) {
 				if ( $( this ).hasClass( 'hidden' ) ) {
 					$( this ).removeClass( 'hidden' ).next( 'ul.children' ).slideDown( 'fast', function( ) {
@@ -282,14 +291,14 @@ addComment = {
 				$( '#trackback-list' )
 					//.css( { height: $( '#trackback-list' ).height( ) } )
 					.hide( )
-					.before( '<div class="trackback-toggle"><span class="toggle-text">' + commentingL10n.trackbackShowText + '</span></div>' )
+					.before( '<div class="trackback-toggle"><span class="toggle-text">' + commentingL10n.tb_show + '</span></div>' )
 					.prev( '.trackback-toggle' )
 					.click( function( ){
 						$( this ).toggleClass( 'active' ).next( '#trackback-list' ).slideToggle( 'fast', function( ){
 							$( this )
 								.prev( '.trackback-toggle' )
 								.children( '.toggle-text' )
-								.text( $( this ).css( 'display' ) === 'none' ? commentingL10n.trackbackShowText : commentingL10n.trackbackHideText );
+								.text( $( this ).css( 'display' ) === 'none' ? commentingL10n.tb_show : commentingL10n.tb_hide );
 						} );
 					} );
 			}
@@ -297,12 +306,12 @@ addComment = {
 			// Hide trackbacks that show up in the comment stream.
 			// This is done as a one shot deal at load time as I'll not be collecting them after first load unlike comments.
 			$( '#commentlist li.pingback > .comment-body, #commentlist li.trackback > .comment-body' ).each( function( ){
-				var from = 'Trackback from %s'.replace( '%s', $( this ).find( 'cite.fn' ).text( ) ); /* @todo: Translatify */
+				var from = commentingL10n.tb_from.replace( '%s', '<span class="tb-from">' + $( this ).find( 'cite.fn' ).text( ) + '</span>' );
 				$( this )
 					.hide( )
 					.before( '<div class="trackback-toggle"></div>' )
 					.prev( '.trackback-toggle' )
-					.text( from )
+					.html( from )
 					.click( function( ){
 						$( this ).next( '.comment-body' ).slideToggle( 'fast' );
 					} );
