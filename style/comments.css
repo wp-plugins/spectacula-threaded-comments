@@ -5,8 +5,7 @@
 /* Quick and crude reset */
 #comments fieldset, #comments cite, #comments input, #comments textarea,
 #comments form, #comments p, #comments img, #comments blockquote, #comments ul,
-#comments #commentlist li, #comments .comment-buttons *, #comments #respond,
-#comments div {
+#comments #commentlist li, #comments .comment-buttons *, #comments #respond {
 	background-color: transparent;
 	color: #333;
 	border: 0 none;

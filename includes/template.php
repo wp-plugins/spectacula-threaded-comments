@@ -8,7 +8,7 @@ if ( __FILE__ == basename( $_SERVER[ 'SCRIPT_FILENAME' ] ) )
 */
 
 if ( ( comments_open( ) || get_comments_number( ) > 0 ) && ( is_single( ) || is_page( ) ) && ! post_password_required( ) ) { ?>
-	<div id="comments"<?php echo $section_class;?>>
+	<div id="comments"<?php echo isset( $section_class ) ? $section_class : '';?>>
 		<?php
 		if ( have_comments( ) || comments_open( ) ) {
 			if ( spec_comment_option( 'title' ) != '' ) {

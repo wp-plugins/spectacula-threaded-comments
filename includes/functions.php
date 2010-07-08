@@ -157,7 +157,7 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 			$commenter = wp_get_current_commenter( );
 
 			if ( get_option( 'show_avatars' ) ) {
-				$avatar = get_avatar( $current_user->user_email ? $current_user->user_email : $commenter[ 'comment_author_email' ] , 64 );
+				$avatar = get_avatar( isset( $current_user->user_email ) ? $current_user->user_email : $commenter[ 'comment_author_email' ] , 64 );
 			} ?>
 
 			<li class="depth-1<?php echo $avatar ? ' with-avatar' : ''?>" id="respond">
@@ -171,7 +171,7 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 
 					} else {?>
 						<div class="comment-author-avatar">
-							<?php echo $current_user->user_email || $commenter[ 'comment_author_email' ] ? '<a href="http://gravatar.com/site/login" title="' . __( 'Change Your Avatar', SPEC_COMMENT_DOM ) . '">' . $avatar . '</a>' : $avatar; ?>
+							<?php echo isset( $current_user->user_email ) || isset( $commenter[ 'comment_author_email' ] ) ? '<a href="http://gravatar.com/site/login" title="' . __( 'Change Your Avatar', SPEC_COMMENT_DOM ) . '">' . $avatar . '</a>' : $avatar; ?>
 						</div>
 
 						<form action="<?php echo get_option( 'siteurl' )?>/wp-comments-post.php" method="post" id="comment-form">
@@ -236,10 +236,15 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
  @return null
 */
 if ( ! function_exists( 'spec_comment_layout' ) ) {
-	function spec_comment_layout( $comment, $args = array( ), $depth = null ){
+	function spec_comment_layout( $comment, $args = array( ), $depth = null ) {
+		global $post;
+
 		$GLOBALS[ 'comment' ] = $comment;
 
 		extract( $args, EXTR_SKIP );
+
+		if ( ! ( isset( $post ) && is_object( $post ) ) && ( isset( $post_id ) && intval( $post_id ) ) )
+			$post = get_post( $post_id );
 
 		if ( ! isset( $max_depth ) )
 			$max_depth = get_option( 'thread_comments_depth' );
@@ -255,6 +260,8 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 		<li id="comment-<?php comment_ID( ); ?>" <?php echo comment_class( $avatar ? 'with-avatar' : '', get_comment_ID( ), null, false ); ?>>
 
 			<div id="div-comment-<?php comment_ID( ) ?>" class="comment-body">
+				<?php //echo $comment->comment_date; ?>
+
 				<?php
 
 				echo $avatar && ! $tb ? '<div class="comment-author-avatar">' . $avatar . '</div>' : ''; ?>
@@ -273,7 +280,7 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 					<?php
 					if ( ! $tb ) { ?>
 					<div class="comment-buttons"><?php
-						comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $max_depth, 'reply_text' => __( 'Reply', SPEC_COMMENT_DOM ) ) ), null, intval( $args[ 'post_id' ] ) ? intval( $args[ 'post_id' ] ) : null );
+						comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $max_depth, 'reply_text' => __( 'Reply', SPEC_COMMENT_DOM ) ) ), null, isset( $args[ 'post_id' ] ) && intval( $args[ 'post_id' ] ) ? intval( $args[ 'post_id' ] ) : null );
 
 						edit_comment_link( __( 'Edit', SPEC_COMMENT_DOM ), '', '' ); ?>
 						<a class="comment-button comment-link" href="<?php echo htmlspecialchars( get_comment_link( ) ) ?>"><?php _e( 'Link', SPEC_COMMENT_DOM ) ?></a>

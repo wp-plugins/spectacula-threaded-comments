@@ -83,7 +83,12 @@ addComment = {
 		return true;
 	},
 
-	newComment: function( html, comment_ID, parent_ID ) {
+	newComment: function( html, comment_ID, parent_ID, scroll_to ) {
+		var comment_exists = jQuery( 'ul#commentlist li#comment-' + comment_ID ).length;
+
+		if ( comment_exists )
+			return false;
+
 		// We're replying so we have to do something different
 		if ( parent_ID > 0 ) {
 			// Check there is a child UL to attach stuff to.
@@ -110,17 +115,15 @@ addComment = {
 				jQuery( 'li#respond' ).before( jQuery( html ).hide( ).addClass( 'rolledup' ) );
 		}
 
-		addComment.cancelReply( );
 		addComment.addToggles( );
 
-		jQuery( '#comment-form #comment' ).val( '' ); // Blank the comment field
 		jQuery( 'ul#commentlist' ).find( '.rolledup' ).slideDown( 500, function( ){
-			// Scroll once the thing finishes unrolling.
-			jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500 } );
+			// Our comment is in place, now let us scroll to it once unrolled.
+			if ( scroll_to )
+				jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500 } );
 		} ).removeClass( 'rolledup' );
 
-		// Our comment is in place, now let us scroll to it.
-		jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500 } );
+		return true;
 	},
 
 	// Send the comment to WP for processing
@@ -161,7 +164,7 @@ addComment = {
 				action: 'new_comment_added',
 				depth: addComment.commentDepth( addComment.replying )
 			},
-			//dataType: 'json', // Not 100% it will always be so need to parse it myself.
+			//dataType: 'json', // Not 100% it will always be due to wp_die so need to parse it myself.
 
 			error: function( r, e ) {
 				var msg;
@@ -197,7 +200,10 @@ addComment = {
 					return;
 				}
 
-				addComment.newComment( d.html, d.comment_ID, d.comment_parent );
+				addComment.newComment( d.html, d.comment_ID, d.comment_parent, true );
+				// Kill anything in the comment form and reset the reply button
+				addComment.cancelReply( );
+				jQuery( '#comment-form #comment' ).val( '' );
 			}
 		} );
 
@@ -205,7 +211,7 @@ addComment = {
 	},
 
 	// Scan through looking for missing toggles and add them.
-	addToggles: function( hidden ){
+	addToggles: function( hidden ) {
 		jQuery( '#commentlist li.depth-' + commentingL10n.nestDepth + ' > ul.children' ).each( function( ) {
 
 			if( ! jQuery( this ).prev( 'div.toggle' ).length ) {
@@ -246,9 +252,53 @@ addComment = {
 		return true;
 	},
 
+	toggleInterval: function( ) {
+
+	},
+
+	getCommentUpdates: function( ) {
+		var data = {
+			_spec_ajax: 'Why is everyone looking at me', // As you can guess this can be anything at all just need to be there. :D
+			action: 'get_comment_changes',
+			time: commentingL10n.time,
+			post_id: commentingL10n.post_id
+		}
+		jQuery.post( commentingL10n.ajax_url, data, function( r ) {
+			var d, i;
+			try {
+				d = JSON.parse( r );
+			} catch ( e ) {
+				if ( typeof r === 'string' ) {
+					addComment.error( r );
+				} else {
+					addComment.error( 'Oops!' );
+				}
+				return;
+			}
+
+			if ( d !== null && d !== undefined ) {
+				for ( i in d ) {
+					commentingL10n.time = d[i].log_date !== null ? d[i].log_date : d[i].comment_date;
+
+					if ( d[i].action !== 'delete' && d[i].html !== undefined && d[i].html !== null && d[i].html !== '' ) {
+						addComment.newComment( d[i].html, d[i].comment_ID, d[i].comment_parent, false );
+					} else {
+						//alert( 'delete ' + d[i].comment_ID);
+						//addComment.deleteComment( d[i].comment_ID );
+					}
+				}
+			}
+		} );
+	},
+
 	_init: function( ) {
 
 		jQuery( document ).ready( function( $ ) {
+
+			addComment.interval = setInterval( function( ) {
+				addComment.getCommentUpdates( );
+			}, 10000 );
+
 
 			$.ajaxSetup( {
 				cache: false,

@@ -21,7 +21,6 @@ if ( ! defined( 'SPEC_COMMENT_URL' ) ) {
 	}
 }
 
-define( 'SCRIPT_DEBUG', true );
 define( 'SPEC_COMMENT_PTH', dirname( __FILE__ ) );
 define( 'SPEC_COMMENT_DOM', 'spectacula-threaded-comments' ); // Translation domain
 define( 'SPEC_COMMENT_VER', '2.7' ); // Min version of wordpress this will work with.
@@ -37,6 +36,7 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 
 	require_once( SPEC_COMMENT_PTH . '/includes/functions.php' );
 	require_once( SPEC_COMMENT_PTH . '/includes/options-page.php' );
+	require_once( SPEC_COMMENT_PTH . '/includes/db.php' );
 	require_once( SPEC_COMMENT_PTH . '/includes/spec-ajax.php' );
 
 	class spec_commenting {
@@ -72,8 +72,9 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 			load_plugin_textdomain( SPEC_COMMENT_DOM, false, '/lang/' );
 
 			// If we're requesting ajax stuff we'll hand over control to spec ajax then die.
-			if ( isset( $_REQUEST[ '_spec_ajax' ] ) || isset( $_POST[ '_spec_ajax' ] ) )
+			if ( isset( $_REQUEST[ '_spec_ajax' ] ) ) {
 				new spectacula_ajax( );
+			}
 
 			add_filter( 'body_class', array( &$this, 'get_agent_body_class' ) );
 			add_action( 'wp_head', array( &$this, 'css' ) );
@@ -128,16 +129,16 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 					'order' => get_option( 'comment_order' ),
 					'polling' => spec_comment_option( 'polling' ),
 					'update' => spec_comment_option( 'update' ) ? 1 : 0,
-					'time' => gmdate('Y-m-d H:i:s'),
-					'post_id' => $post->ID
+					'time' => current_time( 'mysql', false ),
+					'post_id' => $post->ID,
+					'ajax_url' => trailingslashit( get_bloginfo( 'home' ) ),
+					'nestDepth' => spec_comment_option( 'comments_nest_depth' )
 				);
-
-				$localisation = array_merge( ( array ) apply_filters( 'spec_comment_local_js', $localisation ), array( 'nestDepth' => spec_comment_option( 'comments_nest_depth' ) ) );
 
 				$prefix = ! defined( 'SCRIPT_DEBUG' ) || ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) ? '.min' : '';
 
 				wp_enqueue_script( 'commenting', apply_filters( 'spec_comment_js', SPEC_COMMENT_URL . "/js/commenting$prefix.js" ), array( 'jquery', 'jquery-form', 'json2', 'scrollto' ), '1.0.3', true );
-				wp_localize_script( 'commenting', 'commentingL10n', $localisation );
+				wp_localize_script( 'commenting', 'commentingL10n', apply_filters( 'spec_comment_local_js', $localisation ) );
 			}
 		}
 

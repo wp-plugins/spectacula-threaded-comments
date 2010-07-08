@@ -164,7 +164,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 
 			foreach( $this->defaults as $key => $value ) {
 				if ( is_string( $value ) )
-					$this->defaults[ $key ] = sprintf( $value, get_bloginfo( 'template_url' ), TEMPLATEPATH, SPEC_COMMENT_URL, SPEC_COMMENT_PTH );
+					$this->defaults[ $key ] = sprintf( $value, get_bloginfo( 'template_url' ), get_template_directory( ), SPEC_COMMENT_URL, SPEC_COMMENT_PTH );
 			}
 
 			$this->options = wp_parse_args( get_option( SPEC_COMMENT_OPT ), $this->defaults );
