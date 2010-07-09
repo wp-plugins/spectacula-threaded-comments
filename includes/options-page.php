@@ -39,7 +39,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 			</p>
 
 			<p>
-				<label for="<?php $this->item_attrib( 'polling' ); ?>"><?php _e( 'Frequency of comment update in seconds ( minimum 5 seconds )', SPEC_COMMENT_DOM ); ?></label>
+				<label for="<?php $this->item_attrib( 'polling' ); ?>"><?php _e( 'Frequency of comment update in seconds ( minimum 10 seconds )', SPEC_COMMENT_DOM ); ?></label>
 				<input style="vertical-align:middle" class="regular-text" size="3" maxlength="3" type="text" value="<?php echo esc_attr( $options[ 'polling' ] );?>" name="<?php $this->item_attrib( 'polling', true ); ?>" id="<?php $this->item_attrib( 'polling' ); ?>" />
 			</p>
 
@@ -117,7 +117,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				$output[ 'trackback' ] = html_entity_decode( stripcslashes( $options[ 'trackback' ] ) );
 				$output[ 'credit' ] = intval( $options[ 'credit' ] ) == 1 ? true : false;
 				$output[ 'comments_nest_depth' ] = intval( $options[ 'comments_nest_depth' ] ) >= 0 && intval( $options[ 'comments_nest_depth' ] ) <= 10 ? intval( $options[ 'comments_nest_depth' ] ) : $this->defaults[ 'comments_nest_depth' ];
-				$output[ 'polling' ] = intval( $options[ 'polling' ] ) >= 5 && intval( $options[ 'polling' ] ) <= 999 ? intval( $options[ 'polling' ] ) : $this->defaults[ 'polling' ];
+				$output[ 'polling' ] = intval( $options[ 'polling' ] ) >= 10 && intval( $options[ 'polling' ] ) <= 999 ? intval( $options[ 'polling' ] ) : $this->defaults[ 'polling' ];
 				$output[ 'update' ] = intval( $options[ 'update' ] ) == 1 ? true : false;
 
 				$stylesheets = spec_stylesheet_find( );

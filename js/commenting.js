@@ -83,20 +83,53 @@ addComment = {
 		return true;
 	},
 
-	newComment: function( html, comment_ID, parent_ID, scroll_to ) {
+	// Rather than remove all the mark up for a deleted comment we'll just fold it up and empty it.
+	deleteComment: function( comment_ID, action ) {
 		var comment_exists = jQuery( 'ul#commentlist li#comment-' + comment_ID ).length;
 
-		if ( comment_exists )
-			return false;
+		if ( ! comment_exists )
+			return true;
+
+		jQuery( 'ul#commentlist li#comment-' + comment_ID + ' > .comment-body' ).slideUp( 'slow', function( ) {
+			jQuery( this ).text( 'Deleted comment' ).slideDown( ).parent( 'li#comment-' + comment_ID ).addClass( 'deleted' );
+		} );
+
+		return true;
+	},
+
+	newComment: function( html, comment_ID, parent_ID, scroll_to ) {
+		var comment_exists = jQuery( 'ul#commentlist li#comment-' + comment_ID ).length, depth_class;
+
+		// If comment is already there then lets remove the needs approval message.
+		if ( comment_exists ) {
+			// Remove the approval messaqe
+			jQuery( 'ul#commentlist li#comment-' + comment_ID ).find( '.moderation' ).slideUp( 'slow', function( ) {
+				jQuery( this ).remove( );
+			} );
+			// Undelete a comment
+			if ( jQuery( 'ul#commentlist li#comment-' + comment_ID ).hasClass( 'deleted' ) ) {
+				jQuery( 'ul#commentlist li#comment-' + comment_ID + ' > .comment-body' ).slideUp( 'slow', function( ) {
+					jQuery( this ).html( jQuery( html ).find( '.comment-body' ).html( ) ).slideDown( 'slow' );
+				} ).removeClass( 'deleted' );
+
+			}
+			return true;
+		}
 
 		// We're replying so we have to do something different
-		if ( parent_ID > 0 ) {
+		if ( parent_ID > 0 && jQuery( 'ul#commentlist li#comment-' + parent_ID ).length ) {
+
 			// Check there is a child UL to attach stuff to.
 			if ( ! jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).length )
 				jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > div.comment-body' ).after( '<ul class="children"></ul>' );
 
 			// Attach the comment.
 			jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+
+			// Don't trust the depth on the html of replies
+			depth_class = jQuery( 'li#comment-' + parent_ID ).attr( 'class' ).match( /(?:\s|^)depth-(\d+)\s?/i );
+			if ( depth_class[1] !== null && depth_class[1].match( /\d+/ ) )
+				jQuery( 'ul#commentlist li#comment-' + comment_ID ).removeClass( 'depth-1 depth-2 depth-3 depth-4 depth-5 depth-6 depth-7 depth-8 depth-9 depth-10').addClass( 'depth-' + ( parseInt( depth_class[1], 10 ) + 1 ) );
 
 			// Check to see if our comment has been added to a rolled up UL
 			if ( jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ).hasClass( 'hidden' ) ) {
@@ -280,11 +313,10 @@ addComment = {
 				for ( i in d ) {
 					commentingL10n.time = d[i].log_date !== null ? d[i].log_date : d[i].comment_date;
 
-					if ( d[i].action !== 'delete' && d[i].html !== undefined && d[i].html !== null && d[i].html !== '' ) {
+					if ( d[i].action === 'approve' && d[i].html !== undefined && d[i].html !== null && d[i].html !== '' ) {
 						addComment.newComment( d[i].html, d[i].comment_ID, d[i].comment_parent, false );
 					} else {
-						//alert( 'delete ' + d[i].comment_ID);
-						//addComment.deleteComment( d[i].comment_ID );
+						addComment.deleteComment( d[i].comment_ID, d[i].action );
 					}
 				}
 			}
@@ -295,10 +327,11 @@ addComment = {
 
 		jQuery( document ).ready( function( $ ) {
 
-			addComment.interval = setInterval( function( ) {
-				addComment.getCommentUpdates( );
-			}, 10000 );
-
+			if ( undefined !== commentingL10n.update && commentingL10n.update == 1 ) {
+				addComment.interval = setInterval( function( ) {
+					addComment.getCommentUpdates( );
+				}, parseInt( commentingL10n.polling, 10 ) >= 10 ? commentingL10n.polling * 1000 : 10000 );
+			}
 
 			$.ajaxSetup( {
 				cache: false,

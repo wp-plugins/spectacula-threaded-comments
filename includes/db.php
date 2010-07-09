@@ -175,7 +175,7 @@ if ( ! class_exists( 'spec_comment_log' ) ) {
 			if ( ! $post_id || ! strtotime( $since ) )
 				return false;
 
-			$query = $wpdb->prepare( "SELECT * FROM $table WHERE post_id = %d AND date > %s ORDER BY date DESC LIMIT 10;", $post_id, $since );
+			$query = $wpdb->prepare( "SELECT * FROM $table WHERE post_id = %d AND date > %s ORDER BY date ASC LIMIT 10;", $post_id, $since );
 			$results = $wpdb->get_results( $query );
 
 			return ! empty( $results ) ? $results : false;

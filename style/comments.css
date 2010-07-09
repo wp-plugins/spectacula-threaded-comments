@@ -377,6 +377,10 @@ ul#trackback-list {
 	padding-left:0.65em;
 }
 
+#comments .comment-text {
+	overflow: hidden;
+}
+
 #comments .comment-text p {
 	margin-bottom: 0.75em;
 }
