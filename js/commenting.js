@@ -7,7 +7,9 @@
 
 addComment = {
 
-	replying: 	0,
+	interval:	0,
+	replying: 	0,	// The ID of the comment we're replying to.
+	myComments:	[], // An array of comments I've made so we can avoid deletion of comments awaiting moderation
 	showOne: 	commentingL10n.rpl_show_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
 	hideOne: 	commentingL10n.rpl_hide_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
 	showMany:	commentingL10n.rpl_show_2.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
@@ -48,6 +50,7 @@ addComment = {
 		}
 		// Make sure the submit button is still around.
 		jQuery( '#comment-form .submit' ).attr( { disabled: '' } ).removeClass( 'disabled' );
+		addComment.startInterval( true );
 	},
 
 	// Take the depth class assigned to the comment and turn into an int.
@@ -183,6 +186,8 @@ addComment = {
 			return false;
 		}
 
+		addComment.startInterval( false );
+
 		jQuery( v ).ajaxSubmit( {
 
 			beforeSubmit: function( r ) {
@@ -285,8 +290,17 @@ addComment = {
 		return true;
 	},
 
-	toggleInterval: function( ) {
+	startInterval: function( on ) {
 
+		if ( on === true ) {
+			if ( undefined !== commentingL10n.update && commentingL10n.update == 1 ) {
+				addComment.interval = setInterval( function( ) {
+					addComment.getCommentUpdates( );
+				}, parseInt( commentingL10n.polling, 10 ) >= 10 ? commentingL10n.polling * 1000 : 10000 );
+			}
+		} else {
+			clearInterval( addComment.interval );
+		}
 	},
 
 	getCommentUpdates: function( ) {
@@ -327,11 +341,7 @@ addComment = {
 
 		jQuery( document ).ready( function( $ ) {
 
-			if ( undefined !== commentingL10n.update && commentingL10n.update == 1 ) {
-				addComment.interval = setInterval( function( ) {
-					addComment.getCommentUpdates( );
-				}, parseInt( commentingL10n.polling, 10 ) >= 10 ? commentingL10n.polling * 1000 : 10000 );
-			}
+			addComment.startInterval( true );
 
 			$.ajaxSetup( {
 				cache: false,
