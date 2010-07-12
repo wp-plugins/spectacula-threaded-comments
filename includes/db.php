@@ -98,8 +98,6 @@ if ( ! class_exists( 'spec_comment_log' ) ) {
 						action_taken varchar( 64 )
 					  ) ENGINE = MEMORY;";
 
-			echo $table;
-
 			// Create the tables if needed.
 			if ( ! maybe_create_table( $comment_log, $table ) )
 				return false; // Drop out if we fail, will mean we keep trying as the toggle won't get set
