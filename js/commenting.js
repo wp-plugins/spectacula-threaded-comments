@@ -9,7 +9,7 @@ addComment = {
 
 	interval:	0,
 	replying: 	0,	// The ID of the comment we're replying to.
-	myComments:	[], // An array of comments I've made so we can avoid deletion of comments awaiting moderation
+	action_id:	0,
 	showOne: 	commentingL10n.rpl_show_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
 	hideOne: 	commentingL10n.rpl_hide_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
 	showMany:	commentingL10n.rpl_show_2.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
@@ -17,7 +17,8 @@ addComment = {
 
 	// We won't move the form to under the comment, it's messy and I don't like
 	// it. Instead we'll take some content from the comment we're replying to
-	// And show that next to the form.
+	// and show that next to the form. This is called moveForm to match WP's
+	// function.
 	moveForm: function( belowID, commentID, formID, postID ) {
 		var str = jQuery( '#' + belowID + ' > .comment-body .comment-meta' ).next( ).text( ),
 			to = jQuery( '#' + belowID + ' > .comment-body cite.fn' ).text( );
@@ -93,6 +94,9 @@ addComment = {
 		if ( ! comment_exists )
 			return true;
 
+		if ( action == 'unapprove' && jQuery( 'ul#commentlist li#comment-' + comment_ID + ' > .comment-body:has( .moderation )' ) )
+			return true;
+
 		jQuery( 'ul#commentlist li#comment-' + comment_ID + ' > .comment-body' ).slideUp( 'slow', function( ) {
 			jQuery( this ).text( 'Deleted comment' ).slideDown( ).parent( 'li#comment-' + comment_ID ).addClass( 'deleted' );
 		} );
@@ -131,8 +135,14 @@ addComment = {
 
 			// Don't trust the depth on the html of replies
 			depth_class = jQuery( 'li#comment-' + parent_ID ).attr( 'class' ).match( /(?:\s|^)depth-(\d+)\s?/i );
-			if ( depth_class[1] !== null && depth_class[1].match( /\d+/ ) )
+
+			if ( depth_class[1] !== null && depth_class[1].match( /\d+/ ) ) {
 				jQuery( 'ul#commentlist li#comment-' + comment_ID ).removeClass( 'depth-1 depth-2 depth-3 depth-4 depth-5 depth-6 depth-7 depth-8 depth-9 depth-10').addClass( 'depth-' + ( parseInt( depth_class[1], 10 ) + 1 ) );
+
+				// If the reply turns up to be too deep then we'll kill the reply button
+				if ( ( parseInt( depth_class[1], 10 ) + 1 ) >= commentingL10n.max_depth )
+					jQuery( 'ul#commentlist li#comment-' + comment_ID + ' > div.comment-body .comment-reply-link' ).remove( );
+			}
 
 			// Check to see if our comment has been added to a rolled up UL
 			if ( jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ).hasClass( 'hidden' ) ) {
@@ -238,6 +248,8 @@ addComment = {
 					return;
 				}
 
+				//addComment.myComments[] = d.comment_ID;
+
 				addComment.newComment( d.html, d.comment_ID, d.comment_parent, true );
 				// Kill anything in the comment form and reset the reply button
 				addComment.cancelReply( );
@@ -250,7 +262,7 @@ addComment = {
 
 	// Scan through looking for missing toggles and add them.
 	addToggles: function( hidden ) {
-		jQuery( '#commentlist li.depth-' + commentingL10n.nestDepth + ' > ul.children' ).each( function( ) {
+		jQuery( '#commentlist li.depth-' + commentingL10n.nest_depth + ' > ul.children' ).each( function( ) {
 
 			if( ! jQuery( this ).prev( 'div.toggle' ).length ) {
 				jQuery( this ).before( jQuery( '<div class="toggle"></div>' ).hide( ).css( { opacity: 0 } ) );
@@ -284,7 +296,7 @@ addComment = {
 			}
 
 			jQuery( this ).find( '.post-count' ).text( reply_quant );
-			jQuery( this ).find( '.poster-name' ).text( poster_name );
+			jQuery( this ).find( '.poster-name' ).text( poster_name != '' ? poster_name : 'unknow' );
 		} );
 
 		return true;
@@ -307,9 +319,11 @@ addComment = {
 		var data = {
 			_spec_ajax: 'Why is everyone looking at me', // As you can guess this can be anything at all just need to be there. :D
 			action: 'get_comment_changes',
+			action_id: addComment.action_id,
 			time: commentingL10n.time,
 			post_id: commentingL10n.post_id
 		}
+
 		jQuery.post( commentingL10n.ajax_url, data, function( r ) {
 			var d, i;
 			try {
@@ -326,6 +340,7 @@ addComment = {
 			if ( d !== null && d !== undefined ) {
 				for ( i in d ) {
 					commentingL10n.time = d[i].log_date !== null ? d[i].log_date : d[i].comment_date;
+					addComment.action_id = d[i].action_id !== null ? d[i].action_id : 0;
 
 					if ( d[i].action === 'approve' && d[i].html !== undefined && d[i].html !== null && d[i].html !== '' ) {
 						addComment.newComment( d[i].html, d[i].comment_ID, d[i].comment_parent, false );

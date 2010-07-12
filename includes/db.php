@@ -1,7 +1,7 @@
 <?php
 
 if ( ! class_exists( 'spec_comment_log' ) ) {
-	define( 'SPEC_COMMENT_DBV', 1 );
+	define( 'SPEC_COMMENT_DBV', 1.1 );
 	define( 'SPEC_COMMENT_LOG_TBL', 'spec_comment_log' );
 
 	class spec_comment_log {
@@ -24,7 +24,7 @@ if ( ! class_exists( 'spec_comment_log' ) ) {
 			if ( $comment_id == 0 || $comment == '' )
 				return false;
 
-			$this->add_row( $comment_id, $comment->comment_post_ID, $comment->comment_approved == 1 ? 'approve' : 'delete' );
+			$this->add_row( $comment_id, $comment->comment_post_ID, $comment->comment_approved == 1 ? 'approve' : 'unapprove' );
 		}
 
 
@@ -78,8 +78,9 @@ if ( ! class_exists( 'spec_comment_log' ) ) {
 		*/
 		function create_tables( ) {
 			global $wpdb;
+			$dbv = get_option( 'spec_comment_dbv', 0 );
+
 			$comment_log = $this->get_table_names( );
-			$dbv = get_option( 'spec_comment_dbv' );
 
 			// If the table changes in the future this'll get a little more work
 			if ( version_compare( $dbv, SPEC_COMMENT_DBV, 'ge' ) )
@@ -89,26 +90,19 @@ if ( ! class_exists( 'spec_comment_log' ) ) {
 			if ( ( ! function_exists( 'maybe_create_table' ) || ! function_exists( 'check_column' ) )&& file_exists( ABSPATH . '/wp-admin/install-helper.php' ) )
 				require_once( ABSPATH . '/wp-admin/install-helper.php' );
 
-			if( $wpdb->supports_collation( ) ) {
-				if( !empty( $wpdb->charset ) ) {
-					$collation = "DEFAULT CHARACTER SET $wpdb->charset";
-				}
-
-				if( !empty( $wpdb->collate ) ) {
-					$collation .= " COLLATE $wpdb->collate";
-				}
-			}
-
 			$table = "CREATE TABLE $comment_log  (
 						id BIGINT( 20 ) UNSIGNED NOT NULL AUTO_INCREMENT, INDEX USING BTREE ( id ), PRIMARY KEY ( id ),
 						date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, INDEX USING BTREE ( date ),
 						post_id BIGINT( 20 ) UNSIGNED NOT NULL, INDEX USING BTREE ( post_id ),
 						comment_id BIGINT( 20 ) UNSIGNED NOT NULL, INDEX USING BTREE ( comment_id ),
 						action_taken varchar( 64 )
-					  ) ENGINE = MEMORY $collation;";
+					  ) ENGINE = MEMORY;";
+
+			echo $table;
 
 			// Create the tables if needed.
-			maybe_create_table( $comment_log, $table );
+			if ( ! maybe_create_table( $comment_log, $table ) )
+				return false; // Drop out if we fail, will mean we keep trying as the toggle won't get set
 
 			if ( ! update_option( 'spec_comment_dbv', SPEC_COMMENT_DBV ) )
 				add_option( 'spec_comment_dbv', SPEC_COMMENT_DBV );
@@ -132,7 +126,7 @@ if ( ! class_exists( 'spec_comment_log' ) ) {
 			$comment_id = intval( $comment_id );
 			$post_id = intval( $post_id );
 
-			if ( ! ( $post_id && $comment_id && in_array( $action, $this->actions ) ) )
+			if ( ! ( $post_id && $comment_id /*&& in_array( $action, $this->actions )*/ ) )
 				return false;
 
 			$data = array( 'comment_id' => $comment_id, 'post_id' => $post_id, 'action_taken' => $action, 'date' => current_time( 'mysql', false ) );
@@ -167,15 +161,16 @@ if ( ! class_exists( 'spec_comment_log' ) ) {
 		/*
 		 Find comments on post_id since date passed.
 		*/
-		function find( $post_id = 0, $since = '' ) {
+		function find( $post_id = 0, $since = '', $action_id ) {
 			global $wpdb;
 			$table = $this->get_table_names( );
 
 			$post_id = intval( $post_id );
+			$action_id = intval( $action_id );
 			if ( ! $post_id || ! strtotime( $since ) )
 				return false;
 
-			$query = $wpdb->prepare( "SELECT * FROM $table WHERE post_id = %d AND date > %s ORDER BY date ASC LIMIT 10;", $post_id, $since );
+			$query = $wpdb->prepare( "SELECT * FROM $table WHERE post_id = %d AND ( date > %s ) OR ( date = %s AND id > %d ) ORDER BY id ASC LIMIT 10;", $post_id, $since, $since, $action_id );
 			$results = $wpdb->get_results( $query );
 
 			return ! empty( $results ) ? $results : false;

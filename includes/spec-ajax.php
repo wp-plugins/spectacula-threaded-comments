@@ -65,7 +65,7 @@ class spectacula_ajax {
 	function get_comment_changes( ) {
 		global $spec_comment_log, $wpdb;
 
-		$comment_log = $spec_comment_log->find( $_POST[ 'post_id' ], $_POST[ 'time' ] );
+		$comment_log = $spec_comment_log->find( $_POST[ 'post_id' ], $_POST[ 'time' ], $_POST[ 'action_id' ] );
 		$json = array( );
 		$comment_ids = array( );
 
@@ -81,6 +81,7 @@ class spectacula_ajax {
 				*/
 				$comment_ids[ ] = intval( $comment->comment_id );
 				$json[ $comment->comment_id ][ 'action' ] = $comment->action_taken;
+				$json[ $comment->comment_id ][ 'action_id' ] = $comment->id;
 				$json[ $comment->comment_id ][ 'post' ] = $comment->post_id;
 				$json[ $comment->comment_id ][ 'comment_ID' ] = $comment->comment_id;
 				$json[ $comment->comment_id ][ 'log_date' ] = $comment->date;

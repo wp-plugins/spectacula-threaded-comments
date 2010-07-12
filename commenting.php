@@ -132,7 +132,8 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 					'time' => current_time( 'mysql', false ),
 					'post_id' => $post->ID,
 					'ajax_url' => trailingslashit( get_bloginfo( 'home' ) ),
-					'nestDepth' => spec_comment_option( 'comments_nest_depth' )
+					'nest_depth' => spec_comment_option( 'comments_nest_depth' ),
+					'max_depth' => get_option( 'thread_comments_depth' )
 				);
 
 				$prefix = ! defined( 'SCRIPT_DEBUG' ) || ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) ? '.min' : '';
