@@ -426,20 +426,38 @@ addComment = {
 			} );
 
 			// Change the link button to a pop up element that has the link in it. WIP.
-			//$( '#commentlist .comment-link' ).live( 'click', function( ) {
-			//	var val = $( this ).attr( 'href' ),
-			//		box = $( '<div class="comment-link-display"><input type="text" value="' + val + '" /></div>' )
-			//			.css( {
-			//				position: 'absolute',
-			//				top: $(this).offset( ).top + 'px',
-			//				left: $(this).offset( ).left + 'px',
-			//				zIndex: 100
-			//			} )
-			//			.hide( );
-			//
-			//	$( 'body' ).append( box ).find( '.comment-link-display' ).fadeTo( 'slow', 1 );
-			//	return false;
-			//} );
+			$( '#commentlist .comment-link' ).live( 'click', function( ) {
+				var val = $( this ).attr( 'href' ),
+					text = $( this ).text( ),
+					box = $( '<div class="comment-link-display"><span>' + text + '</span><input type="text" value="' + val + '" /></div>' );
+
+				$( 'body' )
+					.append( box )
+					.find( '.comment-link-display' )
+					.css( {
+						position: 'absolute',
+						top: ( $( this ).offset( ).top - 27 ) + 'px',
+						left: ( $( this ).offset( ).left + 5 ) + 'px',
+						zIndex: 100,
+						opacity: 0
+					} )
+					.fadeTo( 'fast', 1, function( ) {
+
+						$( this ).find( 'input' ).blur( function( ) {
+							$( this ).parents( '.comment-link-display' ).fadeTo( 'fast', 0, function( ){
+								$( this ).remove( );
+							} );
+						} );
+
+						$( this ).find( 'input' ).focus();
+					} );
+				return false;
+
+			} );
+
+			$( '.comment-link-display input' ).live( 'focus', function( ){
+				this.select( );
+			} );
 
 		} );
 	}

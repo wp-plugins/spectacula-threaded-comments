@@ -231,12 +231,13 @@
 	background-position: right top;
 }
 
-#comment {
+#comments #comment {
 	border: 0 none;
-	background-color: #fff;
 	width: 100%;
 	padding: 0;
 	margin: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 
@@ -400,4 +401,20 @@ ul#trackback-list {
 
 .tb-from {
 	font-style: italic;
+}
+
+.comment-link-display {
+	padding: 5px 10px;
+	background-color: #fff;
+	border: solid 1px #bbb;
+	cursor: pointer;
+
+	-moz-border-radius: 5px;
+	-moz-box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+}
+
+.comment-link-display input {
+	cursor: pointer;
+	width: 250px;
+	margin-left: 5px;
 }
