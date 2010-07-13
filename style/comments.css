@@ -210,12 +210,6 @@
 	padding: 3px 2px 2px
 }
 
-#comments .comment-form-row label sup {
-	vertical-align: 0.4em;
-	font-size: smaller;
-	color: #900;
-}
-
 .textarea-border {
 	padding: 5px;
 }

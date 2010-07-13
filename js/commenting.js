@@ -370,7 +370,7 @@ addComment = {
 			} );
 
 			// Make sure the cancel comment button does what it should
-			$( '#cancel-comment-reply-link' ).live( 'click', function( ){
+			$( '#cancel-comment-reply-link' ).click( function( ){
 				addComment.cancelReply( );
 				return false;
 			} );

@@ -68,10 +68,10 @@
 
 .comment-body .moderation,
 #comment-form .error {
-	background-color: #FFFFE0;
-	border: solid 1px #E6DB55;
+	background-color: #422;
+	border: solid 1px #522;
 	margin-top: 5px;
-	color: #333;
+	color: #ddd;
 	padding: 5px;
 	font-size: 10px;
 	min-height: 1px; /* IE7 */
@@ -142,7 +142,7 @@
 	float: right;
 	padding: 0 5px;
 	background: none #333;
-	color: #fff;
+	color: #ddd;
 	font-size: 10px;
 	height: 18px;
 	line-height: 18px;
@@ -161,7 +161,7 @@
 #comments #cancel-comment-reply-link:focus,
 #comments #cancel-comment-reply-link:hover {
 	background-color: #933;
-	color: #fff
+	color: #ddd
 }
 
 #comments .comment-buttons input:active, #comments .comment-buttons input:focus,
@@ -169,16 +169,16 @@
 #comments .comment-buttons a:hover, #comments .comment-button:active,
 #comments .comment-button:focus, #comments .comment-button:hover {
 	background-color: #666;
-	color: #fff
+	color: #ddd
 }
 
 #comments .comment-buttons .disabled,
 #comments .comment-buttons .disabled:active,
 #comments .comment-buttons .disabled:focus,
 #comments .comment-buttons .disabled:hover {
-	background-color: #ddd;
+	background-color: #444;
 	cursor: wait;
-	color: #fff;
+	color: #666;
 }
 
 /* End Comment buttons */
@@ -208,12 +208,6 @@
 	float: right;
 	margin: 0;
 	padding: 3px 2px 2px
-}
-
-#comments .comment-form-row label sup {
-	vertical-align: 0.4em;
-	font-size: smaller;
-	color: #900;
 }
 
 .textarea-border {
@@ -409,24 +403,27 @@ ul#trackback-list {
 
 .comment-link-display {
 	padding: 5px 10px;
-	background-color: #fff;
-	border: solid 1px #bbb;
+	background-color: #333;
+	border: solid 1px #444;
 	cursor: pointer;
 
 	-moz-border-radius: 5px;
-	-moz-box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+	-moz-box-shadow: 0 0 4px 0 rgba( 255, 255, 255, 0.5 );
 
 	-webkit-border-radius: 5px;
-	-webkit-box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+	-webkit-box-shadow: 0 0 4px 0 rgba( 255, 255, 255, 0.5 );
 
 	-o-border-radius: 5px;
-	-o-box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+	-o-box-shadow: 0 0 4px 0 rgba( 255, 255, 255, 0.5 );
 
 	border-radius: 5px;
-	box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+	box-shadow: 0 0 4px 0 rgba( 255, 255, 255, 0.5 );
 }
 
 .comment-link-display input {
+	background-color: #333;
+	border: solid 1px #555;
+	color: #ccc;
 	cursor: text;
 	width: 250px;
 	margin-left: 5px;
