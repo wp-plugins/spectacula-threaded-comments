@@ -65,7 +65,7 @@ class spectacula_ajax {
 	function get_comment_changes( ) {
 		global $spec_comment_log, $wpdb;
 
-		$comment_log = $spec_comment_log->find( $_POST[ 'post_id' ], $_POST[ 'time' ], $_POST[ 'action_id' ] );
+		$comment_log = $spec_comment_log->find( $_POST[ 'post_id' ], $_POST[ 'time' ], isset( $_POST[ 'action_id' ] ) ? $_POST[ 'action_id' ] : 0 );
 		$json = array( );
 		$comment_ids = array( );
 

@@ -18,9 +18,14 @@ if ( ! class_exists( 'spec_comment_log' ) ) {
 			add_action( 'wp_set_comment_status', array( &$this, 'set_comment_status' ), 10, 2 );
 			// Log new comment insertion
 			add_action( 'wp_insert_comment', array( &$this, 'insert_comment' ), 10, 2 );
+			if ( version_compare( $GLOBALS[ 'wp_version' ], '2.8', '<' ) )
+				add_action( 'comment_post', array( &$this, 'insert_comment' ), 10, 2 );
 		}
 
 		function insert_comment( $comment_id = 0, $comment = '' ) {
+			if ( ! ( isset( $comment ) && is_object( $comment ) ) )
+				$comment = get_comment( $comment_id );
+
 			if ( $comment_id == 0 || $comment == '' )
 				return false;
 

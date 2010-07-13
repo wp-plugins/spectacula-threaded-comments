@@ -18,7 +18,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 							'title' => 'Comments',
 							'trackback' => 'Trackbacks',
 							'polling' => 30, // Frequency to poll the server for new comments in seconds.
-							'update' => true, // Do we want to auto update or not.
+							'update' => false, // Do we want to auto update or not.
 							);
 
 
@@ -32,10 +32,11 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 			$this->add_stuff_box( array( 'title' => __( 'Our credit', SPEC_COMMENT_DOM ), 'callback' => 'credit' ) );
 		}
 
+
 		function polling( $options = '' ) { ?>
 			<p>
 				<label for="<?php $this->item_attrib( 'update' ); ?>"><?php _e( 'Auto update comments', SPEC_COMMENT_DOM ); ?></label>
-				<input type="checkbox" value="1" <?php checked( $options[ 'update' ] );?> name="<?php $this->item_attrib( 'update', true ); ?>" id="<?php $this->item_attrib( 'update' ); ?>" />
+				<input type="checkbox" value="1" <?php checked( $options[ 'update' ], true );?> name="<?php $this->item_attrib( 'update', true ); ?>" id="<?php $this->item_attrib( 'update' ); ?>" />
 			</p>
 
 			<p>
