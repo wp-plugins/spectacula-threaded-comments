@@ -18,6 +18,9 @@ if ( ! class_exists( 'spec_comment_log' ) ) {
 			add_action( 'wp_set_comment_status', array( &$this, 'set_comment_status' ), 10, 2 );
 			// Log new comment insertion
 			add_action( 'wp_insert_comment', array( &$this, 'insert_comment' ), 10, 2 );
+
+			// For wp2.7 I have to use comment_post as wp_insert_comment doesn't exist.
+			// Using wp_insert_comment saves a query but if it's not there I have no choice.
 			if ( version_compare( $GLOBALS[ 'wp_version' ], '2.8', '<' ) )
 				add_action( 'comment_post', array( &$this, 'insert_comment' ), 10, 2 );
 		}
