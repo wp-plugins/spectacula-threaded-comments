@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Spectacu.la threaded comments\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-06 12:30-0000\n"
+"POT-Creation-Date: 2010-07-13 12:48-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Interconnect IT <admin@interconnectit.com>\n"
 "Language-Team: Interconnect IT\n"
@@ -13,144 +13,211 @@ msgstr ""
 "X-Poedit-Country: UNITED KINGDOM\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: _e;__\n"
-"X-Poedit-Basepath: T:\\hosts\\wordpress\\wordpress.29\\wp-content\\plugins\n"
-"X-Poedit-SearchPath-0: spec-comments\n"
+"X-Poedit-Basepath: T:\\repositories\\wordpress\\spectacula-threaded-comments\n"
+"X-Poedit-SearchPath-0: trunk\n"
 
-#: spec-comments/commenting.php:86
+#: trunk/commenting.php:122
 msgid "Show trackbacks"
 msgstr "Show trackbacks"
 
-#: spec-comments/commenting.php:87
+#: trunk/commenting.php:123
 msgid "Hide trackbacks"
 msgstr "Hide trackbacks"
 
-#: spec-comments/commenting.php:88
-msgid "Hide %count% replies to %name% comment"
-msgstr "Hide %count% replies to %name% comment"
+#: trunk/commenting.php:124
+msgid "Hide %count% replies to %name%'s comment"
+msgstr "Hide %count% replies to %name%'s comment"
 
-#: spec-comments/commenting.php:89
-msgid "View %count% replies to %name% comment"
-msgstr "View %count% replies to %name% comment"
+#: trunk/commenting.php:125
+msgid "View %count% replies to %name%'s comment"
+msgstr "View %count% replies to %name%'s comment"
 
-#: spec-comments/commenting.php:90
-msgid "Hide the reply to %name% comment"
-msgstr "Hide the reply to %name% comment"
+#: trunk/commenting.php:126
+msgid "Hide the reply to %name%'s comment"
+msgstr "Hide the reply to %name%'s comment"
 
-#: spec-comments/commenting.php:91
-msgid "View the reply to %name% comment"
-msgstr "View the reply to %name% comment"
+#: trunk/commenting.php:127
+msgid "View the reply to %name%'s comment"
+msgstr "View the reply to %name%'s comment"
 
-#: spec-comments/commenting.php:221
-#: spec-comments/template/comments.php:187
-#: spec-comments/template/comments.php:195
-msgid "Comments"
-msgstr "Comments"
+#: trunk/commenting.php:128
+#, php-format
+msgid "Trackback from: %s"
+msgstr "Trackback from: %s"
 
-#: spec-comments/commenting.php:250
-msgid "Threaded comment options"
-msgstr "Threaded comment options"
+#: trunk/commenting.php:129
+msgid "Missing some fields"
+msgstr "Missing some fields"
 
-#: spec-comments/commenting.php:258
-msgid "Rollup Depth"
-msgstr "Rollup Depth"
+#: trunk/commenting.php:130
+msgid "Unknown commenter"
+msgstr "Unknown commenter"
 
-#: spec-comments/commenting.php:269
-msgid "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
-msgstr "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
+#: trunk/includes/functions.php:129
+#: trunk/includes/functions.php:136
+msgid "Theme styling"
+msgstr "Theme styling"
 
-#: spec-comments/commenting.php:275
-msgid "Save"
-msgstr "Save"
+#: trunk/includes/functions.php:168
+msgid "You must be logged in to comment."
+msgstr "You must be logged in to comment."
 
-#: spec-comments/commenting.php:281
-msgid "Toggles"
-msgstr "Toggles"
+#: trunk/includes/functions.php:174
+msgid "Change Your Avatar"
+msgstr "Change Your Avatar"
 
-#: spec-comments/commenting.php:284
-msgid "Use the stylesheet that came with this plug-in. "
-msgstr "Use the stylesheet that came with this plug-in. "
+#: trunk/includes/functions.php:190
+msgid "Name"
+msgstr "Named"
 
-#: spec-comments/commenting.php:289
-msgid "Use the dark theme CSS file. "
-msgstr "Use the dark theme CSS file. "
+#: trunk/includes/functions.php:195
+msgid "Email"
+msgstr "Email"
 
-#: spec-comments/commenting.php:295
-msgid "Use the included javaScript. "
-msgstr "Use the included javaScript. "
+#: trunk/includes/functions.php:200
+msgid "Website"
+msgstr "Website"
 
-#: spec-comments/commenting.php:302
-msgid "Show our credit link at the bottom of the comments form."
-msgstr "Show our credit link at the bottom of the comments form."
+#: trunk/includes/functions.php:211
+msgid "Post your comment"
+msgstr "Post your comment"
 
-#: spec-comments/commenting.php:304
-msgid "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
-msgstr "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
+#: trunk/includes/functions.php:212
+msgid "Cancel reply"
+msgstr "Cancel reply"
 
-#: spec-comments/template/comments.php:144
-msgid "Reply"
-msgstr "Reply"
+#: trunk/includes/functions.php:216
+msgid "Edit profile"
+msgstr "Edit profile"
 
-#: spec-comments/template/comments.php:146
+#: trunk/includes/functions.php:217
+msgid "Log out of this account"
+msgstr "Log out of this account"
+
+#: trunk/includes/functions.php:217
+msgid "Log Out"
+msgstr "Log Out"
+
+#: trunk/includes/functions.php:271
 #, php-format
 msgid "%1$s at %2$s"
 msgstr "%1$s at %2$s"
 
-#: spec-comments/template/comments.php:147
-msgid "Comment in moderation."
-msgstr "Comment in moderation."
+#: trunk/includes/functions.php:277
+msgid "Comment awaiting moderation."
+msgstr "Comment awaiting moderation."
 
-#: spec-comments/template/comments.php:148
+#: trunk/includes/functions.php:283
+msgid "Reply"
+msgstr "Reply"
+
+#: trunk/includes/functions.php:285
 msgid "Edit"
 msgstr "Edit"
 
-#: spec-comments/template/comments.php:180
-msgid "Trackbacks"
-msgstr "Trackbacks"
+#: trunk/includes/functions.php:286
+msgid "Link"
+msgstr "Link"
 
-#: spec-comments/template/comments.php:211
-#: spec-comments/template/comments.php:213
-msgid "Leave a Comment"
-msgstr "Leave a Comment"
+#: trunk/includes/options-page.php:28
+msgid "Rollup Depth"
+msgstr "Rollup Depth"
 
-#: spec-comments/template/comments.php:211
-#, php-format
-msgid "Leave a Reply to %s"
-msgstr "Leave a Reply to %s"
+#: trunk/includes/options-page.php:29
+msgid "Titles"
+msgstr "Titles"
 
-#: spec-comments/template/comments.php:218
-msgid "You must be logged in to comment."
-msgstr "You must be logged in to comment."
+#: trunk/includes/options-page.php:30
+msgid "Stylesheet"
+msgstr "Stylesheet"
 
-#: spec-comments/template/comments.php:225
-msgid "Logged in as"
-msgstr "Logged in as"
+#: trunk/includes/options-page.php:31
+msgid "Comment update"
+msgstr "Comment update"
 
-#: spec-comments/template/comments.php:226
-msgid "Log out of this account"
-msgstr "Log out of this account"
+#: trunk/includes/options-page.php:32
+msgid "Our credit"
+msgstr "Our credit"
 
-#: spec-comments/template/comments.php:226
-msgid "Log Out"
-msgstr "Log Out"
+#: trunk/includes/options-page.php:38
+msgid "Auto update comments"
+msgstr "Auto update comments"
 
-#: spec-comments/template/comments.php:232
-msgid "Name"
-msgstr "Name"
+#: trunk/includes/options-page.php:43
+msgid "Frequency of comment update in seconds ( minimum 10 seconds )"
+msgstr "Frequency of comment update in seconds ( minimum 10 seconds )"
 
-#: spec-comments/template/comments.php:232
-#: spec-comments/template/comments.php:238
-msgid "(required)"
-msgstr "(required)"
+#: trunk/includes/options-page.php:52
+msgid "Comments title"
+msgstr "Comments title"
 
-#: spec-comments/template/comments.php:238
-msgid "Mail (will not be published)"
-msgstr "Mail (will not be published)"
+#: trunk/includes/options-page.php:55
+msgid "Trackback title"
+msgstr "Trackback title"
 
-#: spec-comments/template/comments.php:244
-msgid "Website"
-msgstr "Website"
+#: trunk/includes/options-page.php:63
+msgid "Choose the stylesheet you want to use for the comments."
+msgstr "Choose the stylesheet you want to use for the comments."
 
-#: spec-comments/template/comments.php:253
-msgid "Post your comment"
-msgstr "Post your comment"
+#: trunk/includes/options-page.php:66
+#: trunk/includes/options-page.php:94
+msgid "Disable"
+msgstr "Disable"
+
+#: trunk/includes/options-page.php:75
+msgid "If you want to customise the look of the comments you can do, however avoid making changes to the original CSS files as changes could be wiped out by any update. You can copy the comments.css from the style folder within this plug-in to your theme folder, make changes to it there then select the \"theme style\" option from the drop down above. You can also make a copy of it in the style folder, change the comment \"comment style: xxxxxx\" at the top of the file and then select that name from the drop down. You can also disable the inbuilt style system if you want to roll your comment CSS into your theme CSS."
+msgstr "If you want to customise the look of the comments you can do, however avoid making changes to the original CSS files as changes could be wiped out by any update. You can copy the comments.css from the style folder within this plug-in to your theme folder, make changes to it there then select the \"theme style\" option from the drop down above. You can also make a copy of it in the style folder, change the comment \"comment style: xxxxxx\" at the top of the file and then select that name from the drop down. You can also disable the inbuilt style system if you want to roll your comment CSS into your theme CSS."
+
+#: trunk/includes/options-page.php:84
+msgid "Show our credit link at the bottom of the comments form."
+msgstr "Show our credit link at the bottom of the comments form."
+
+#: trunk/includes/options-page.php:87
+msgid "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
+msgstr "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
+
+#: trunk/includes/options-page.php:102
+msgid "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
+msgstr "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
+
+#: trunk/includes/options-page.php:153
+msgid "Spectacu.la Comments"
+msgstr "Spectacu.la Comments"
+
+#: trunk/includes/options-page.php:153
+msgid "Ajax comments"
+msgstr "Ajax comments"
+
+#: trunk/includes/options-page.php:214
+msgid "Comment Options"
+msgstr "Comment Options"
+
+#: trunk/includes/options-page.php:221
+msgid "Save settings"
+msgstr "Save settings"
+
+#: trunk/includes/options-page.php:223
+msgid "This will reset all options to their to defaults if checked when saved."
+msgstr "This will reset all options to their to defaults if checked when saved."
+
+#: trunk/includes/options-page.php:229
+msgid "Save"
+msgstr "Save"
+
+#~ msgid "Threaded comment options"
+#~ msgstr "Threaded comment options"
+#~ msgid "Use the stylesheet that came with this plug-in. "
+#~ msgstr "Use the stylesheet that came with this plug-in. "
+#~ msgid "Use the dark theme CSS file. "
+#~ msgstr "Use the dark theme CSS file. "
+#~ msgid "Use the included javaScript. "
+#~ msgstr "Use the included javaScript. "
+#~ msgid "Leave a Reply to %s"
+#~ msgstr "Leave a Reply to %s"
+#~ msgid "Logged in as"
+#~ msgstr "Logged in as"
+#~ msgid "(required)"
+#~ msgstr "(required)"
+#~ msgid "Mail (will not be published)"
+#~ msgstr "Mail (will not be published)"
 

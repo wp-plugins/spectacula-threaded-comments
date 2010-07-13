@@ -72,10 +72,10 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 
 				</select>
 			</p>
-			<p><?php _e( 'If you want to customise the look of the comments you can do, however avoid making changes to the original CSS files as changes could be wiped out by any update.
-						You can copy the comments.css from the style folder within this plug-in to your theme folder, make changes to it there then select the "theme style" option from the
-						drop down above. You can also make a copy of it in the style folder, change the comment "comment style: xxxxxx" at the top of the file and then select that name from
-						the drop down. You can also disable the inbuilt style system if you want to roll your comment CSS into your theme CSS.', SPEC_COMMENT_DOM ); ?></p><?php
+			<p><?php _e( 'If you want to customise the look of the comments you can do, however avoid making changes to the original CSS files as changes could be wiped out by any update. ' .
+						'You can copy the comments.css from the style folder within this plug-in to your theme folder, make changes to it there then select the "theme style" option from the ' .
+						'drop down above. You can also make a copy of it in the style folder, change the comment "comment style: xxxxxx" at the top of the file and then select that name from ' .
+						'the drop down. You can also disable the inbuilt style system if you want to roll your comment CSS into your theme CSS.', SPEC_COMMENT_DOM ); ?></p><?php
 		}
 
 

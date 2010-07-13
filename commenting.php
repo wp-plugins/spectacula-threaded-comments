@@ -65,11 +65,11 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 		function _init ( ) {
 
 			// Load the translation stuff
-			//$abs_rel_path = trim( trim( str_replace( trim( ABSPATH, '/' ), '', dirname( __FILE__ ) ), '/' ), '\\' ) . '/lang/';
-			/*
-			 @todo: Sort this so we can load from within a theme if we're in an include folder or something like that.
-			*/
-			load_plugin_textdomain( SPEC_COMMENT_DOM, false, '/lang/' );
+			//load_plugin_textdomain( SPEC_COMMENT_DOM, false, '/lang/' );
+			$locale = get_locale( );
+			if ( file_exists( SPEC_COMMENT_PTH . '/lang/' . SPEC_COMMENT_DOM . '-' . $locale . '.mo' ) )
+				load_textdomain( SPEC_COMMENT_DOM, SPEC_COMMENT_PTH . '/lang/' . SPEC_COMMENT_DOM . '-' . $locale . '.mo' );
+
 
 			// If we're requesting ajax stuff we'll hand over control to spec ajax then die.
 			if ( isset( $_REQUEST[ '_spec_ajax' ] ) ) {
@@ -126,6 +126,8 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 					'rpl_hide_1' => __( "Hide the reply to %name%'s comment", SPEC_COMMENT_DOM ),
 					'rpl_show_1' => __( "View the reply to %name%'s comment", SPEC_COMMENT_DOM ),
 					'tb_from' => __( 'Trackback from: %s', SPEC_COMMENT_DOM ),
+					'err_txt_mis' => __( 'Missing some fields', SPEC_COMMENT_DOM ),
+					'unknown' => __( 'Unknown commenter', SPEC_COMMENT_DOM ),
 					'order' => get_option( 'comment_order' ),
 					'polling' => spec_comment_option( 'polling' ),
 					'update' => spec_comment_option( 'update' ) ? 1 : 0,

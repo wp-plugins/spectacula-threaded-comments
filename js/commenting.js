@@ -192,7 +192,7 @@ addComment = {
 
 		// Form not filled out then no point going on.
 		if ( blankFields ) {
-			addComment.error( 'Missing some fields' ); /* @todo: Add to translation */
+			addComment.error( commentingL10n.err_txt_mis );
 			return false;
 		}
 
@@ -296,7 +296,7 @@ addComment = {
 			}
 
 			jQuery( this ).find( '.post-count' ).text( reply_quant );
-			jQuery( this ).find( '.poster-name' ).text( poster_name != '' ? poster_name : 'unknow' );
+			jQuery( this ).find( '.poster-name' ).text( poster_name != '' ? poster_name : commentingL10n.unknown );
 		} );
 
 		return true;

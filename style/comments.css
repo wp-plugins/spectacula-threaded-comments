@@ -19,6 +19,15 @@
 	text-decoration: none;
 	text-transform: none;
 	line-height: inherit;
+
+	/* Kill box shadows from 2010 theme */
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+#comments input {
+	width: auto;
 }
 
 #comments img.avatar {
@@ -388,7 +397,6 @@ ul#trackback-list {
 #comments .reply-quote cite {
 	font-weight: 700;
 }
-
 
 .tb-from {
 	font-style: italic;
