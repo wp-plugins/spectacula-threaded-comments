@@ -34,6 +34,9 @@
 	border: 0 none !important;
 	padding: 0 !important;
 	margin: 0 !important;
+	width: auto;
+	height: auto;
+	float: none;
 }
 
 #comments {
@@ -120,6 +123,7 @@
 
 #comments .comment-meta {
 	margin-bottom: 5px;
+	height: auto;
 }
 
 /* Comment buttons */
@@ -411,10 +415,19 @@ ul#trackback-list {
 
 	-moz-border-radius: 5px;
 	-moz-box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+
+	-webkit-border-radius: 5px;
+	-webkit-box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+
+	-o-border-radius: 5px;
+	-o-box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+
+	border-radius: 5px;
+	box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
 }
 
 .comment-link-display input {
-	cursor: pointer;
+	cursor: text;
 	width: 250px;
 	margin-left: 5px;
 }

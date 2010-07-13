@@ -1,196 +1,257 @@
 /*
- comment style: Dark comments.
+ comment style: Dark theme
 */
 
-#commentlist li ul {
+/* Quick and crude reset */
+#comments fieldset, #comments cite, #comments input, #comments textarea,
+#comments form, #comments p, #comments img, #comments blockquote, #comments ul,
+#comments #commentlist li, #comments .comment-buttons *, #comments #respond {
+	background-color: transparent;
+	color: #ddd;
 	border: 0 none;
 	padding: 0;
 	margin: 0;
+	list-style: none outside;
+	font-style: inherit;
+	font-weight: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	text-decoration: none;
+	text-transform: none;
+	line-height: inherit;
+
+	/* Kill box shadows from 2010 theme */
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+#comments input {
+	width: auto;
+}
+
+#comments img.avatar {
+	border: 0 none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	width: auto;
+	height: auto;
+	float: none;
 }
 
 #comments {
-	margin-top: 1em;
-	overflow:hidden
-}
-	.commentTitle{
-		font-size:large;
-		line-height:2em;
-		display:block;
-		clear:both;
-	}
-	#comments fieldset {
-		border:0 none;
-		padding:0;
-		margin:0;
-	}
-	#commentlist,
-	#comments ul,
-	#comments li {
-		padding:0;
-		margin:0;
-		list-style-type: none;
-		/* Sort out IE7. */
-		max-width:100%;
-		min-width:1px;
-	}
-	#commentlist ul.children {
-		padding:0 5px 5px;
-		margin-top:5px;
-	}
-	#commentlist .depth-2 ul.children {
-		padding:0 2px 2px; /* Padding above minus the border width below. */
-	}
-	#commentlist li {
-		margin-top:5px;
-		border-style:solid;
-		border-width:3px;
-	}
-	#commentlist li.depth-1 {
-		border-width:1px;
-
-	}
-	#commentlist li:first-child {
-		margin-top:0;
-	}
-	#respond,
-	#trackbackList div.comment-body {
-		padding-bottom:1em;
-	}
-
-	#commentlist #respond {
-		padding-bottom:0;
-	}
-
-	#commentlist div.comment-body {
-		min-height:1px;
-		padding:1em
-	}
-	#commentlist .toggle {
-		cursor:pointer;
-		padding: 5px;
-		line-height: 16px;
-		max-width:100%;
-	}
-		#commentlist .toggle span.posterName {
-			font-weight:bold;
-			font-style:oblique;
-		}
-
-		.trackbackToggle span.switch,
-		#commentlist span.switch {
-			width:16px;
-			height:16px;
-			float:right;
-			background: url(plus-minus-dark.gif) no-repeat 0 0 transparent;
-		}
-		.trackbackToggle {
-			display:block;
-			cursor:pointer;
-			border:solid 1px;
-			padding:0.25em;
-			line-height:16px;
-			font-size:12px;
-		}
-		.trackbackToggle span.switch {
-			/*margin-top:2px;*/
-		}
-
-		.ie8 li.comment {
-			overflow:hidden;
-		}
-
-		#commentlist .active span.switch {
-			background-position: 0 -16px;
-		}
-	#commentlist li.with-replies {
-		padding-bottom:0;
-	}
-
-/* Comment Content */
-
-	.comment-author {
-		margin-bottom:1em;
-	}
-	.avatar {
-		float: none;
-		display:inline;
-		vertical-align:middle;
-	}
-	#commentlist li.bypostauthor > div.comment-body img.avatar {
-		border:solid 2px;
-		padding:1px;
-	}
-	.trackbackToggle.active span.switch,
-	#commentlist li.active span.switch {
-		background-position: 0 -16px;
-	}
-	.vcard {font-size: large; }
-
-	div.commentmetadata {
-		font-size:x-small;
-		line-height:16px;
-		height:16px;
-	}
-
-#trackbackList { margin-left: 2em;}
-#trackbackList .says {display:none}
-
-.comment .comment-reply-link {
-	float:right;
-	text-align:right;
-	padding-right: 21px;
-	overflow:hidden;
-	background: url(reply-dark.gif) no-repeat 100% 0 transparent;
-}
-.comment .comment-reply-link:hover {
-	background-position: 100% -16px;
+	display: block;
+	clear: both;
+	overflow: hidden;
+	min-height: 1px;
+	position: relative;
+	z-index: 10;
 }
 
-#commentForm {
-	margin-top: 1em;
-	width:100%
+#comments ul#commentlist ul li {
+	margin-left: 20px;
 }
 
-#commentForm label {
-	font-weight:bold;
-	display:inline
+#comments .trackback-toggle,
+#comments ul#commentlist div.toggle,
+#comments ul#commentlist li .comment-body {
+	background-color: #222;
+	border: solid 1px #444;
+	color: #ddd;
+	padding: 9px;
+	overflow: auto;
+	margin-bottom: 11px;
+
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 
-#author, #email, #url, #comment {
-	border-style:solid;
-	border-width:1px;
+.comment-body .moderation,
+#comment-form .error {
+	background-color: #FFFFE0;
+	border: solid 1px #E6DB55;
+	margin-top: 5px;
+	color: #333;
+	padding: 5px;
+	font-size: 10px;
+	min-height: 1px; /* IE7 */
+
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+.comment-body .moderation {
+	display: block;
+	margin-bottom: 3px;
+	clear: both;
+}
+
+#commentlist .comment-author-avatar {
+	display: inline;
+	float: left;
+	margin: 0 10px 10px 0;
+}
+
+#commentlist li.bypostauthor > div.comment-body .comment-author-avatar {
+	padding-bottom: 5px;
+	border-bottom: solid 5px #550;
+}
+
+#comments .trackback-toggle,
+#comments ul#commentlist div.toggle {
+	cursor: pointer;
+}
+
+#comments cite.fn,
+#comments div.toggle .poster-name {
+	font-weight: bold;
+}
+
+#comments .trackback-toggle:hover,
+#comments ul#commentlist div.toggle:hover {
+	background-color: #333;
+}
+
+.with-avatar #comment-form,
+.with-avatar .comment-content {
+	margin-left: 76px;
+}
+
+#commentlist .children .with-avatar .comment-content {
+	margin-left: 44px;
+}
+
+#comments .comment-meta {
+	margin-bottom: 5px;
+	height: auto;
+}
+
+/* Comment buttons */
+
+#comments .comment-buttons {
+	margin-top: 9px;
+	overflow: hidden;
+}
+
+#comments .comment-buttons .comment-button,
+#comments .comment-buttons a ,
+#comments .comment-buttons input {
+	border: 0 none;
+	cursor: pointer;
+	margin:  0 0 0 5px;
+	float: right;
+	padding: 0 5px;
+	background: none #333;
+	color: #fff;
+	font-size: 10px;
+	height: 18px;
+	line-height: 18px;
+
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+#comments .comment-buttons a.comment-button,
+#comments .comment-buttons a.comment-edit-link {
+	float: left;
+	margin: 0 5px 0 0;
+}
+
+#comments #cancel-comment-reply-link:active,
+#comments #cancel-comment-reply-link:focus,
+#comments #cancel-comment-reply-link:hover {
+	background-color: #933;
+	color: #fff
+}
+
+#comments .comment-buttons input:active, #comments .comment-buttons input:focus,
+#comments .comment-buttons input:hover, #comments .comment-buttons a:active, #comments .comment-buttons a:focus,
+#comments .comment-buttons a:hover, #comments .comment-button:active,
+#comments .comment-button:focus, #comments .comment-button:hover {
+	background-color: #666;
+	color: #fff
+}
+
+#comments .comment-buttons .disabled,
+#comments .comment-buttons .disabled:active,
+#comments .comment-buttons .disabled:focus,
+#comments .comment-buttons .disabled:hover {
+	background-color: #ddd;
+	cursor: wait;
+	color: #fff;
+}
+
+/* End Comment buttons */
+
+#comments .comment-form-row {
+	overflow: auto;
 	margin-bottom: 10px;
-	vertical-align: text-top;
-	width: 50%;
+	width: 100%;
 }
 
-#author, #email, #url{
-	margin-right:10px;
+#comments .comment-form-row input,
+#comment-form .textarea-border {
+	border: solid 1px #444;
+	background-color: #333;
+
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 
-#comment {
-	display:block;
-	padding:5px;
-	width: 98%;
-	border:solid 1px;
-	max-width:98%;
+#comments .comment-form-row label {
+	float: left;
+	width: 18%;
 }
 
-.gecko #comment {
-	max-width: 100%;
-
+#comments .comment-form-row input {
+	width: 80%;
+	float: right;
+	margin: 0;
+	padding: 3px 2px 2px
 }
 
-.commentSubmit {text-align: right;}
-.commentSubmit a {margin-right:2em;}
+#comments .comment-form-row label sup {
+	vertical-align: 0.4em;
+	font-size: smaller;
+	color: #900;
+}
+
+.textarea-border {
+	padding: 5px;
+}
+
+#comment-form span.required {
+	display: block;
+	text-align: right;
+	font-size: small;
+	color: #999;
+}
+
+#comment-form .oops {
+	background: url( exclamation.png ) no-repeat 98% center;
+}
+
+#comment-form textarea.oops {
+	background-position: right top;
+}
+
+#comments #comment {
+	border: 0 none;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
 
 /* Pagination */
-#commentPagination, .pageNavigationLinks {
+#comment-pagination {
 	clear:both;
 	text-align: center;
 	padding: 1em 0;
 }
-	.pageLinks a {text-decoration:none}
+	.page-links a {text-decoration:none}
 
 	.page-numbers {
 		line-height: 26px;
@@ -217,7 +278,7 @@
 span.dots,
 a.prev, a.next {
 	background-color:transparent;
-	color: #666;
+	color: #fff;
 }
 
 a.prev, a.next {
@@ -231,84 +292,142 @@ a.prev:focus,
 a.next:focus,
 a.prev:hover,
 a.next:hover {
-	color:#666;
+	color:#ccc;
 	background-color:transparent;
 }
 
 .current {
-	background-color:#999;
-	color:#ccc;
+	background-color:#ccc;
+	color:#999;
 }
 
-.pageLinks .page-numbers, #commentPagination span.current {
-	background-color:#666;
+.pageLinks .page-numbers, #comment-pagination span.current {
+	background-color:#eee;
 	color:#ccc;
 }
 
 .pageLinks a .page-numbers,
-#commentPagination .page-numbers {
-	color:#ddd;
-	background-color: #333;
+#comment-pagination .page-numbers {
+	color:#666;
+	background-color: #ddd;
 	text-decoration:none;
 }
 
-#commentPagination span.dots,#commentPagination a.prev,#commentPagination a.next {
+#comment-pagination span.dots,#comment-pagination a.prev,#comment-pagination a.next {
 	background-color:transparent;
-	color: #666;
+	color: #333;
 }
 
 .pageLinks a:hover .page-numbers,
-#commentPagination a.page-numbers:focus,
-#commentPagination a.page-numbers:hover {
-	background-color: #999;
-	color: #333;
+#comment-pagination a.page-numbers:focus,
+#comment-pagination a.page-numbers:hover {
+	background-color: #666;
+	color: #fff;
 	text-decoration:none;
 }
 
-#commentPagination a.prev:focus,
-#commentPagination a.next:focus,
-#commentPagination a.prev:hover,
-#commentPagination a.next:hover {
+#comment-pagination a.prev:focus,
+#comment-pagination a.next:focus,
+#comment-pagination a.prev:hover,
+#comment-pagination a.next:hover {
 	background-color:transparent;
-	color:#ccc;
+	color:#666;
 }
 
-#commentlist { color: #aaa}
-#commentlist .comment-body {background-color: #222; }
-#commentlist .depth-1  .toggle, #commentlist .depth-1 {background-color:#444;border-color:#444}
-#commentlist .depth-2  .toggle, #commentlist .depth-2 {background-color:#666;border-color:#666}
-#commentlist .depth-3  .toggle, #commentlist .depth-3 {background-color:#444;border-color:#444}
-#commentlist .depth-4  .toggle, #commentlist .depth-4 {background-color:#666;border-color:#666}
-#commentlist .depth-5  .toggle, #commentlist .depth-5 {background-color:#444;border-color:#444}
-#commentlist .depth-6  .toggle, #commentlist .depth-6 {background-color:#666;border-color:#666}
-#commentlist .depth-7  .toggle, #commentlist .depth-7 {background-color:#444;border-color:#444}
-#commentlist .depth-8  .toggle, #commentlist .depth-8 {background-color:#666;border-color:#666}
-#commentlist .depth-9  .toggle, #commentlist .depth-9 {background-color:#444;border-color:#444}
-#commentlist .depth-10 .toggle, #commentlist .depth-10{background-color:#666;border-color:#666}
-#commentlist li.bypostauthor > div.comment-body .vcard a,
-#commentlist li.bypostauthor > div.comment-body .vcard {color:#aa0}
-#commentlist li.bypostauthor > div.comment-body img.avatar {border-color:#aa0}
-
-.commentSubmit a{color: #900; text-decoration:none;}
-.commentSubmit a:hover {color: #f00; text-decoration:none;}
-.trackbackToggle{border-color:#444;background-color:#222;color:#aaa}
-
-#author, #email, #url, #comment {
-	border-color:#444;
-	background-color: #222;
-	color:#aaa;
+#comments ul#commentlist li .comment-body,
+.ie6 .comment-buttons {
+	zoom: 1
 }
 
-/* IE6 Fixes */
-.ie6 #comment {margin-right:-12px}
-.ie6 .page-numbers {width: 20px;white-space:nowrap}
-.ie6 .trackbackToggle,
-.ie6 #trackbackList,
-.ie6 li.comment,
-.ie6 #comments { display: inline-block}
-/* classed added by jQuery only to ie6 */
-.ie6 #commentlist li.first-child {margin-top:0}
-.ie6 #commentlist div.bypostauthor img.avatar{border:solid 2px;	padding:1px}
-.ie6 #commentlist div.bypostauthor .vcard a,
-.ie6 #commentlist div.bypostauthor .vcard {color:#aa0}
-.ie6 #commentlist div.bypostauthor img.avatar {border-color:#aa0}
+.comment-title {
+	font-size: 140%;
+	font-weight: normal;
+	margin-bottom: 0.5em;
+
+}
+ul#trackback-list {
+	margin: 0;
+	padding: 0;
+}
+
+#trackback-list li {
+	margin-bottom: 20px;
+}
+
+#comment #commentlist .pingback cite.fn,
+#comment #commentlist .trackback cite.fn,
+#comment #trackback-list cite.fn {
+	display:block;
+}
+
+/*
+ For RPX openid plug-in and
+ anyone else who sticks a
+ small image next to the
+ name.
+*/
+#commentlist cite.fn img {
+	vertical-align: text-top;
+	float: right;
+}
+
+#commentlist .pingback span.date,
+#commentlist .trackback span.date,
+#trackback-list span.date {
+	font-style: italic;
+	color: #666;
+}
+
+#trackback-list .comment-body {
+	padding-bottom: 10px;
+	margin-bottom: 15px;
+	border-bottom: solid 1px #DFDFDF;
+}
+
+#comment-form blockquote {
+	border-left:0.325em solid #dfdfdf;
+	font-style:italic;
+	margin:0 6%;
+	padding-left:0.65em;
+}
+
+#comments .comment-text {
+	overflow: hidden;
+}
+
+#comments .comment-text p {
+	margin-bottom: 0.75em;
+}
+
+#comments .reply-quote cite {
+	font-weight: 700;
+}
+
+.tb-from {
+	font-style: italic;
+}
+
+.comment-link-display {
+	padding: 5px 10px;
+	background-color: #fff;
+	border: solid 1px #bbb;
+	cursor: pointer;
+
+	-moz-border-radius: 5px;
+	-moz-box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+
+	-webkit-border-radius: 5px;
+	-webkit-box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+
+	-o-border-radius: 5px;
+	-o-box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+
+	border-radius: 5px;
+	box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.3 );
+}
+
+.comment-link-display input {
+	cursor: text;
+	width: 250px;
+	margin-left: 5px;
+}
