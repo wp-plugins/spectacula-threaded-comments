@@ -89,7 +89,7 @@ addComment = {
 
 	// Rather than remove all the mark up for a deleted comment we'll just fold it up and empty it.
 	deleteComment: function( comment_ID, action ) {
-		var comment_exists = jQuery( 'ul#commentlist li#comment-' + comment_ID ).length;
+		var comment_exists = jQuery( 'ul#commentlist li#comment-' + comment_ID + ', #trackback-list li#comment-' + comment_ID  ).length;
 
 		if ( ! comment_exists )
 			return true;
@@ -97,15 +97,15 @@ addComment = {
 		if ( action == 'unapprove' && jQuery( 'ul#commentlist li#comment-' + comment_ID + ' > .comment-body:has( .moderation )' ) )
 			return true;
 
-		jQuery( 'ul#commentlist li#comment-' + comment_ID + ' > .comment-body' ).slideUp( 'slow', function( ) {
+		jQuery( 'li#comment-' + comment_ID + ' > .comment-body' ).slideUp( 'slow', function( ) {
 			jQuery( this ).text( 'Deleted comment' ).slideDown( ).parent( 'li#comment-' + comment_ID ).addClass( 'deleted' );
 		} );
 
 		return true;
 	},
 
-	newComment: function( html, comment_ID, parent_ID, scroll_to ) {
-		var comment_exists = jQuery( 'ul#commentlist li#comment-' + comment_ID ).length, depth_class;
+	newComment: function( html, comment_ID, parent_ID, scroll_to, comment_type ) {
+		var comment_exists = jQuery( 'ul#commentlist li#comment-' + comment_ID + ', #trackback-list li#comment-' + comment_ID ).length, depth_class;
 
 		// If comment is already there then lets remove the needs approval message.
 		if ( comment_exists ) {
@@ -114,8 +114,8 @@ addComment = {
 				jQuery( this ).remove( );
 			} );
 			// Undelete a comment
-			if ( jQuery( 'ul#commentlist li#comment-' + comment_ID ).hasClass( 'deleted' ) ) {
-				jQuery( 'ul#commentlist li#comment-' + comment_ID + ' > .comment-body' ).slideUp( 'slow', function( ) {
+			if ( jQuery( 'li#comment-' + comment_ID ).hasClass( 'deleted' ) ) {
+				jQuery( 'li#comment-' + comment_ID + ' > .comment-body' ).slideUp( 'slow', function( ) {
 					jQuery( this ).html( jQuery( html ).find( '.comment-body' ).html( ) ).slideDown( 'slow' );
 				} ).removeClass( 'deleted' );
 
@@ -124,7 +124,7 @@ addComment = {
 		}
 
 		// We're replying so we have to do something different
-		if ( parent_ID > 0 && jQuery( 'ul#commentlist li#comment-' + parent_ID ).length ) {
+		if ( comment_type == 'comment' && parent_ID > 0 && jQuery( 'ul#commentlist li#comment-' + parent_ID ).length ) {
 
 			// Check there is a child UL to attach stuff to.
 			if ( ! jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).length )
@@ -155,7 +155,9 @@ addComment = {
 			// Change the toggle text to the correct
 			addComment.toggleToggleText( jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ) );
 		} else {
-			if ( commentingL10n.order === 'desc'  )
+			if ( comment_type !== 'comment' && jQuery( '#trackback-list' ).length ) {
+				jQuery( '#trackback-list' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+			} else 	if ( commentingL10n.order === 'desc'  )
 				jQuery( 'li#respond' ).after( jQuery( html ).hide( ).addClass( 'rolledup' ) );
 			else
 				jQuery( 'li#respond' ).before( jQuery( html ).hide( ).addClass( 'rolledup' ) );
@@ -163,11 +165,14 @@ addComment = {
 
 		addComment.addToggles( );
 
-		jQuery( 'ul#commentlist' ).find( '.rolledup' ).slideDown( 500, function( ){
+		jQuery( 'ul#commentlist, ul#trackback-list' ).find( '.rolledup' ).slideDown( 500, function( ){
 			// Our comment is in place, now let us scroll to it once unrolled.
 			if ( scroll_to )
 				jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500 } );
 		} ).removeClass( 'rolledup' );
+
+		if ( comment_type !== 'comment' && jQuery( '#trackback-list' ).length )
+			addComment.trackbackToggle( 400 )
 
 		return true;
 	},
@@ -250,7 +255,7 @@ addComment = {
 
 				//addComment.myComments[] = d.comment_ID;
 
-				addComment.newComment( d.html, d.comment_ID, d.comment_parent, true );
+				addComment.newComment( d.html, d.comment_ID, d.comment_parent, true, 'comment' );
 				// Kill anything in the comment form and reset the reply button
 				addComment.cancelReply( );
 				jQuery( '#comment-form #comment' ).val( '' );
@@ -343,13 +348,32 @@ addComment = {
 					addComment.action_id = d[i].action_id !== null ? d[i].action_id : 0;
 
 					if ( d[i].action === 'approve' && d[i].html !== undefined && d[i].html !== null && d[i].html !== '' ) {
-						addComment.newComment( d[i].html, d[i].comment_ID, d[i].comment_parent, false );
+						addComment.newComment( d[i].html, d[i].comment_ID, d[i].comment_parent, false, d[i].comment_type );
 					} else {
 						addComment.deleteComment( d[i].comment_ID, d[i].action );
 					}
 				}
 			}
 		} );
+	},
+
+	trackbackToggle: function( max_height ) {
+
+		if ( jQuery( '#trackback-list' ).height( ) > ( max_height > 0 ? max_height : 400 ) && ! jQuery( '#trackback-list' ).prev( '.trackback-toggle' ).length ) {
+			jQuery( '#trackback-list' )
+				.hide( )
+				.before( '<div class="trackback-toggle"><span class="toggle-text">' + commentingL10n.tb_show + '</span></div>' )
+				.prev( '.trackback-toggle' )
+				.click( function( ){
+					jQuery( this ).toggleClass( 'active' ).next( '#trackback-list' ).slideToggle( 'fast', function( ){
+						jQuery( this )
+							.prev( '.trackback-toggle' )
+							.children( '.toggle-text' )
+							.text( jQuery( this ).css( 'display' ) === 'none' ? commentingL10n.tb_show : commentingL10n.tb_hide );
+					} );
+				} );
+		}
+
 	},
 
 	_init: function( ) {
@@ -395,21 +419,7 @@ addComment = {
 			} );
 
 			// Hide trackbacks from view if they take up too much space. Too much is 400px in my opinion but then I don't really like them. :P
-			if ( $( '#trackback-list' ).height( ) > 400 ) {
-				$( '#trackback-list' )
-					//.css( { height: $( '#trackback-list' ).height( ) } )
-					.hide( )
-					.before( '<div class="trackback-toggle"><span class="toggle-text">' + commentingL10n.tb_show + '</span></div>' )
-					.prev( '.trackback-toggle' )
-					.click( function( ){
-						$( this ).toggleClass( 'active' ).next( '#trackback-list' ).slideToggle( 'fast', function( ){
-							$( this )
-								.prev( '.trackback-toggle' )
-								.children( '.toggle-text' )
-								.text( $( this ).css( 'display' ) === 'none' ? commentingL10n.tb_show : commentingL10n.tb_hide );
-						} );
-					} );
-			}
+			addComment.trackbackToggle( 400 );
 
 			// Hide trackbacks that show up in the comment stream.
 			// This is done as a one shot deal at load time as I'll not be collecting them after first load unlike comments.

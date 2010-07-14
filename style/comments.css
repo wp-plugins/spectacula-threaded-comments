@@ -52,6 +52,10 @@
 	margin-left: 20px;
 }
 
+#comments ul#trackback-list {
+	display: block;
+}
+
 #comments .trackback-toggle,
 #comments ul#commentlist div.toggle,
 #comments ul#commentlist li .comment-body {

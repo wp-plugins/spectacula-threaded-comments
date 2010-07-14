@@ -52,11 +52,15 @@
 	margin-left: 20px;
 }
 
+#comments ul#trackback-list {
+	display: block;
+}
+
 #comments .trackback-toggle,
 #comments ul#commentlist div.toggle,
 #comments ul#commentlist li .comment-body {
 	background-color: #222;
-	border: solid 1px #444;
+	border: dotted 1px #444;
 	color: #ddd;
 	padding: 9px;
 	overflow: auto;
@@ -69,7 +73,7 @@
 .comment-body .moderation,
 #comment-form .error {
 	background-color: #422;
-	border: solid 1px #522;
+	border: dotted 1px #522;
 	margin-top: 5px;
 	color: #ddd;
 	padding: 5px;
@@ -191,7 +195,7 @@
 
 #comments .comment-form-row input,
 #comment-form .textarea-border {
-	border: solid 1px #444;
+	border: dotted 1px #444;
 	background-color: #333;
 
 	-moz-border-radius: 3px;
@@ -259,14 +263,14 @@
 		-moz-border-radius: 2px;
 		-webkit-border-radius: 2px;
 
-		background-color: #fff;
-		color:#000;
+		background-color: #000;
+		color:#fff;
 	}
 
 	a.page-numbers:focus,
 	a.page-numbers:hover {
-		background-color: #ccc;
-		color: #333;
+		background-color: #f00;
+		color: #600;
 	}
 
 span.dots,
@@ -291,25 +295,25 @@ a.next:hover {
 }
 
 .current {
-	background-color:#ccc;
-	color:#999;
+	background-color:#333;
+	color:#666;
 }
 
 .pageLinks .page-numbers, #comment-pagination span.current {
-	background-color:#eee;
-	color:#ccc;
+	background-color:#333;
+	color:#666;
 }
 
 .pageLinks a .page-numbers,
 #comment-pagination .page-numbers {
-	color:#666;
-	background-color: #ddd;
+	color:#ddd;
+	background-color: #333;
 	text-decoration:none;
 }
 
 #comment-pagination span.dots,#comment-pagination a.prev,#comment-pagination a.next {
 	background-color:transparent;
-	color: #333;
+	color: #ddd;
 }
 
 .pageLinks a:hover .page-numbers,
@@ -375,11 +379,11 @@ ul#trackback-list {
 #trackback-list .comment-body {
 	padding-bottom: 10px;
 	margin-bottom: 15px;
-	border-bottom: solid 1px #DFDFDF;
+	border-bottom: dotted 1px #444;
 }
 
 #comment-form blockquote {
-	border-left:0.325em solid #dfdfdf;
+	border-left:0.325em solid #444;
 	font-style:italic;
 	margin:0 6%;
 	padding-left:0.65em;
@@ -404,7 +408,7 @@ ul#trackback-list {
 .comment-link-display {
 	padding: 5px 10px;
 	background-color: #333;
-	border: solid 1px #444;
+	border: dotted 1px #444;
 	cursor: pointer;
 
 	-moz-border-radius: 5px;
@@ -422,7 +426,7 @@ ul#trackback-list {
 
 .comment-link-display input {
 	background-color: #333;
-	border: solid 1px #555;
+	border: dotted 1px #555;
 	color: #ccc;
 	cursor: text;
 	width: 250px;

@@ -106,6 +106,7 @@ class spectacula_ajax {
 				$json[ $comment->comment_ID ][ 'comment_date' ] = $comment->comment_date;
 				$json[ $comment->comment_ID ][ 'comment_ID' ] = $comment->comment_ID;
 				$json[ $comment->comment_ID ][ 'comment_parent' ] = $comment->comment_parent;
+				$json[ $comment->comment_ID ][ 'comment_type' ] = empty( $comment->comment_type ) ? 'comment' : $comment->comment_type;
 				$json[ $comment->comment_ID ][ 'comment_post_ID' ] = $comment->comment_post_ID;
 				$json[ $comment->comment_ID ][ 'comment_approved' ] = $comment->comment_approved;
 				$json[ $comment->comment_ID ][ 'html' ] = $html;
