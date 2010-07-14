@@ -104,6 +104,7 @@
 #comments .trackback-toggle,
 #comments ul#commentlist div.toggle {
 	cursor: pointer;
+	zoom: 1;
 }
 
 #comments cite.fn,
@@ -431,4 +432,14 @@ ul#trackback-list {
 	cursor: text;
 	width: 250px;
 	margin-left: 5px;
+}
+
+#comments .comment-body .trackback-toggle {
+	margin: -9px -9px -9px -9px;
+	padding-bottom: 10px;
+	border: 0 none;
+}
+
+#comments .comment-body .with-toggle {
+	margin-top: 18px;
 }

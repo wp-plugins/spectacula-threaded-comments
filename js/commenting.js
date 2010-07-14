@@ -124,46 +124,54 @@ addComment = {
 		}
 
 		// We're replying so we have to do something different
-		if ( comment_type == 'comment' && parent_ID > 0 && jQuery( 'ul#commentlist li#comment-' + parent_ID ).length ) {
+		if ( comment_type == 'comment' && parent_ID > 0 ) {
+			// If the comment we're replying to isn't here we just skip most of this
+			if( jQuery( 'ul#commentlist li#comment-' + parent_ID ).length ) {
 
-			// Check there is a child UL to attach stuff to.
-			if ( ! jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).length )
-				jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > div.comment-body' ).after( '<ul class="children"></ul>' );
+				// Check there is a child UL to attach stuff to.
+				if ( ! jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).length )
+					jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > div.comment-body' ).after( '<ul class="children"></ul>' );
 
-			// Attach the comment.
-			jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+				// Attach the comment.
+				jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ) );
 
-			// Don't trust the depth on the html of replies
-			depth_class = jQuery( 'li#comment-' + parent_ID ).attr( 'class' ).match( /(?:\s|^)depth-(\d+)\s?/i );
+				// Don't trust the depth on the html of replies
+				depth_class = jQuery( 'li#comment-' + parent_ID ).attr( 'class' ).match( /(?:\s|^)depth-(\d+)\s?/i );
 
-			if ( depth_class[1] !== null && depth_class[1].match( /\d+/ ) ) {
-				jQuery( 'ul#commentlist li#comment-' + comment_ID ).removeClass( 'depth-1 depth-2 depth-3 depth-4 depth-5 depth-6 depth-7 depth-8 depth-9 depth-10').addClass( 'depth-' + ( parseInt( depth_class[1], 10 ) + 1 ) );
+				if ( depth_class[1] !== null && depth_class[1].match( /\d+/ ) ) {
+					jQuery( 'ul#commentlist li#comment-' + comment_ID ).removeClass( 'depth-1 depth-2 depth-3 depth-4 depth-5 depth-6 depth-7 depth-8 depth-9 depth-10').addClass( 'depth-' + ( parseInt( depth_class[1], 10 ) + 1 ) );
 
-				// If the reply turns up to be too deep then we'll kill the reply button
-				if ( ( parseInt( depth_class[1], 10 ) + 1 ) >= commentingL10n.max_depth )
-					jQuery( 'ul#commentlist li#comment-' + comment_ID + ' > div.comment-body .comment-reply-link' ).remove( );
-			}
+					// If the reply turns up to be too deep then we'll kill the reply button
+					if ( ( parseInt( depth_class[1], 10 ) + 1 ) >= commentingL10n.max_depth )
+						jQuery( 'ul#commentlist li#comment-' + comment_ID + ' > div.comment-body .comment-reply-link' ).remove( );
+				}
 
-			// Check to see if our comment has been added to a rolled up UL
-			if ( jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ).hasClass( 'hidden' ) ) {
-				// If it has roll it down
-				jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ).removeClass( 'hidden' ).next( 'ul.children' ).slideDown( 'fast', function( ) {
-					jQuery( this ).prev( 'div.toggle' ).css( { backgroundPosition: 'bottom right' } ); // FIXES IE8.
-				} );
-			}
+				// Check to see if our comment has been added to a rolled up UL
+				if ( jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ).hasClass( 'hidden' ) ) {
+					// If it has roll it down
+					jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ).removeClass( 'hidden' ).next( 'ul.children' ).slideDown( 'fast', function( ) {
+						jQuery( this ).prev( 'div.toggle' ).css( { backgroundPosition: 'bottom right' } ); // FIXES IE8.
+					} );
+				}
 
-			// Change the toggle text to the correct
-			addComment.toggleToggleText( jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ) );
+				// Change the toggle text to the correct
+				addComment.toggleToggleText( jQuery( '#comment-' + comment_ID ).closest( 'li:has(div.toggle)' ).children( '.toggle' ) );
+
+				addComment.addToggles( );
+			}	// else the thing we're replying to isn't here. Not going to do anything with this for the moment
+
 		} else {
 			if ( comment_type !== 'comment' && jQuery( '#trackback-list' ).length ) {
 				jQuery( '#trackback-list' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ) );
-			} else 	if ( commentingL10n.order === 'desc'  )
-				jQuery( 'li#respond' ).after( jQuery( html ).hide( ).addClass( 'rolledup' ) );
-			else
-				jQuery( 'li#respond' ).before( jQuery( html ).hide( ).addClass( 'rolledup' ) );
-		}
+			} else {
+				if ( commentingL10n.order === 'desc' )
+					jQuery( 'li#respond' ).after( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+				else
+					jQuery( 'li#respond' ).before( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+			}
 
-		addComment.addToggles( );
+			addComment.addToggles( );
+		}
 
 		jQuery( 'ul#commentlist, ul#trackback-list' ).find( '.rolledup' ).slideDown( 500, function( ){
 			// Our comment is in place, now let us scroll to it once unrolled.
@@ -171,7 +179,7 @@ addComment = {
 				jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500 } );
 		} ).removeClass( 'rolledup' );
 
-		if ( comment_type !== 'comment' && jQuery( '#trackback-list' ).length )
+		if ( comment_type !== 'comment' )
 			addComment.trackbackToggle( 400 )
 
 		return true;
@@ -359,7 +367,7 @@ addComment = {
 
 	trackbackToggle: function( max_height ) {
 
-		if ( jQuery( '#trackback-list' ).height( ) > ( max_height > 0 ? max_height : 400 ) && ! jQuery( '#trackback-list' ).prev( '.trackback-toggle' ).length ) {
+		if ( jQuery( '#trackback-list' ).height( ) > ( max_height > 0 ? max_height : 400 ) && ! jQuery( '#trackback-list' ).prev( '.trackback-toggle' ).length && jQuery( '#trackback-list' ).length ) {
 			jQuery( '#trackback-list' )
 				.hide( )
 				.before( '<div class="trackback-toggle"><span class="toggle-text">' + commentingL10n.tb_show + '</span></div>' )
@@ -374,6 +382,25 @@ addComment = {
 				} );
 		}
 
+		// Hide trackbacks that show up in the comment stream.
+		jQuery( '#commentlist li.pingback > .comment-body .comment-content, #commentlist li.trackback > .comment-body .comment-content' ).each( function( ){
+			// If this already has a toggle then jump ship.
+			if ( jQuery( this ).prev( '.trackback-toggle' ).length )
+				return true;
+
+			var from = commentingL10n.tb_from.replace( '%s', '<span class="tb-from">' + jQuery( this ).find( 'cite.fn' ).text( ) + '</span>' );
+			jQuery( this )
+				.hide( )
+				.addClass( 'with-toggle' )
+				.before( '<div class="trackback-toggle"></div>' )
+				.prev( '.trackback-toggle' )
+				.html( from )
+				.click( function( ){
+					jQuery( this ).next( '.comment-content' ).slideToggle( 'fast' );
+				} );
+
+			return true;
+		} );
 	},
 
 	_init: function( ) {
@@ -418,24 +445,12 @@ addComment = {
 				addComment.toggleToggleText( jQuery( this ) );
 			} );
 
-			// Hide trackbacks from view if they take up too much space. Too much is 400px in my opinion but then I don't really like them. :P
+			// Hide trackbacks from view if they take up too much space.
+			// Too much is 400px in my opinion but then I don't really like them. :P
+			// Or make trackbacks toggleible in the comment stream
 			addComment.trackbackToggle( 400 );
 
-			// Hide trackbacks that show up in the comment stream.
-			// This is done as a one shot deal at load time as I'll not be collecting them after first load unlike comments.
-			$( '#commentlist li.pingback > .comment-body, #commentlist li.trackback > .comment-body' ).each( function( ){
-				var from = commentingL10n.tb_from.replace( '%s', '<span class="tb-from">' + $( this ).find( 'cite.fn' ).text( ) + '</span>' );
-				$( this )
-					.hide( )
-					.before( '<div class="trackback-toggle"></div>' )
-					.prev( '.trackback-toggle' )
-					.html( from )
-					.click( function( ){
-						$( this ).next( '.comment-body' ).slideToggle( 'fast' );
-					} );
-			} );
-
-			// Change the link button to a pop up element that has the link in it. WIP.
+			// Change the link button to a pop up element that has the link in it.
 			$( '#commentlist .comment-link' ).live( 'click', function( ) {
 				var val = $( this ).attr( 'href' ),
 					text = $( this ).text( ),
