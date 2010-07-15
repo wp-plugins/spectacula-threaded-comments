@@ -1,9 +1,9 @@
 === Plugin Name ===
 Contributors: interconnectit, spectacula
 Donate link: https://spectacu.la/signup/signup.php
-Tags: comments, jQuery,
+Tags: comments, jQuery, AJAX
 Requires at least: 2.7.0
-Tested up to: 2.9.2
+Tested up to: 3.0
 Stable tag: 1.0.3
 
 This plug-in will add threaded comments to most themes without any need for you
@@ -12,22 +12,24 @@ to dig into that themes code.
 == Description ==
 
 Once installed this plug-in will replace your theme's comments template with its
-own. Giving you threading, pagination and jQuery based roll up of subordinate
-comments this allows you to keep things tidy. The roll up can be told to trigger
-at any depth you feel is best using the comments page under appearance. Also
-available on the plug-ins admin page is the option to use the other included
-stylesheet that's more appropriate for dark hued themes. You can also tell it to
-use no stylesheet at all. This is handy if you want to roll it into your themes
-stylesheet to cut down the number of HTTP requests a visitor makes, useful on
-busy sites.
+own fully Ajax comment template. This allows both submission and update of
+comments without the page refreshing letting your visitors use it more as a chat
+room than the more traditional comment system. You can also roll up replied
+which can be told to trigger at any depth you feel is best using the settings
+page. Also available on the plug-ins admin page is the option to use another or
+no stylesheet, toggle the live updating of comments and change the refresh
+period for live update.
 
-This could also be useful for theme builders as you'd not have to worry about
-your comments.php again, Comments.php is one of the more complicated elements of
-any theme. And don't worry about only being able to use the stylesheets provided
-or having to hack the plug-in after every update, I've included three filers to
-allow you to replace the jQuery and the stylesheet with something of your own.
+As of version 2 you can now easily add new stylesheets to the availble list by
+either copying them into the plug's style folder with a comment at the top of
+the sheet that looks like this /* comment style: Styleshee name */ or adding a
+commenting.css to your theme or child theme. Once added they will then be listed
+in the dropdown menu that shows on the admin page.
 
-The filters
+=The filters=
+
+There are a few filters available for developers to intercept the javascript,
+paramerers passed to the javascript and the CSS file location
 
 1.	**spec_comment_css**
 	This will pass the URL of the stylesheet through to your function to replace
@@ -41,7 +43,8 @@ The filters
 
 To replace the CSS file you could add something like the following to your
 functions.php that would point to a comments.css file in the folder of your
-current theme.
+current theme. This will then override any choice made by the user on the admin
+page.
 
 `<?php
 	add_filter('spec_comment_css', 'my_css_file');
@@ -53,15 +56,20 @@ current theme.
 ?>`
 
 = Warning =
-Some themes will fail to work with this without you doing something to them
-first. Such as if the theme doesn't call the comments.php using the
-`comments_template();` template tag or if your theme deals with comments in an
-unusual way, such as placing them in a sidebar or calling them in using Ajax. A
-missing or unusual DOCTYPE could cause problems too, in fact there are lots of
-things that could cause strangeness. However with most of the themes I've tested
-this with it has worked without issue straight out of the gate and even if it
-doesn't look right you need only disable the plug-in to go back to how things
-were so nothing lost.
+
+Every effort has been made to make this work with as wide a variety of themes as
+is possible but we can't cover every eventuality so some themes out there will
+cause problems with this plugin without you doing something to either the
+plug-in or the theme first. The most likely cause of problems is that some of
+the CSS in the theme conflicts with the CSS in the comments. There are various
+other area where problems could arise, such as if the theme doesn't call the
+comments.php using the `comments_template();` template tag or if your theme
+deals with comments in an unusual way, such as placing them in a sidebar or
+calling them in using Ajax that conflicts with out own. A missing or unusual
+DOCTYPE could cause problems too, in fact there are lots of things that could
+cause strangeness. However with most of the themes I've tested this with it has
+worked without issue straight out of the gate and even if it doesn't look right
+you need only disable the plug-in to go back to how things were so nothing lost.
 
 == Installation ==
 
@@ -71,33 +79,33 @@ were so nothing lost.
 	`/wp-content/plugins/spec-comments/` or `/wp-content/mu-plugins/` directory.
 	If the directory doesn't exist then create it.
 2.	Activate the plugin through the 'Plugins' menu in WordPress.
-3.	You should now see an extra menu called comments show up under the
-	appearance menu in the main admin sidebar.
+3.	You should now see an extra menu show up under the settings menu in the main
+	admin sidebar.
 4.	Check a page on your site with comments and see that everything is as you'd
 	hope. If it's not then proceed to the config menu and see if what you want
 	can be set from there.
 
 = The config =
-1.  The main option with this plug-in is the option to define at which point the
-	comments roll up. Default is set so that all replies are hidden behind a
+
+1.  The first option with this plug-in is the option to define at which point
+	the	comments roll up. Default is set so that all replies are hidden behind a
 	click but with the drop down you could specify that replies to replies are
 	hidden or replies to replies of replies and so on...
-2.  The next group of options are some simple toggles and the first of these
-	lets you turn off the plug-in's CSS file. This can be handy if you want to
-	keep all CSS in the one stylesheet thus reducing the number of HTTP requests
-	or if you just want to style it up in your own way. If you turn off the
-	style anything attached to the spec_comment_css filter will fail to run
-	also.
-3.  As an extra to the one above we have the option to turn on the dark version
-	of the comments. This is handy if your theme is, well err.., dark.
-4.  If you'd rather drop all the javaScript then the next option is for you. Be
-	warned however that this will cause some styling issues in IE6 as jQuery is
-	used to add some extra classes to items that would otherwise be inaccessible
-	to IE6's limited understanding of CSS. All other browsers are unaffected and
-	IE6 will still be in a perfectly acceptable state it just won't look the
-	same as the other real browsers. Much the same as for the CSS, if you turn
-	it off anything attached to the spec_comment_js or spec_comment_local_js
-	filter will not be run.
+2.	The next block is for controlling the titles that show above the comment
+	block and the trackback block if your theme separates them out.
+3.	Choose the stylesheet you want to use with your theme. At the moment there
+	are two, the default style for use with light coloured themes and the dark
+	style for use with dark themes. You can also disable the CSS here if you'd
+	rather roll it into your theme's stylesheet. If you add more CSS files with
+	the special CSS comment to the style folder in the plug-in or add a
+	commenting.css to your theme's folder then that'll show up in this list too.
+4.	The comment update block lets you control the frequency of comment update
+	and whether they're enabled or not.	The default status for "Auto update" is
+	off, if you want to enable live	commenting then check this box and set a
+	time interval in the box below that	is appropriate to your server/traffic
+	levels. The minimum amount of time you can set for the auto update is 10
+	seconds any attempt to get it quicker than that will result in it returning
+	to the default value of 30 seconds.
 5.	The final option is to hide our credit link and is one we'd rather you
 	didn't do anything with but we've given you it anyway as we're nice like
 	that. We do understand that sometimes clients want things like that gone
@@ -124,6 +132,20 @@ theme developer to change their theme.
 2.	The control interface for this plug-in.
 
 == Changelog ==
+
+= 2.0.0 =
+*	There is now a completely new theme for the comments which has been updated
+	for both the dark an light versions and should work with more themes.
+	Comments are now ajaxed for both submit and update. You have control over
+	update frequency and the code will respect your choices for comment order
+	depth and all the other settings in the discussion area of the settings.
+	Made sure it is working with all versions of WP from 2.7 up and that
+	includes WP 3.0.
+	New stylesheet handling code that allows us to add more styles quickly. You
+	can now add stylesheet to your theme/child theme directory and that'll be
+	picked up by the plug-in and offered as an option on the plug-in's admin
+	page.
+	
 
 = 1.0.3 =
 *	Moved the javascript to the footer and removed an unneeded script.

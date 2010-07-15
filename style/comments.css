@@ -201,6 +201,8 @@
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	-moz-box-shadow: 5px 5px 12px -8px rgba(0, 0, 0, 0.3) inset;
+	-webkit-box-shadow: 5px 5px 12px -8px rgba(0, 0, 0, 0.3) inset;
 }
 
 #comments .comment-form-row label {
@@ -396,6 +398,16 @@ ul#trackback-list {
 
 #comments .comment-text p {
 	margin-bottom: 0.75em;
+}
+
+#comments .comment-text blockquote {
+	margin-bottom: 0.75em;
+	padding-left: 2em;
+	border-left: 5px solid #efefef;
+}
+
+#comments .comment-text img {
+	max-width: 100%;
 }
 
 #comments .reply-quote cite {
