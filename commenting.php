@@ -1,8 +1,8 @@
 <?php
 /*
- Plugin Name: Spectacu.la Threaded comments
+ Plugin Name: Spectacu.la Discussion
  Plugin URI: http://spectacu.la/
- Description: Make it easy to add threaded comments to any theme.
+ Description: Make it easy to add fully ajax threaded comments to any theme.
  Version: 2.0.0
  Author: James R Whitehead
  Author URI: http://www.interconnectit.com/
@@ -30,6 +30,12 @@ define( 'SPEC_COMMENT_TMP', SPEC_COMMENT_PTH . '/includes/template.php' );
 //delete_option( SPEC_COMMENT_OPT );
 
 if ( ! class_exists( 'spec_commenting' ) ) {
+
+	// Load the translation stuff
+	//load_plugin_textdomain( SPEC_COMMENT_DOM, false, '/lang/' );
+	$locale = get_locale( );
+	if ( file_exists( SPEC_COMMENT_PTH . '/lang/' . SPEC_COMMENT_DOM . '-' . $locale . '.mo' ) )
+		load_textdomain( SPEC_COMMENT_DOM, SPEC_COMMENT_PTH . '/lang/' . SPEC_COMMENT_DOM . '-' . $locale . '.mo' );
 
 	if ( ! function_exists ( 'json_encode' ) )
 		require_once( SPEC_COMMENT_PTH . '/includes/JSON.php' );
@@ -63,13 +69,6 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 		}
 
 		function _init ( ) {
-
-			// Load the translation stuff
-			//load_plugin_textdomain( SPEC_COMMENT_DOM, false, '/lang/' );
-			$locale = get_locale( );
-			if ( file_exists( SPEC_COMMENT_PTH . '/lang/' . SPEC_COMMENT_DOM . '-' . $locale . '.mo' ) )
-				load_textdomain( SPEC_COMMENT_DOM, SPEC_COMMENT_PTH . '/lang/' . SPEC_COMMENT_DOM . '-' . $locale . '.mo' );
-
 
 			// If we're requesting ajax stuff we'll hand over control to spec ajax then die.
 			if ( isset( $_REQUEST[ '_spec_ajax' ] ) ) {

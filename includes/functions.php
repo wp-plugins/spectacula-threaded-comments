@@ -155,10 +155,7 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 		if ( comments_open( ) ) {
 
 			$commenter = wp_get_current_commenter( );
-
-			if ( get_option( 'show_avatars' ) ) {
-				$avatar = get_avatar( isset( $current_user->user_email ) ? $current_user->user_email : $commenter[ 'comment_author_email' ] , 64 );
-			} ?>
+			$avatar = get_avatar( isset( $current_user->user_email ) ? $current_user->user_email : $commenter[ 'comment_author_email' ] , 64 ); ?>
 
 			<li class="depth-1<?php echo $avatar ? ' with-avatar' : ''?>" id="respond">
 				<div class="comment-body"><?php
@@ -169,10 +166,12 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 						echo ' '; // Adding this here rather than the string above so translations will still work from the old version
 						wp_loginout( get_permalink( ) );
 
-					} else {?>
-						<div class="comment-author-avatar">
-							<?php echo isset( $current_user->user_email ) || isset( $commenter[ 'comment_author_email' ] ) ? '<a href="http://gravatar.com/site/login" title="' . __( 'Change Your Avatar', SPEC_COMMENT_DOM ) . '">' . $avatar . '</a>' : $avatar; ?>
-						</div>
+					} else {
+						if ( get_option( 'show_avatars' ) ) { ?>
+							<div class="comment-author-avatar">
+								<?php echo isset( $current_user->user_email ) || isset( $commenter[ 'comment_author_email' ] ) ? '<a href="http://gravatar.com/site/login" title="' . __( 'Change Your Avatar', SPEC_COMMENT_DOM ) . '">' . $avatar . '</a>' : $avatar; ?>
+							</div><?php
+						} ?>
 
 						<form action="<?php echo get_option( 'siteurl' )?>/wp-comments-post.php" method="post" id="comment-form">
 							<fieldset><?php

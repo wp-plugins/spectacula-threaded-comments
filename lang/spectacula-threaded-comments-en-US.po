@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Spectacu.la threaded comments\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-13 12:48-0000\n"
+"POT-Creation-Date: 2010-07-15 17:05-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Interconnect IT <admin@interconnectit.com>\n"
 "Language-Team: Interconnect IT\n"
@@ -58,64 +58,64 @@ msgstr "Unknown commenter"
 msgid "Theme styling"
 msgstr "Theme styling"
 
-#: trunk/includes/functions.php:168
+#: trunk/includes/functions.php:165
 msgid "You must be logged in to comment."
 msgstr "You must be logged in to comment."
 
-#: trunk/includes/functions.php:174
+#: trunk/includes/functions.php:172
 msgid "Change Your Avatar"
 msgstr "Change Your Avatar"
 
-#: trunk/includes/functions.php:190
+#: trunk/includes/functions.php:189
 msgid "Name"
-msgstr "Named"
+msgstr "Name"
 
-#: trunk/includes/functions.php:195
+#: trunk/includes/functions.php:194
 msgid "Email"
 msgstr "Email"
 
-#: trunk/includes/functions.php:200
+#: trunk/includes/functions.php:199
 msgid "Website"
 msgstr "Website"
 
-#: trunk/includes/functions.php:211
+#: trunk/includes/functions.php:210
 msgid "Post your comment"
 msgstr "Post your comment"
 
-#: trunk/includes/functions.php:212
+#: trunk/includes/functions.php:211
 msgid "Cancel reply"
 msgstr "Cancel reply"
 
-#: trunk/includes/functions.php:216
+#: trunk/includes/functions.php:215
 msgid "Edit profile"
 msgstr "Edit profile"
 
-#: trunk/includes/functions.php:217
+#: trunk/includes/functions.php:216
 msgid "Log out of this account"
 msgstr "Log out of this account"
 
-#: trunk/includes/functions.php:217
+#: trunk/includes/functions.php:216
 msgid "Log Out"
 msgstr "Log Out"
 
-#: trunk/includes/functions.php:271
+#: trunk/includes/functions.php:270
 #, php-format
 msgid "%1$s at %2$s"
 msgstr "%1$s at %2$s"
 
-#: trunk/includes/functions.php:277
+#: trunk/includes/functions.php:276
 msgid "Comment awaiting moderation."
 msgstr "Comment awaiting moderation."
 
-#: trunk/includes/functions.php:283
+#: trunk/includes/functions.php:282
 msgid "Reply"
 msgstr "Reply"
 
-#: trunk/includes/functions.php:285
+#: trunk/includes/functions.php:284
 msgid "Edit"
 msgstr "Edit"
 
-#: trunk/includes/functions.php:286
+#: trunk/includes/functions.php:285
 msgid "Link"
 msgstr "Link"
 
@@ -181,16 +181,12 @@ msgid "This is the depth at which comments require a click to see replies. JavaS
 msgstr "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
 
 #: trunk/includes/options-page.php:153
-msgid "Spectacu.la Comments"
-msgstr "Spectacu.la Comments"
-
-#: trunk/includes/options-page.php:153
-msgid "Ajax comments"
-msgstr "Ajax comments"
+msgid "Spectacu.la Discussion"
+msgstr "Spectacu.la Discussion"
 
 #: trunk/includes/options-page.php:214
-msgid "Comment Options"
-msgstr "Comment Options"
+msgid "Spectacu.la Discussion Options"
+msgstr "Spectacu.la Discussion Options Page"
 
 #: trunk/includes/options-page.php:221
 msgid "Save settings"
@@ -204,6 +200,10 @@ msgstr "This will reset all options to their to defaults if checked when saved."
 msgid "Save"
 msgstr "Save"
 
+#~ msgid "Ajax comments"
+#~ msgstr "Ajax comments"
+#~ msgid "Comment Options"
+#~ msgstr "Comment Options"
 #~ msgid "Threaded comment options"
 #~ msgstr "Threaded comment options"
 #~ msgid "Use the stylesheet that came with this plug-in. "

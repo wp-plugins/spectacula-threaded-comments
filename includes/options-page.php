@@ -150,7 +150,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 
 		function add_options_pages( ) {
 			register_setting( SPEC_COMMENT_OPT, SPEC_COMMENT_OPT, array( &$this, 'validate_options' ) );
-			add_options_page( __( 'Spectacu.la Comments', SPEC_COMMENT_DOM ), __( 'Ajax comments', SPEC_COMMENT_DOM ), 'manage_options', SPEC_COMMENT_OPT, array( &$this, 'options_page' ) );
+			add_options_page( __( 'Spectacu.la Discussion', SPEC_COMMENT_DOM ), __( 'Spectacu.la Discussion', SPEC_COMMENT_DOM ), 'manage_options', SPEC_COMMENT_OPT, array( &$this, 'options_page' ) );
 		}
 
 
@@ -211,7 +211,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 		function options_page( ) { ?>
 
 			<div class="wrap">
-				<h2><?php _e( 'Comment Options', SPEC_COMMENT_DOM )?></h2>
+				<h2><?php _e( 'Spectacu.la Discussion Options', SPEC_COMMENT_DOM )?></h2>
 				<form method="post" action="options.php" enctype="multipart/form-data">
 					<?php settings_fields( SPEC_COMMENT_OPT ); ?>
 
