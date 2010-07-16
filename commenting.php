@@ -129,7 +129,7 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 					'unknown' => __( 'Unknown commenter', SPEC_COMMENT_DOM ),
 					'order' => get_option( 'comment_order' ),
 					'polling' => spec_comment_option( 'polling' ),
-					'update' => spec_comment_option( 'update' ) ? 1 : 0,
+					'update' => spec_comment_option( 'update' ) && comments_open( $post->ID ) ? 1 : 0,
 					'time' => current_time( 'mysql', false ),
 					'post_id' => $post->ID,
 					'ajax_url' => trailingslashit( get_bloginfo( 'home' ) ),
