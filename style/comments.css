@@ -3,10 +3,11 @@
 */
 
 /* Quick and crude reset */
-#comments *, #comments fieldset, #comments cite, #comments p, #comments label,
+#comments div, #comments fieldset, #comments cite, #comments p, #comments label,
 #comments form, #comments img, #comments blockquote, #comments #commentlist ul,
 #comments #commentlist li, #comments #respond textarea, #comments #commentlist,
-#comments #commentlist img.photo, #comments #respond input {
+#comments #commentlist img.photo, #comments #respond input, #comments span,
+#comments #trackback-list, #comments #trackback-list li  {
 	background-color: transparent;
 	background-image: none;
 	border: 0 none;
@@ -40,6 +41,8 @@
 #comments #respond input {
 	width: auto;
 	height: auto;
+	min-height: 0;
+	min-width: 0;
 }
 
 #comments #commentlist img.photo,
@@ -84,7 +87,7 @@
 	-webkit-border-radius: 3px;
 }
 
-.comment-body .moderation,
+#comments .comment-body .moderation,
 #comment-form .error {
 	background-color: #FFFFE0;
 	border: solid 1px #E6DB55;
@@ -98,7 +101,7 @@
 	-webkit-border-radius: 3px;
 }
 
-.comment-body .moderation {
+#comments .comment-body .moderation {
 	display: block;
 	margin-bottom: 3px;
 	clear: both;
@@ -131,8 +134,8 @@
 	background-color: #efefef;
 }
 
-.with-avatar #comment-form,
-.with-avatar .comment-content {
+#comments .with-avatar #comment-form,
+#comments .with-avatar .comment-content {
 	margin-left: 76px;
 }
 
@@ -186,9 +189,10 @@
 }
 
 #comments .comment-buttons input:active, #comments .comment-buttons input:focus,
-#comments .comment-buttons input:hover, #comments .comment-buttons a:active, #comments .comment-buttons a:focus,
-#comments .comment-buttons a:hover, #comments .comment-button:active,
-#comments .comment-button:focus, #comments .comment-button:hover {
+#comments .comment-buttons input:hover, #comments .comment-buttons a:active,
+#comments .comment-buttons a:focus, #comments .comment-buttons a:hover,
+#comments .comment-button:active, #comments .comment-button:focus,
+#comments .comment-button:hover {
 	background-color: #333;
 	color: #fff
 }
@@ -211,7 +215,7 @@
 }
 
 #comments #respond .comment-form-row input,
-#comment-form .textarea-border {
+#comments #comment-form .textarea-border {
 	border: solid 1px #ccc;
 	background-color: #f8f8f8;
 
@@ -233,7 +237,7 @@
 	padding: 3px 2px 2px;
 }
 
-.textarea-border {
+#comments .textarea-border {
 	padding: 5px;
 }
 
@@ -244,11 +248,11 @@
 	color: #999;
 }
 
-#comment-form .oops {
+#comments #comment-form .oops {
 	background: url( exclamation.png ) no-repeat 98% center;
 }
 
-#comment-form textarea.oops {
+#comments #comment-form textarea.oops {
 	background-position: right top;
 }
 
@@ -330,7 +334,8 @@ a.next:hover {
 	text-decoration:none;
 }
 
-#comment-pagination span.dots,#comment-pagination a.prev,#comment-pagination a.next {
+#comment-pagination span.dots, #comment-pagination a.prev,
+#comment-pagination a.next {
 	background-color:transparent;
 	color: #333;
 }
@@ -352,16 +357,16 @@ a.next:hover {
 }
 
 #comments ul#commentlist li .comment-body,
-.ie6 .comment-buttons {
+.ie6 #comments .comment-buttons {
 	zoom: 1
 }
 
-.comment-title {
+#comments .comment-title {
 	font-size: 140%;
 	font-weight: normal;
 	margin-bottom: 0.5em;
-
 }
+
 ul#trackback-list {
 	margin: 0;
 	padding: 0;

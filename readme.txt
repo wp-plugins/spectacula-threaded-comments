@@ -6,23 +6,23 @@ Requires at least: 2.7.0
 Tested up to: 3.0
 Stable tag: 1.0.3
 
-Spectacu.la Discussion adds threaded commenting with live AJAX comments 
+Spectacu.la Discussion adds threaded commenting with live AJAX comments
 to almost any WordPress Theme.
 
 == Description ==
 
-Ever found your theme doesn't support threaded comments?  Would you like to to be
-able to have P2 style live commenting on your site?  Spectacu.la Discussion is a
-plugin that replaces the commenting code in your theme with a fully Ajaxed comments
-engine.
+Ever found your theme doesn't support threaded comments?  Would you like to to
+be able to have P2 style live commenting on your site?  Spectacu.la Discussion
+is a plugin that replaces the commenting code in your theme with a fully Ajaxed
+comments engine.
 
 The plugin uses memory tables for fast cacheing within the database (no pesky
-permission setting for you to worry about here) and adjustible polling times
-to suit a wide range of server performance.
+permission setting for you to worry about here) and adjustible polling times to
+suit a wide range of server performance.
 
-The plugin is also developer friendly, meaning that you can easily add styles
-to your theme so that should a user implement the plugin your meticulous design
-can be carried through.  By default there are two styles that should work in most
+The plugin is also developer friendly, meaning that you can easily add styles to
+your theme so that should a user implement the plugin your meticulous design can
+be carried through.  By default there are two styles that should work in most
 cases.  Read below for further instructions.
 
 Once installed this plug-in will replace your theme's comments template with its
@@ -85,13 +85,15 @@ calling them in using Ajax that conflicts with our own. A missing or unusual
 DOCTYPE could cause problems too, in fact there are lots of things that could
 cause strangeness. However with most of the themes I've tested this with it has
 worked without issue straight out of the gate and even if it doesn't look right
-you need only disable the plug-in to go back to how things were, so nothing's lost.
+you need only disable the plug-in to go back to how things were, so nothing's
+lost.
 
 == Installation ==
 
 = The install =
 
-You can either install the plugin using the WordPress auto-installer, or manually:
+You can either install the plugin using the WordPress auto-installer, or
+manually:
 
 1.	Upload `commenting.php` and all sub folders to
 	`/wp-content/plugins/spec-comments/` or `/wp-content/mu-plugins/` directory.
@@ -162,7 +164,7 @@ theme developer to change their theme.
 	can now add stylesheet to your theme/child theme directory and that'll be
 	picked up by the plug-in and offered as an option on the plug-in's admin
 	page.
-	
+
 
 = 1.0.3 =
 *	Moved the javascript to the footer and removed an unneeded script.
