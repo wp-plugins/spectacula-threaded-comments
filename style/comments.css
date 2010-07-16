@@ -5,7 +5,8 @@
 /* Quick and crude reset */
 #comments fieldset, #comments cite, #comments input, #comments textarea,
 #comments form, #comments p, #comments img, #comments blockquote, #comments ul,
-#comments #commentlist li, #comments .comment-buttons *, #comments #respond {
+#comments #commentlist li, #comments .comment-buttons *, #comments #respond,
+#comments label {
 	background-color: transparent;
 	color: #333;
 	border: 0 none;
@@ -26,8 +27,10 @@
 	box-shadow: none;
 }
 
+#comments textarea,
 #comments input {
 	width: auto;
+	height: auto;
 }
 
 #comments img.avatar {
