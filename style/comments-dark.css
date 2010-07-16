@@ -267,14 +267,14 @@
 
 
 /* Pagination */
-#comment-pagination {
+#comments #comment-pagination {
 	clear:both;
 	text-align: center;
 	padding: 1em 0;
 }
-	.page-links a {text-decoration:none}
+	#comments .page-links a {text-decoration:none}
 
-	.page-numbers {
+	#comments .page-numbers {
 		line-height: 26px;
 		height: 26px;
 		min-width: 20px;
@@ -290,68 +290,66 @@
 		color:#fff;
 	}
 
-	a.page-numbers:focus,
-	a.page-numbers:hover {
+	#comments a.page-numbers:focus,
+	#comments a.page-numbers:hover {
 		background-color: #f00;
 		color: #600;
 	}
 
-span.dots,
-a.prev, a.next {
+#comments span.dots,
+#comments #comments a.prev, a.next {
 	background-color:transparent;
 	color: #fff;
 }
 
-a.prev, a.next {
+#comments a.prev, #comments a.next {
 	font-size: 200%;
 	vertical-align:top;
 }
 
 /* Colours */
 
-a.prev:focus,
-a.next:focus,
-a.prev:hover,
-a.next:hover {
+#comments a.prev:focus,
+#comments a.next:focus,
+#comments a.prev:hover,
+#comments a.next:hover {
 	color:#ccc;
 	background-color:transparent;
 }
 
-.current {
+#comments .current {
 	background-color:#333;
 	color:#666;
 }
 
-.pageLinks .page-numbers, #comment-pagination span.current {
+#comments #comment-pagination span.current {
 	background-color:#333;
 	color:#666;
 }
 
-.pageLinks a .page-numbers,
-#comment-pagination .page-numbers {
+#comments #comment-pagination .page-numbers {
 	color:#ddd;
 	background-color: #333;
 	text-decoration:none;
 }
 
-#comment-pagination span.dots, #comment-pagination a.prev,
-#comment-pagination a.next {
+#comments #comment-pagination span.dots, #comment-pagination a.prev,
+#comments #comment-pagination a.next {
 	background-color:transparent;
 	color: #ddd;
 }
 
-.pageLinks a:hover .page-numbers,
-#comment-pagination a.page-numbers:focus,
-#comment-pagination a.page-numbers:hover {
+#comments #comment-pagination a.page-numbers:focus,
+#comments #comment-pagination a.page-numbers:hover {
 	background-color: #666;
 	color: #fff;
 	text-decoration:none;
 }
 
-#comment-pagination a.prev:focus,
-#comment-pagination a.next:focus,
-#comment-pagination a.prev:hover,
-#comment-pagination a.next:hover {
+#comments #comment-pagination a.prev:focus,
+#comments #comment-pagination a.next:focus,
+#comments #comment-pagination a.prev:hover,
+#comments #comment-pagination a.next:hover {
 	background-color:transparent;
 	color:#666;
 }
