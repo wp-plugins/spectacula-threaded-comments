@@ -73,8 +73,10 @@ addComment = {
 		jQuery( '#comment-form .textarea-border' ).after( jQuery( '<div class="error">' + msg + '</div>' ).hide( ) ).next( '.error' ).slideDown( 'slow', function( ) {
 			var a = jQuery( this );
 			// Kill the filter for IE as it makes the text unreadable.
-			jQuery( this ).css( 'FILTER', '' );
-			jQuery( this )[ 0 ].style.filter = '';
+			if ( undefined  !== jQuery( this )[ 0 ].style ) {
+				jQuery( this ).css( 'FILTER', '' );
+				jQuery( this )[ 0 ].style.filter = '';
+			}
 
 			setTimeout( function( ) {
 				jQuery( a ).slideUp( 'slow', function( ) {
@@ -281,8 +283,10 @@ addComment = {
 				jQuery( this ).before( jQuery( '<div class="toggle"></div>' ).hide( ).css( { opacity: 0 } ) );
 				jQuery( this ).prev( 'div.toggle' ).show().fadeTo( 'slow', 1, function( ){
 					// Kill the filter for IE as it makes the text unreadable.
-					jQuery( this ).css( 'FILTER', '' );
-					jQuery( this )[ 0 ].style.filter = '';
+					if ( undefined !== jQuery( this )[ 0 ].style ) {
+						jQuery( this ).css( 'FILTER', '' );
+						jQuery( this )[ 0 ].style.filter = '';
+					}
 				} );
 			}
 

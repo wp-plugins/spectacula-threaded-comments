@@ -3,13 +3,14 @@
 */
 
 /* Quick and crude reset */
-#comments fieldset, #comments cite, #comments input, #comments textarea,
-#comments form, #comments p, #comments img, #comments blockquote, #comments ul,
-#comments #commentlist li, #comments .comment-buttons *, #comments #respond,
-#comments label, #comments #commentlist img.photo {
+#comments *, #comments fieldset, #comments cite, #comments p, #comments label,
+#comments form, #comments img, #comments blockquote, #comments #commentlist ul,
+#comments #commentlist li, #comments #respond textarea, #comments #commentlist,
+#comments #commentlist img.photo, #comments #respond input {
 	background-color: transparent;
-	color: #ddd;
+	background-image: none;
 	border: 0 none;
+	outline: 0 none;
 	padding: 0;
 	margin: 0;
 	list-style: none outside;
@@ -17,10 +18,14 @@
 	font-weight: inherit;
 	font-family: inherit;
 	font-size: inherit;
+	line-height: inherit;
 	text-decoration: none;
 	text-transform: none;
-	line-height: inherit;
 	text-align: left;
+	clear: none;
+	text-shadow: 0 0;
+	float: none;
+	color: #ddd;
 
 	/* Kill box shadows from 2010 theme */
 	-moz-box-shadow: none;
@@ -28,8 +33,11 @@
 	box-shadow: none;
 }
 
-#comments textarea,
-#comments input {
+#comments .comment-body,
+#comments .comment-body *,
+#comments #commentlist li,
+#comments #respond textarea,
+#comments #respond input  {
 	width: auto;
 	height: auto;
 }
@@ -42,6 +50,7 @@
 	width: auto;
 	height: auto;
 	float: none;
+	position: static;
 }
 
 #comments {
@@ -145,7 +154,9 @@
 
 #comments .comment-buttons .comment-button,
 #comments .comment-buttons a ,
-#comments .comment-buttons input {
+#comments #respond .comment-buttons input {
+	text-align: center;
+	position: static;
 	border: 0 none;
 	cursor: pointer;
 	margin:  0 0 0 5px;
@@ -199,7 +210,7 @@
 	width: 100%;
 }
 
-#comments .comment-form-row input,
+#comments #respond .comment-form-row input,
 #comment-form .textarea-border {
 	border: dotted 1px #444;
 	background-color: #333;
@@ -210,12 +221,12 @@
 
 }
 
-#comments .comment-form-row label {
+#comments #respond .comment-form-row label {
 	float: left;
 	width: 18%;
 }
 
-#comments .comment-form-row input {
+#comments #respond .comment-form-row input {
 	width: 80%;
 	float: right;
 	margin: 0;
@@ -241,7 +252,7 @@
 	background-position: right top;
 }
 
-#comments #comment {
+#comments textarea#comment {
 	border: 0 none;
 	width: 100%;
 	padding: 0;

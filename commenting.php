@@ -171,8 +171,8 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 		 @return null;
 		*/
 		function css( ){
-			if ( is_singular( ) && spec_comment_option( 'stylesheet' ) != '' ) {
-				?><link rel="stylesheet" href="<?php echo apply_filters( 'spec_comment_css', spec_comment_option( 'stylesheet' ) . '?ver=2.0.0' ); ?>" type="text/css" media="screen" /><?php
+			if ( is_singular( ) && spec_comment_option( 'stylesheet' ) != '' ) { ?>
+				<link rel="stylesheet" href="<?php echo apply_filters( 'spec_comment_css', spec_comment_option( 'stylesheet' ) . '?ver=2.0.0' ); ?>" type="text/css" media="screen" /><?php
 			}
 		}
 
