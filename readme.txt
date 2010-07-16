@@ -6,10 +6,24 @@ Requires at least: 2.7.0
 Tested up to: 3.0
 Stable tag: 1.0.3
 
-This plug-in will add threaded comments to most themes without any need for you
-to dig into that themes code.
+Spectacu.la Discussion adds threaded commenting with live AJAX comments 
+to almost any WordPress Theme.
 
 == Description ==
+
+Ever found your theme doesn't support threaded comments?  Would you like to to be
+able to have P2 style live commenting on your site?  Spectacu.la Discussion is a
+plugin that replaces the commenting code in your theme with a fully Ajaxed comments
+engine.
+
+The plugin uses memory tables for fast cacheing within the database (no pesky
+permission setting for you to worry about here) and adjustible polling times
+to suit a wide range of server performance.
+
+The plugin is also developer friendly, meaning that you can easily add styles
+to your theme so that should a user implement the plugin your meticulous design
+can be carried through.  By default there are two styles that should work in most
+cases.  Read below for further instructions.
 
 Once installed this plug-in will replace your theme's comments template with its
 own fully Ajax comment template. This allows both submission and update of
@@ -20,11 +34,13 @@ page. Also available on the plug-ins admin page is the option to use another or
 no stylesheet, toggle the live updating of comments and change the refresh
 period for live update.
 
-As of version 2 you can now easily add new stylesheets to the availble list by
-either copying them into the plug's style folder with a comment at the top of
-the sheet that looks like this /* comment style: Styleshee name */ or adding a
+As of version 2 you can now easily add new stylesheets to the available list by
+either copying them into the plug-in's style folder with a comment at the top of
+the sheet that looks like this /* comment style: Stylesheet name */ or adding a
 commenting.css to your theme or child theme. Once added they will then be listed
 in the dropdown menu that shows on the admin page.
+
+The plugin is also, of course, Multisites compatible.
 
 =The filters=
 
@@ -32,13 +48,13 @@ There are a few filters available for developers to intercept the javascript,
 paramerers passed to the javascript and the CSS file location
 
 1.	**spec_comment_css**
-	This will pass the URL of the stylesheet through to your function to replace
+	Passes the URL of the stylesheet through to your function to replace
 	with your own file.
 2.	**spec_comment_js**
-	The will pass the URL to the jQuery file that controls the roll up and a few
+	Passes the URL to the jQuery file that controls the roll up and a few
 	other elements.
 3.	**spec_comment_local_js**
-	This will pass in an array of localisation strings that are passed to the
+	Passes in an array of localisation strings that are passed to the
 	jQuery code.
 
 To replace the CSS file you could add something like the following to your
@@ -58,22 +74,24 @@ page.
 = Warning =
 
 Every effort has been made to make this work with as wide a variety of themes as
-is possible but we can't cover every eventuality so some themes out there will
+possible but we can't cover every eventuality so some themes out there will
 cause problems with this plugin without you doing something to either the
 plug-in or the theme first. The most likely cause of problems is that some of
 the CSS in the theme conflicts with the CSS in the comments. There are various
-other area where problems could arise, such as if the theme doesn't call the
+other areas where problems could arise, such as if the theme doesn't call the
 comments.php using the `comments_template();` template tag or if your theme
 deals with comments in an unusual way, such as placing them in a sidebar or
-calling them in using Ajax that conflicts with out own. A missing or unusual
+calling them in using Ajax that conflicts with our own. A missing or unusual
 DOCTYPE could cause problems too, in fact there are lots of things that could
 cause strangeness. However with most of the themes I've tested this with it has
 worked without issue straight out of the gate and even if it doesn't look right
-you need only disable the plug-in to go back to how things were so nothing lost.
+you need only disable the plug-in to go back to how things were, so nothing's lost.
 
 == Installation ==
 
 = The install =
+
+You can either install the plugin using the WordPress auto-installer, or manually:
 
 1.	Upload `commenting.php` and all sub folders to
 	`/wp-content/plugins/spec-comments/` or `/wp-content/mu-plugins/` directory.
@@ -139,8 +157,7 @@ theme developer to change their theme.
 	Comments are now ajaxed for both submit and update. You have control over
 	update frequency and the code will respect your choices for comment order
 	depth and all the other settings in the discussion area of the settings.
-	Made sure it is working with all versions of WP from 2.7 up and that
-	includes WP 3.0.
+	Made sure it works with all versions of WP from 2.7 up, including WP 3.0.
 	New stylesheet handling code that allows us to add more styles quickly. You
 	can now add stylesheet to your theme/child theme directory and that'll be
 	picked up by the plug-in and offered as an option on the plug-in's admin
