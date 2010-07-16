@@ -6,7 +6,7 @@
 #comments fieldset, #comments cite, #comments input, #comments textarea,
 #comments form, #comments p, #comments img, #comments blockquote, #comments ul,
 #comments #commentlist li, #comments .comment-buttons *, #comments #respond,
-#comments label {
+#comments label, #comments #commentlist img.photo {
 	background-color: transparent;
 	color: #ddd;
 	border: 0 none;
@@ -34,6 +34,7 @@
 	height: auto;
 }
 
+#comments #commentlist img.photo,
 #comments img.avatar {
 	border: 0 none !important;
 	padding: 0 !important;
