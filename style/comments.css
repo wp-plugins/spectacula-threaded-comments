@@ -20,6 +20,7 @@
 	text-decoration: none;
 	text-transform: none;
 	line-height: inherit;
+	text-align: left;
 
 	/* Kill box shadows from 2010 theme */
 	-moz-box-shadow: none;
