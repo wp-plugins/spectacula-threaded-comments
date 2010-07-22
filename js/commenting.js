@@ -175,6 +175,16 @@ addComment = {
 			addComment.addToggles( );
 		}
 
+		if ( ! scroll_to ) {
+			jQuery( '#comment-' + comment_ID  ).addClass( 'new' ).children( '#div-comment-' + comment_ID ).find( '.comment-meta' ).prepend( '<span class="new-comment"></span>' );
+			jQuery( '#div-comment-' + comment_ID ).bind( 'mouseover', function( ) {
+				jQuery( this ).find( '.comment-meta span.new-comment').fadeTo( 1000, 0, function( ) {
+					jQuery( this ).closest( 'li' ).removeClass( 'new' );
+					jQuery( this ).remove( );
+				} );
+			} );
+		}
+
 		jQuery( 'ul#commentlist, ul#trackback-list' ).find( '.rolledup' ).slideDown( 500, function( ){
 			// Our comment is in place, now let us scroll to it once unrolled.
 			if ( scroll_to )

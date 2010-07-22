@@ -154,10 +154,19 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 
 		if ( comments_open( ) ) {
 
-			$commenter = wp_get_current_commenter( );
-			$avatar = get_avatar( isset( $current_user->user_email ) ? $current_user->user_email : $commenter[ 'comment_author_email' ] , 64 ); ?>
+			if ( ! is_user_logged_in( ) )
+				$commenter = wp_get_current_commenter( );
+
+			if ( spec_comment_option( 'form_avatar' ) )
+				$avatar = get_avatar( isset( $current_user->user_email ) ? $current_user->user_email : $commenter[ 'comment_author_email' ], 64 ); ?>
 
 			<li class="depth-1<?php echo $avatar ? ' with-avatar' : ''?>" id="respond">
+
+			<?php
+				$form_title = spec_comment_option( 'form_title' );
+				if ( $form_title != '' )
+					echo '<div class="comment-title">' . $form_title . '</div>'; ?>
+
 				<div class="comment-body"><?php
 					// Not logged in, then you're not getting the form.
 					if ( get_option( 'comment_registration' ) && ! $user_ID ) {
@@ -167,7 +176,7 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 						wp_loginout( get_permalink( ) );
 
 					} else {
-						if ( get_option( 'show_avatars' ) ) { ?>
+						if ( get_option( 'show_avatars' ) && isset( $avatar ) && $avatar != '' ) { ?>
 							<div class="comment-author-avatar">
 								<?php echo isset( $current_user->user_email ) || isset( $commenter[ 'comment_author_email' ] ) ? '<a href="http://gravatar.com/site/login" title="' . __( 'Change Your Avatar', SPEC_COMMENT_DOM ) . '">' . $avatar . '</a>' : $avatar; ?>
 							</div><?php
@@ -263,7 +272,7 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 
 				<?php
 
-				echo $avatar && ! $tb ? '<div class="comment-author-avatar">' . $avatar . '</div>' : ''; ?>
+				echo $avatar && ! $tb ? '<div class="comment-author-avatar">' . $avatar . '<span class="avatar-overlay"></span></div>' : ''; ?>
 				<div class="comment-content">
 					<div class="comment-meta">
 						<cite class="fn"><?php comment_author_link( ); ?></cite>

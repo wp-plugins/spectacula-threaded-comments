@@ -17,8 +17,10 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 							'credit' => true,
 							'title' => 'Comments',
 							'trackback' => 'Trackbacks',
+							'form_title' => '',
 							'polling' => 30, // Frequency to poll the server for new comments in seconds.
 							'update' => false, // Do we want to auto update or not.
+							'form_avatar' => true,
 							);
 
 
@@ -26,7 +28,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 
 		function init( ) {
 			$this->add_stuff_box( array( 'title' => __( 'Rollup Depth', SPEC_COMMENT_DOM ), 'callback' => 'comment_nest_depth' ) );
-			$this->add_stuff_box( array( 'title' => __( 'Titles', SPEC_COMMENT_DOM ), 'callback' => 'titles' ) );
+			$this->add_stuff_box( array( 'title' => __( 'Titles and form', SPEC_COMMENT_DOM ), 'callback' => 'titles' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Stylesheet', SPEC_COMMENT_DOM ), 'callback' => 'stylesheet' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Comment update', SPEC_COMMENT_DOM ), 'callback' => 'polling' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Our credit', SPEC_COMMENT_DOM ), 'callback' => 'credit' ) );
@@ -54,6 +56,16 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 
 			<p><label for="<?php $this->item_attrib( 'trackback' ); ?>"><?php _e( 'Trackback title', SPEC_COMMENT_DOM ); ?></label></p>
 			<p><input style="width:98%" class="regular-text" type="text" value="<?php echo esc_attr( $options[ 'trackback' ] );?>" name="<?php $this->item_attrib( 'trackback', true ); ?>" id="<?php $this->item_attrib( 'trackback' ); ?>" /></p>
+
+			<p><label for="<?php $this->item_attrib( 'form_title' ); ?>"><?php _e( 'Comment form title', SPEC_COMMENT_DOM ); ?></label></p>
+			<p><input style="width:98%" class="regular-text" type="text" value="<?php echo esc_attr( $options[ 'form_title' ] );?>" name="<?php $this->item_attrib( 'form_title', true ); ?>" id="<?php $this->item_attrib( 'form_title' ); ?>" /></p>
+
+			<br/>
+			<p><?php _e( 'We will attempt to show, next to the comment form, the avatar of the logged in user, the user found in the cookie or a default avatar. Some plug-ins can get in the way of this and cause problems if that happens to you your best option is to not show this avatar.', SPEC_COMMENT_DOM )?></p>
+			<p>
+				<label for="<?php $this->item_attrib( 'form_avatar' ); ?>"><?php _e( 'Show form avatar', SPEC_COMMENT_DOM ); ?></label>
+				<input type="checkbox" value="1" <?php checked( $options[ 'form_avatar' ], true );?> name="<?php $this->item_attrib( 'form_avatar', true ); ?>" id="<?php $this->item_attrib( 'form_avatar' ); ?>" />
+			</p>
 			<?php
 		}
 
@@ -116,10 +128,12 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				// My options
 				$output[ 'title' ] = html_entity_decode( stripcslashes( $options[ 'title' ] ) );
 				$output[ 'trackback' ] = html_entity_decode( stripcslashes( $options[ 'trackback' ] ) );
+				$output[ 'form_title' ] = html_entity_decode( stripcslashes( $options[ 'form_title' ] ) );
 				$output[ 'credit' ] = intval( $options[ 'credit' ] ) == 1 ? true : false;
 				$output[ 'comments_nest_depth' ] = intval( $options[ 'comments_nest_depth' ] ) >= 0 && intval( $options[ 'comments_nest_depth' ] ) <= 10 ? intval( $options[ 'comments_nest_depth' ] ) : $this->defaults[ 'comments_nest_depth' ];
 				$output[ 'polling' ] = intval( $options[ 'polling' ] ) >= 10 && intval( $options[ 'polling' ] ) <= 999 ? intval( $options[ 'polling' ] ) : $this->defaults[ 'polling' ];
 				$output[ 'update' ] = intval( $options[ 'update' ] ) == 1 ? true : false;
+				$output[ 'form_avatar' ] = intval( $options[ 'form_avatar' ] ) == 1 ? true : false;
 
 				$stylesheets = spec_stylesheet_find( );
 

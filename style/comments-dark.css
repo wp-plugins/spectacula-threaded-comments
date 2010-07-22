@@ -249,7 +249,7 @@
 }
 
 #comments #comment-form .oops {
-	background: url( exclamation.png ) no-repeat 98% center;
+	background: url( 'system-error.png' ) no-repeat 98% center;
 }
 
 #comments #comment-form textarea.oops {

@@ -249,7 +249,7 @@
 }
 
 #comments #comment-form .oops {
-	background: url( exclamation.png ) no-repeat 98% center;
+	background: url( 'system-error.png' ) no-repeat 98% center;
 }
 
 #comments #comment-form textarea.oops {
@@ -473,4 +473,17 @@ ul#trackback-list {
 
 #comments .comment-body .with-toggle {
 	margin-top: 18px;
+}
+
+#comments .comment-body .comment-meta .new-comment {
+	display: inline;
+	float: right;
+	width: 20px;
+	height: 20px;
+	background: url( badge-new.png ) no-repeat center center transparent;
+}
+
+#comments ul#commentlist li.new > .comment-body {
+	/*border: 2px solid #337FBA;*/
+	background-color: #efefef
 }
