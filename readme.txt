@@ -4,7 +4,7 @@ Donate link: https://spectacu.la/signup/signup.php
 Tags: comments, jQuery, AJAX
 Requires at least: 2.7.0
 Tested up to: 3.0
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 
 Spectacu.la Discussion adds threaded commenting with live AJAX comments
 to almost any WordPress Theme.
@@ -153,6 +153,14 @@ theme developer to change their theme.
 
 == Changelog ==
 
+= 2.0.1 =
+*	Added an option to remove the avatar in the comment form.
+	Added an option to set a title for the comment form.
+	Added some script to allow highlight of new comments as they arrive and also
+	styled up the two default styles to make use of the new class and icon.
+	Changed the exclamation icon to a GPL compatible one from
+	http://19eighty7.com/icons
+
 = 2.0.0 =
 *	There is now a completely new theme for the comments which has been updated
 	for both the dark an light versions and should work with more themes.
@@ -164,7 +172,6 @@ theme developer to change their theme.
 	can now add stylesheet to your theme/child theme directory and that'll be
 	picked up by the plug-in and offered as an option on the plug-in's admin
 	page.
-
 
 = 1.0.3 =
 *	Moved the javascript to the footer and removed an unneeded script.

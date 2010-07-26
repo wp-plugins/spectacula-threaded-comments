@@ -83,8 +83,13 @@
 	overflow: auto;
 	margin-bottom: 11px;
 
+	-webkit-transition:background-color 0.25s ease-in;
+	-moz-transition:background-color 0.25s ease-in;
+	transition:background-color 0.25s ease-in;
+
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 #comments .comment-body .moderation,
@@ -99,6 +104,7 @@
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 #comments .comment-body .moderation {
@@ -173,6 +179,7 @@
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 #comments .comment-buttons a.comment-button,
@@ -221,6 +228,9 @@
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
+
+
 
 
 }
@@ -285,6 +295,7 @@
 		text-decoration:none;
 		-moz-border-radius: 2px;
 		-webkit-border-radius: 2px;
+		border-radius: 2px;
 
 		background-color: #000;
 		color:#fff;
@@ -297,7 +308,7 @@
 	}
 
 #comments span.dots,
-#comments #comments a.prev, a.next {
+#comments a.prev, #comments a.next {
 	background-color:transparent;
 	color: #fff;
 }
@@ -473,4 +484,17 @@ ul#trackback-list {
 
 #comments .comment-body .with-toggle {
 	margin-top: 18px;
+}
+
+#comments .comment-body .comment-meta .new-comment {
+	display: inline;
+	float: right;
+	width: 20px;
+	height: 20px;
+	background: url( badge-new.png ) no-repeat center center transparent;
+}
+
+#comments ul#commentlist li.new > .comment-body {
+	/*border: 2px solid #337FBA;*/
+	background-color: #333;
 }

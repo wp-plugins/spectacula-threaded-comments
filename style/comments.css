@@ -83,8 +83,13 @@
 	overflow: auto;
 	margin-bottom: 11px;
 
+	-webkit-transition:background-color 0.25s ease-in;
+	-moz-transition:background-color 0.25s ease-in;
+	transition:background-color 0.25s ease-in;
+
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 #comments .comment-body .moderation,
@@ -99,6 +104,7 @@
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 #comments .comment-body .moderation {
@@ -173,6 +179,7 @@
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 #comments .comment-buttons a.comment-button,
@@ -221,8 +228,11 @@
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
+
 	-moz-box-shadow: 5px 5px 12px -8px rgba(0, 0, 0, 0.3) inset;
 	-webkit-box-shadow: 5px 5px 12px -8px rgba(0, 0, 0, 0.3) inset;
+	box-shadow: 5px 5px 12px -8px rgba(0, 0, 0, 0.3) inset;
 }
 
 #comments #respond .comment-form-row label {
@@ -285,6 +295,7 @@
 		text-decoration:none;
 		-moz-border-radius: 2px;
 		-webkit-border-radius: 2px;
+		border-radius: 2px;
 
 		background-color: #fff;
 		color:#000;
@@ -485,5 +496,5 @@ ul#trackback-list {
 
 #comments ul#commentlist li.new > .comment-body {
 	/*border: 2px solid #337FBA;*/
-	background-color: #efefef
+	background-color: #efefef;
 }
