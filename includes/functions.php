@@ -160,7 +160,7 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 			if ( spec_comment_option( 'form_avatar' ) )
 				$avatar = get_avatar( isset( $current_user->user_email ) ? $current_user->user_email : $commenter[ 'comment_author_email' ], 64 ); ?>
 
-			<li class="depth-1<?php echo $avatar ? ' with-avatar' : ''?>" id="respond">
+			<li class="depth-1<?php echo isset( $avatar ) && $avatar ? ' with-avatar' : ''?>" id="respond">
 
 			<?php
 				$form_title = spec_comment_option( 'form_title' );
