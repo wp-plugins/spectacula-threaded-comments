@@ -498,7 +498,35 @@ addComment = {
 				this.select( );
 			} );
 
+//			 Add some tags to the body to target ie6 - 9
+			$.each( $.browser, function( i, val ) {
+				if( i == 'msie' && val === true ) {
+					switch ( parseInt( $.browser.version.substr( 0, 1 ), 10 ) ) {
+						case 6:
+						case 7:
+
+							// Fix issue with inherited fontFamily on #content, only a problem
+							// for ie6 and 7.
+
+							$target = $( '#comment' );
+							while( $target.css( 'fontFamily' ) == 'inherit' ) {
+								$target = $target.parent( );
+							}
+							$( '#comment' ).css( {
+									fontFamily: $target.css( 'fontFamily' ),
+									fontSize: $target.css( 'fontSize' ),
+									width: $( '#comment' ).innerWidth( )
+								}
+							);
+							break;
+					}
+				}
+			});
+
+			$( '#comment' ).autogrow( );
+
 		} );
+
 	}
 };
 

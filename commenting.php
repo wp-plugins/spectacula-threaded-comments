@@ -104,7 +104,10 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 
 			if( function_exists( 'wp_list_comments' ) && is_singular( ) ) {
 
+				$prefix = ! defined( 'SCRIPT_DEBUG' ) || ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) ? '.min' : '';
+
 				wp_register_script( 'json2', SPEC_COMMENT_URL . "/js/json2.js", array( ), '20090817', true );
+				wp_register_script( 'autogrow', SPEC_COMMENT_URL . "/js/jquery.autogrow-textarea$prefix.js", array( 'jquery' ), 1.04, true );
 				wp_register_script( 'scrollto', SPEC_COMMENT_URL . "/js/jquery.scrollTo-1.4.2-min.js", array( 'jquery' ), '1.4.2', true );
 
 				// Make sure we have jQuery version 1.3.2 or better
@@ -137,9 +140,7 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 					'max_depth' => get_option( 'thread_comments_depth' )
 				);
 
-				$prefix = ! defined( 'SCRIPT_DEBUG' ) || ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) ? '.min' : '';
-
-				wp_enqueue_script( 'commenting', apply_filters( 'spec_comment_js', SPEC_COMMENT_URL . "/js/commenting$prefix.js" ), array( 'jquery', 'jquery-form', 'json2', 'scrollto' ), '1.0.3', true );
+				wp_enqueue_script( 'commenting', apply_filters( 'spec_comment_js', SPEC_COMMENT_URL . "/js/commenting$prefix.js" ), array( 'jquery', 'autogrow', 'jquery-form', 'json2', 'scrollto' ), '1.0.3', true );
 				wp_localize_script( 'commenting', 'commentingL10n', apply_filters( 'spec_comment_local_js', $localisation ) );
 			}
 		}
