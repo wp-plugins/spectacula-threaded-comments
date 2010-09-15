@@ -21,6 +21,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 							'polling' => 30, // Frequency to poll the server for new comments in seconds.
 							'update' => false, // Do we want to auto update or not.
 							'form_avatar' => true,
+							'link_button' => true
 							);
 
 
@@ -31,14 +32,27 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 			$this->add_stuff_box( array( 'title' => __( 'Titles and form', SPEC_COMMENT_DOM ), 'callback' => 'titles' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Stylesheet', SPEC_COMMENT_DOM ), 'callback' => 'stylesheet' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Comment update', SPEC_COMMENT_DOM ), 'callback' => 'polling' ) );
+			$this->add_stuff_box( array( 'title' => __( 'Comment buttons', SPEC_COMMENT_DOM ), 'callback' => 'buttons' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Our credit', SPEC_COMMENT_DOM ), 'callback' => 'credit' ) );
+		}
+
+
+		function buttons( $options = '' ) { ?>
+			<p>
+				<label for="<?php $this->item_attrib( 'link_button' ); ?>">
+					<input type="checkbox" value="1" <?php checked( $options[ 'link_button' ], true );?> name="<?php $this->item_attrib( 'link_button', true ); ?>" id="<?php $this->item_attrib( 'link_button' ); ?>" />
+					<?php _e( 'Show the link button on comments.', SPEC_COMMENT_DOM ); ?>
+				</label>
+			</p> <?php
 		}
 
 
 		function polling( $options = '' ) { ?>
 			<p>
-				<label for="<?php $this->item_attrib( 'update' ); ?>"><?php _e( 'Auto update comments', SPEC_COMMENT_DOM ); ?></label>
-				<input type="checkbox" value="1" <?php checked( $options[ 'update' ], true );?> name="<?php $this->item_attrib( 'update', true ); ?>" id="<?php $this->item_attrib( 'update' ); ?>" />
+				<label for="<?php $this->item_attrib( 'update' ); ?>">
+					<input type="checkbox" value="1" <?php checked( $options[ 'update' ], true );?> name="<?php $this->item_attrib( 'update', true ); ?>" id="<?php $this->item_attrib( 'update' ); ?>" />
+					<?php _e( 'Auto update comments', SPEC_COMMENT_DOM ); ?>
+				</label>
 			</p>
 
 			<p>
@@ -63,8 +77,10 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 			<br/>
 			<p><?php _e( 'We will attempt to show, next to the comment form, the avatar of the logged in user, the user found in the cookie or a default avatar. Some plug-ins can get in the way of this and cause problems if that happens to you your best option is to not show this avatar.', SPEC_COMMENT_DOM )?></p>
 			<p>
-				<label for="<?php $this->item_attrib( 'form_avatar' ); ?>"><?php _e( 'Show form avatar', SPEC_COMMENT_DOM ); ?></label>
-				<input type="checkbox" value="1" <?php checked( $options[ 'form_avatar' ], true );?> name="<?php $this->item_attrib( 'form_avatar', true ); ?>" id="<?php $this->item_attrib( 'form_avatar' ); ?>" />
+				<label for="<?php $this->item_attrib( 'form_avatar' ); ?>">
+					<input type="checkbox" value="1" <?php checked( $options[ 'form_avatar' ], true );?> name="<?php $this->item_attrib( 'form_avatar', true ); ?>" id="<?php $this->item_attrib( 'form_avatar' ); ?>" />
+					<?php _e( 'Show form avatar', SPEC_COMMENT_DOM ); ?>
+				</label>
 			</p>
 			<?php
 		}
@@ -93,8 +109,10 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 
 		function credit( $options = '' ) { ?>
 			<p>
-				<label for="<?php $this->item_attrib( 'credit' ); ?>"><?php _e( 'Show our credit link at the bottom of the comments form.', SPEC_COMMENT_DOM ); ?></label>
-				<input type="checkbox" value="1" name="<?php $this->item_attrib( 'credit', true ); ?>" id="<?php $this->item_attrib( 'credit' ); ?>"<?php checked( intval( $options[ 'credit' ] ), 1 )?>/>
+				<label for="<?php $this->item_attrib( 'credit' ); ?>">
+					<input type="checkbox" value="1" name="<?php $this->item_attrib( 'credit', true ); ?>" id="<?php $this->item_attrib( 'credit' ); ?>"<?php checked( intval( $options[ 'credit' ] ), 1 )?>/>
+					<?php _e( 'Show our credit link at the bottom of the comments form.', SPEC_COMMENT_DOM ); ?>
+				</label>
 			</p>
 			<p><?php _e( 'If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work.' );?> <img src="<?php bloginfo( 'home' )?>/wp-includes/images/smilies/icon_cry.gif" alt=":( "/><br/><a href="https://spectacu.la/signup/signup.php">Spectacu.la</a></p><?php
 		}
@@ -134,6 +152,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				$output[ 'polling' ] = intval( $options[ 'polling' ] ) >= 10 && intval( $options[ 'polling' ] ) <= 999 ? intval( $options[ 'polling' ] ) : $this->defaults[ 'polling' ];
 				$output[ 'update' ] = intval( $options[ 'update' ] ) == 1 ? true : false;
 				$output[ 'form_avatar' ] = intval( $options[ 'form_avatar' ] ) == 1 ? true : false;
+				$output[ 'link_button' ] = intval( $options[ 'link_button' ] ) == 1 ? true : false;
 
 				$stylesheets = spec_stylesheet_find( );
 
