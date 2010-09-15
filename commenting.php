@@ -288,7 +288,7 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 				return false; ?>
 
 			<label for="<?php echo SPEC_COMMENT_OPT ?>_live">
-				<input type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT ?>_live" id="<?php echo SPEC_COMMENT_OPT ?>_live" <?php checked( $this->check_live( $post->ID ) ) ?>/>
+				<input type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT ?>_live" id="<?php echo SPEC_COMMENT_OPT ?>_live" <?php checked( $this->check_live( $post->ID ), true ) ?>/>
 				<?php _e( 'Allow Live Discussion', SPEC_COMMENT_DOM ); ?>
 			</label> <?php
 		}

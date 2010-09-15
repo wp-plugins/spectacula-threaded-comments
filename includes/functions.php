@@ -46,13 +46,12 @@ if ( ! function_exists ( 'esc_attr' ) ) {
  set at the call to comments_template and there seems to be no way to force it
  so we need to check for it and render the comments differently for each case.
 
- @return bool True if we habe a comment_by_type array set otherwise false.
+ @return bool True if we have a comment_by_type array set otherwise false.
 */
 
 if ( ! function_exists( 'commenting_by_type' ) ) {
 	function commenting_by_type( ) {
 		global $wp_query;
-		//
 		if ( property_exists( $wp_query, 'comments_by_type' ) && $wp_query->comments_by_type )
 			return true;
 		else
