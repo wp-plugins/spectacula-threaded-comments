@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Spectacu.la threaded comments\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-15 17:05-0000\n"
+"POT-Creation-Date: 2010-09-15 11:42-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Interconnect IT <admin@interconnectit.com>\n"
 "Language-Team: Interconnect IT\n"
@@ -16,190 +16,214 @@ msgstr ""
 "X-Poedit-Basepath: T:\\repositories\\wordpress\\spectacula-threaded-comments\n"
 "X-Poedit-SearchPath-0: trunk\n"
 
-#: trunk/commenting.php:122
+#: trunk/commenting.php:120
 msgid "Show trackbacks"
 msgstr "Show trackbacks"
 
-#: trunk/commenting.php:123
+#: trunk/commenting.php:121
 msgid "Hide trackbacks"
 msgstr "Hide trackbacks"
 
-#: trunk/commenting.php:124
+#: trunk/commenting.php:122
 msgid "Hide %count% replies to %name%'s comment"
 msgstr "Hide %count% replies to %name%'s comment"
 
-#: trunk/commenting.php:125
+#: trunk/commenting.php:123
 msgid "View %count% replies to %name%'s comment"
 msgstr "View %count% replies to %name%'s comment"
 
-#: trunk/commenting.php:126
+#: trunk/commenting.php:124
 msgid "Hide the reply to %name%'s comment"
 msgstr "Hide the reply to %name%'s comment"
 
-#: trunk/commenting.php:127
+#: trunk/commenting.php:125
 msgid "View the reply to %name%'s comment"
 msgstr "View the reply to %name%'s comment"
 
-#: trunk/commenting.php:128
+#: trunk/commenting.php:126
 #, php-format
 msgid "Trackback from: %s"
 msgstr "Trackback from: %s"
 
-#: trunk/commenting.php:129
+#: trunk/commenting.php:127
 msgid "Missing some fields"
 msgstr "Missing some fields"
 
-#: trunk/commenting.php:130
+#: trunk/commenting.php:128
 msgid "Unknown commenter"
 msgstr "Unknown commenter"
+
+#: trunk/commenting.php:271
+#: trunk/commenting.php:274
+#: trunk/commenting.php:275
+msgid "Live Discussion"
+msgstr "Live Discussion"
+
+#: trunk/commenting.php:292
+msgid "Allow Live Discussion"
+msgstr "Allow Live Discussion"
 
 #: trunk/includes/functions.php:129
 #: trunk/includes/functions.php:136
 msgid "Theme styling"
 msgstr "Theme styling"
 
-#: trunk/includes/functions.php:165
+#: trunk/includes/functions.php:174
 msgid "You must be logged in to comment."
 msgstr "You must be logged in to comment."
 
-#: trunk/includes/functions.php:172
+#: trunk/includes/functions.php:181
 msgid "Change Your Avatar"
 msgstr "Change Your Avatar"
 
-#: trunk/includes/functions.php:189
+#: trunk/includes/functions.php:198
 msgid "Name"
 msgstr "Name"
 
-#: trunk/includes/functions.php:194
+#: trunk/includes/functions.php:203
 msgid "Email"
 msgstr "Email"
 
-#: trunk/includes/functions.php:199
+#: trunk/includes/functions.php:208
 msgid "Website"
 msgstr "Website"
 
-#: trunk/includes/functions.php:210
+#: trunk/includes/functions.php:219
 msgid "Post your comment"
 msgstr "Post your comment"
 
-#: trunk/includes/functions.php:211
+#: trunk/includes/functions.php:220
 msgid "Cancel reply"
 msgstr "Cancel reply"
 
-#: trunk/includes/functions.php:215
+#: trunk/includes/functions.php:224
 msgid "Edit profile"
 msgstr "Edit profile"
 
-#: trunk/includes/functions.php:216
+#: trunk/includes/functions.php:225
 msgid "Log out of this account"
 msgstr "Log out of this account"
 
-#: trunk/includes/functions.php:216
+#: trunk/includes/functions.php:225
 msgid "Log Out"
 msgstr "Log Out"
 
-#: trunk/includes/functions.php:270
+#: trunk/includes/functions.php:279
 #, php-format
 msgid "%1$s at %2$s"
 msgstr "%1$s at %2$s"
 
-#: trunk/includes/functions.php:276
+#: trunk/includes/functions.php:285
 msgid "Comment awaiting moderation."
 msgstr "Comment awaiting moderation."
 
-#: trunk/includes/functions.php:282
+#: trunk/includes/functions.php:291
 msgid "Reply"
 msgstr "Reply"
 
-#: trunk/includes/functions.php:284
+#: trunk/includes/functions.php:293
 msgid "Edit"
 msgstr "Edit"
 
-#: trunk/includes/functions.php:285
+#: trunk/includes/functions.php:294
 msgid "Link"
 msgstr "Link"
 
-#: trunk/includes/options-page.php:28
+#: trunk/includes/options-page.php:30
 msgid "Rollup Depth"
 msgstr "Rollup Depth"
 
-#: trunk/includes/options-page.php:29
-msgid "Titles"
-msgstr "Titles"
+#: trunk/includes/options-page.php:31
+msgid "Titles and form"
+msgstr "Titles and form"
 
-#: trunk/includes/options-page.php:30
+#: trunk/includes/options-page.php:32
 msgid "Stylesheet"
 msgstr "Stylesheet"
 
-#: trunk/includes/options-page.php:31
+#: trunk/includes/options-page.php:33
 msgid "Comment update"
 msgstr "Comment update"
 
-#: trunk/includes/options-page.php:32
+#: trunk/includes/options-page.php:34
 msgid "Our credit"
 msgstr "Our credit"
 
-#: trunk/includes/options-page.php:38
+#: trunk/includes/options-page.php:40
 msgid "Auto update comments"
 msgstr "Auto update comments"
 
-#: trunk/includes/options-page.php:43
+#: trunk/includes/options-page.php:45
 msgid "Frequency of comment update in seconds ( minimum 10 seconds )"
 msgstr "Frequency of comment update in seconds ( minimum 10 seconds )"
 
-#: trunk/includes/options-page.php:52
+#: trunk/includes/options-page.php:54
 msgid "Comments title"
 msgstr "Comments title"
 
-#: trunk/includes/options-page.php:55
+#: trunk/includes/options-page.php:57
 msgid "Trackback title"
 msgstr "Trackback title"
 
-#: trunk/includes/options-page.php:63
+#: trunk/includes/options-page.php:60
+msgid "Comment form title"
+msgstr "Comment form title"
+
+#: trunk/includes/options-page.php:64
+msgid "We will attempt to show, next to the comment form, the avatar of the logged in user, the user found in the cookie or a default avatar. Some plug-ins can get in the way of this and cause problems if that happens to you your best option is to not show this avatar."
+msgstr "We will attempt to show, next to the comment form, the avatar of the logged in user, the user found in the cookie or a default avatar. Some plug-ins can get in the way of this and cause problems if that happens to you your best option is to not show this avatar."
+
+#: trunk/includes/options-page.php:66
+msgid "Show form avatar"
+msgstr "Show form avatar"
+
+#: trunk/includes/options-page.php:75
 msgid "Choose the stylesheet you want to use for the comments."
 msgstr "Choose the stylesheet you want to use for the comments."
 
-#: trunk/includes/options-page.php:66
-#: trunk/includes/options-page.php:94
+#: trunk/includes/options-page.php:78
+#: trunk/includes/options-page.php:106
 msgid "Disable"
 msgstr "Disable"
 
-#: trunk/includes/options-page.php:75
+#: trunk/includes/options-page.php:87
 msgid "If you want to customise the look of the comments you can do, however avoid making changes to the original CSS files as changes could be wiped out by any update. You can copy the comments.css from the style folder within this plug-in to your theme folder, make changes to it there then select the \"theme style\" option from the drop down above. You can also make a copy of it in the style folder, change the comment \"comment style: xxxxxx\" at the top of the file and then select that name from the drop down. You can also disable the inbuilt style system if you want to roll your comment CSS into your theme CSS."
 msgstr "If you want to customise the look of the comments you can do, however avoid making changes to the original CSS files as changes could be wiped out by any update. You can copy the comments.css from the style folder within this plug-in to your theme folder, make changes to it there then select the \"theme style\" option from the drop down above. You can also make a copy of it in the style folder, change the comment \"comment style: xxxxxx\" at the top of the file and then select that name from the drop down. You can also disable the inbuilt style system if you want to roll your comment CSS into your theme CSS."
 
-#: trunk/includes/options-page.php:84
+#: trunk/includes/options-page.php:96
 msgid "Show our credit link at the bottom of the comments form."
 msgstr "Show our credit link at the bottom of the comments form."
 
-#: trunk/includes/options-page.php:87
+#: trunk/includes/options-page.php:99
 msgid "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
 msgstr "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
 
-#: trunk/includes/options-page.php:102
+#: trunk/includes/options-page.php:114
 msgid "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
 msgstr "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
 
-#: trunk/includes/options-page.php:153
+#: trunk/includes/options-page.php:167
 msgid "Spectacu.la Discussion"
 msgstr "Spectacu.la Discussion"
 
-#: trunk/includes/options-page.php:214
+#: trunk/includes/options-page.php:228
 msgid "Spectacu.la Discussion Options"
 msgstr "Spectacu.la Discussion Options Page"
 
-#: trunk/includes/options-page.php:221
+#: trunk/includes/options-page.php:235
 msgid "Save settings"
 msgstr "Save settings"
 
-#: trunk/includes/options-page.php:223
+#: trunk/includes/options-page.php:237
 msgid "This will reset all options to their to defaults if checked when saved."
 msgstr "This will reset all options to their to defaults if checked when saved."
 
-#: trunk/includes/options-page.php:229
+#: trunk/includes/options-page.php:243
 msgid "Save"
 msgstr "Save"
 
+#~ msgid "Titles"
+#~ msgstr "Titles"
 #~ msgid "Ajax comments"
 #~ msgstr "Ajax comments"
 #~ msgid "Comment Options"

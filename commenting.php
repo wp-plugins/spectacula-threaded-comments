@@ -3,33 +3,33 @@
  Plugin Name: Spectacu.la Discussion
  Plugin URI: http://spectacu.la/
  Description: Make it easy to add fully ajax threaded comments to any theme.
- Version: 2.0.1
+ Version: 2.1.0
  Author: James R Whitehead
  Author URI: http://www.interconnectit.com/
 */
 
-/*
- Define this at the top of your functions.php before an include/require pointing
- to this file located in a subfolder of your theme and you can easily integrate
- this with your theme.
-*/
-if ( ! defined( 'SPEC_COMMENT_URL' ) ) {
-	if ( version_compare( $GLOBALS[ 'wp_version' ], '2.8', 'ge' ) ) {
-		define( 'SPEC_COMMENT_URL', plugins_url( '', __FILE__ ) );
-	} else {
-		define( 'SPEC_COMMENT_URL', plugins_url( 'spectacula-threaded-comments' ) );
+if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
+	/*
+	 Define the url at the top of your functions.php before a require/include
+	 pointing to this file located in a subfolder of your theme and you can
+	 easily integrate this with your theme.
+	*/
+	if ( ! defined( 'SPEC_COMMENT_URL' ) ) {
+		if ( version_compare( $GLOBALS[ 'wp_version' ], '2.8', 'ge' ) ) {
+			define( 'SPEC_COMMENT_URL', plugins_url( '', __FILE__ ) );
+		} else {
+			define( 'SPEC_COMMENT_URL', plugins_url( 'spectacula-threaded-comments' ) );
+		}
 	}
-}
 
-define( 'SPEC_COMMENT_PTH', dirname( __FILE__ ) );
-define( 'SPEC_COMMENT_DOM', 'spectacula-threaded-comments' ); // Translation domain
-define( 'SPEC_COMMENT_VER', '2.7' ); // Min version of wordpress this will work with.
-define( 'SPEC_COMMENT_OPT', 'spectacula_threaded_comments' );
-define( 'SPEC_COMMENT_TMP', SPEC_COMMENT_PTH . '/includes/template.php' );
+	define( 'SPEC_COMMENT_PTH', dirname( __FILE__ ) );
+	define( 'SPEC_COMMENT_DOM', 'spectacula-threaded-comments' ); // Translation domain
+	define( 'SPEC_COMMENT_VER', '2.7' ); // Min version of wordpress this will work with.
+	define( 'SPEC_COMMENT_OPT', 'spectacula_threaded_comments' );
+	define( 'SPEC_COMMENT_TMP', SPEC_COMMENT_PTH . '/includes/template.php' );
+	define( 'SPEC_COMMENT_DON', true ); // Set a toggle so we don't come back
 
-//delete_option( SPEC_COMMENT_OPT );
-
-if ( ! class_exists( 'spec_commenting' ) ) {
+	//delete_option( SPEC_COMMENT_OPT );
 
 	// Load the translation stuff
 	//load_plugin_textdomain( SPEC_COMMENT_DOM, false, '/lang/' );
@@ -38,7 +38,7 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 		load_textdomain( SPEC_COMMENT_DOM, SPEC_COMMENT_PTH . '/lang/' . SPEC_COMMENT_DOM . '-' . $locale . '.mo' );
 
 	if ( ! function_exists ( 'json_encode' ) )
-		require_once( SPEC_COMMENT_PTH . '/includes/JSON.php' );
+		require_once( SPEC_COMMENT_PTH . '/includes/JSON.php' ); // PHP <= 5.2
 
 	require_once( SPEC_COMMENT_PTH . '/includes/functions.php' );
 	require_once( SPEC_COMMENT_PTH . '/includes/options-page.php' );
@@ -48,23 +48,14 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 	class spec_commenting {
 
 		/*
-		 PHP4 constructor. Adds the css, js, config menu and the template hijack
-		 filters/actions to Wordpress. It also checks that we've not been here
-		 already and assigns some variables to the class.
-
-		 @return null;
+		 Check to see if we've been here before, if not set the toggle to show
+		 any other calls we have then check the WordPress and PHP versions to
+		 make sure we can go on.
 		*/
 
 		function spec_commenting( ) {
-			// This class was included with some spectacu.la themes this will
-			// stop it running twice and causing confusion.
 
-			if ( defined( 'SPEC_COMMENT_DON' ) )
-				return false;
-			else
-				define( 'SPEC_COMMENT_DON', true );
-
-			if ( version_compare( $GLOBALS[ 'wp_version' ], SPEC_COMMENT_VER, 'ge' ) )
+			if ( version_compare( $GLOBALS[ 'wp_version' ], SPEC_COMMENT_VER, 'ge' ) && version_compare( PHP_VERSION, '5.0.0', 'ge' ) )
 				add_action( 'init', array( & $this, '_init' ), 1 );
 		}
 
@@ -81,6 +72,11 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 
 			add_action( 'comment_form', array( &$this, 'our_credit' ) );
 			add_filter( 'comments_template', array( &$this, 'comment_template_hijack' ) );
+
+			// The live comment toggle metabox. Lets you toggle live comments on
+			// a post by post basis.
+			add_action( 'admin_init', array( &$this, 'add_meta_boxes' ) );
+			add_action( 'save_post', array( &$this, 'save_metabox_toggle_status' ), 100, 2 );
 		}
 
 
@@ -132,7 +128,7 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 					'unknown' => __( 'Unknown commenter', SPEC_COMMENT_DOM ),
 					'order' => get_option( 'comment_order' ),
 					'polling' => spec_comment_option( 'polling' ),
-					'update' => spec_comment_option( 'update' ) && comments_open( $post->ID ) ? 1 : 0,
+					'update' => $this->check_live( $post->ID ) && comments_open( $post->ID ) ? 1 : 0,
 					'time' => current_time( 'mysql', false ),
 					'post_id' => $post->ID,
 					'ajax_url' => trailingslashit( get_bloginfo( 'home' ) ),
@@ -150,7 +146,7 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 		 file.
 
 		 @param string $passed passed in by comments_template apply_filters call
-		 and would normally contain the path to the themes comments.php
+		 and would normally contain the path to the theme's comments.php
 
 		 @return string the new comments.php if it exists otherwise just return
 		 the one we were given before.
@@ -261,9 +257,85 @@ if ( ! class_exists( 'spec_commenting' ) ) {
 				echo "\n<!-- Threaded commenting powered by http://Spectacu.la/ code. -->\n";
 			}
 		}
+
+
+		/*
+		 Add the metaboxes to all post_types available or post and pages for
+		 WordPress 2.9 and older.
+		*/
+		function add_meta_boxes( ) {
+			global $wp_version;
+			if ( version_compare( $wp_version, '3.0', 'ge' ) ) {
+				// WordPress 3.0 and above.
+				foreach( ( array ) get_post_types( array( 'show_ui' => 1 ) ) as $post_type )
+					add_meta_box( 'spec_live_toggle', __( 'Live Discussion', SPEC_COMMENT_DOM ), array( &$this, 'metabox_live_toggle' ), $post_type, 'advanced', 'default' );
+			} else {
+				// Add to post and page for older versions of WordPress.
+				add_meta_box( 'spec_live_toggle', __( 'Live Discussion', SPEC_COMMENT_DOM ), array( &$this, 'metabox_live_toggle' ), 'post', 'advanced', 'default' );
+				add_meta_box( 'spec_live_toggle', __( 'Live Discussion', SPEC_COMMENT_DOM ), array( &$this, 'metabox_live_toggle' ), 'page', 'advanced', 'default' );
+			}
+		}
+
+
+		/*
+		 This is the metabox that'll let you toggle the default status of live
+		 commenting on a post by post basis.
+
+		 @param obj $post The post object as passed in by add_meta_box.
+		*/
+		function metabox_live_toggle( $post = '' ) {
+			if ( ! is_object( $post ) )
+				return false; ?>
+
+			<label for="<?php echo SPEC_COMMENT_OPT ?>_live">
+				<input type="checkbox" value="1" name="<?php echo SPEC_COMMENT_OPT ?>_live" id="<?php echo SPEC_COMMENT_OPT ?>_live" <?php checked( $this->check_live( $post->ID ) ) ?>/>
+				<?php _e( 'Allow Live Discussion', SPEC_COMMENT_DOM ); ?>
+			</label> <?php
+		}
+
+
+		/*
+		 Check the post_save for our toggle and set the post_meta to reflect the
+		 choice.
+		 @return null
+		*/
+		function save_metabox_toggle_status( ) {
+			if ( isset( $_POST[ 'post_ID' ] ) && isset( $_POST[ '_wpnonce' ] ) && isset( $_POST[ 'post_type' ] ) ) {
+				$post_ID =  intval( $_POST[ 'post_ID' ] );
+				$wpnonce = $_POST[ '_wpnonce' ];
+				$post_type = $_POST[ 'post_type' ];
+			} else
+				return;
+
+			if ( current_user_can( 'edit_post', $post_ID ) && wp_verify_nonce( $wpnonce, 'update-' . $post_type . '_' . $post_ID ) ) {
+				$toggle = isset( $_POST[ SPEC_COMMENT_OPT . '_live' ] ) && intval( $_POST[ SPEC_COMMENT_OPT . '_live' ] ) == 1 ? 20 : 10;
+				if ( ! update_post_meta( $post_ID, '_' . SPEC_COMMENT_OPT . '_live', $toggle ) ) {
+					add_post_meta( $post_ID, '_' . SPEC_COMMENT_OPT . '_live', $toggle );
+				}
+			}
+		}
+
+
+		/*
+		 Combine the post_meta with the global live discussion status to give us
+		 the status for the post_id passed in. If the post hasn't had the option
+		 set it will resort to the global setting and if has it'll use it's data
+		 in preference.
+
+		 @param in $post_ID The post id we want to check the status for.
+		 @return bool True if we want live comments false if we don't.
+		*/
+		function check_live( $post_ID = 0 ) {
+			$post_ID = intval( $post_ID );
+			$post_meta = intval( get_post_meta( $post_ID, '_' . SPEC_COMMENT_OPT . '_live', true ) );
+
+			$post_status = $post_meta === 10 ? false : ( $post_meta === 20 ? true : null );
+			$glob_status = spec_comment_option( 'update' );
+
+			return is_bool( $post_status ) ? $post_status : $glob_status;
+		}
 	}
 }
-
 
 new spec_commenting( );
 ?>

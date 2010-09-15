@@ -261,8 +261,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 
 	$spec_options_page  = new spec_options_page ;
 
-
-	if ( !function_exists( 'spec_comment_option' ) ) {
+	if ( ! function_exists( 'spec_comment_option' ) ) {
 		function spec_comment_option( $option_name ) {
 			global $spec_options_page;
 			return $spec_options_page->retrive_comment_option( $option_name );
