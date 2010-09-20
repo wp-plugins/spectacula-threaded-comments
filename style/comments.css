@@ -23,8 +23,9 @@
 	text-decoration: none;
 	text-transform: none;
 	text-align: left;
-	clear: none;
 	text-shadow: 0 0;
+	text-indent: 0;
+	clear: none;
 	float: none;
 	color: #333;
 
@@ -130,9 +131,10 @@
 	zoom: 1;
 }
 
-#comments cite.fn,
+#comments cite,
 #comments div.toggle .poster-name {
 	font-weight: bold;
+	font-style: oblique;
 }
 
 #comments .trackback-toggle:hover,
@@ -451,6 +453,7 @@ ul#trackback-list {
 
 .comment-link-display {
 	padding: 5px 10px;
+	color: #333;
 	background-color: #fff;
 	border: solid 1px #bbb;
 	cursor: pointer;

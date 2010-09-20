@@ -34,7 +34,7 @@ addComment = {
 		jQuery( '#comment-form #cancel-comment-reply-link' ).show( );
 
 		if ( typeof jQuery.scrollTo == 'function' )
-			jQuery.scrollTo( jQuery( '#respond' ), { duration: 500 } );
+			jQuery.scrollTo( jQuery( '#respond' ), { duration: 500, axis: 'y' } );
 
 		return false;
 	},
@@ -118,7 +118,7 @@ addComment = {
 			// Undelete a comment
 			if ( jQuery( 'li#comment-' + comment_ID ).hasClass( 'deleted' ) ) {
 				jQuery( 'li#comment-' + comment_ID + ' > .comment-body' ).slideUp( 'slow', function( ) {
-					jQuery( this ).html( jQuery( html ).find( '.comment-body' ).html( ) ).slideDown( 'slow' );
+					jQuery( this ).html( jQuery( html ).find( '.comment-body' ).html( ).trigger( 'newComment' ) ).slideDown( 'slow' );
 				} ).removeClass( 'deleted' );
 
 			}
@@ -135,7 +135,7 @@ addComment = {
 					jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > div.comment-body' ).after( '<ul class="children"></ul>' );
 
 				// Attach the comment.
-				jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+				jQuery( 'ul#commentlist li#comment-' + parent_ID + ' > ul.children' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ).trigger( 'newComment' ) );
 
 				// Don't trust the depth on the html of replies
 				depth_class = jQuery( 'li#comment-' + parent_ID ).attr( 'class' ).match( /(?:\s|^)depth-(\d+)\s?/i );
@@ -164,12 +164,12 @@ addComment = {
 
 		} else {
 			if ( comment_type !== 'comment' && jQuery( '#trackback-list' ).length ) {
-				jQuery( '#trackback-list' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+				jQuery( '#trackback-list' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ).trigger( 'newComment' ) );
 			} else {
 				if ( commentingL10n.order === 'desc' )
-					jQuery( 'li#respond' ).after( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+					jQuery( 'li#respond' ).after( jQuery( html ).hide( ).addClass( 'rolledup' ).trigger( 'newComment' ) );
 				else
-					jQuery( 'li#respond' ).before( jQuery( html ).hide( ).addClass( 'rolledup' ) );
+					jQuery( 'li#respond' ).before( jQuery( html ).hide( ).addClass( 'rolledup' ).trigger( 'newComment' ) );
 			}
 
 			addComment.addToggles( );
@@ -188,7 +188,7 @@ addComment = {
 		jQuery( 'ul#commentlist, ul#trackback-list' ).find( '.rolledup' ).slideDown( 500, function( ){
 			// Our comment is in place, now let us scroll to it once unrolled.
 			if ( scroll_to )
-				jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500 } );
+				jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500, axis: 'y' } );
 		} ).removeClass( 'rolledup' );
 
 		if ( comment_type !== 'comment' )

@@ -21,7 +21,8 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 							'polling' => 30, // Frequency to poll the server for new comments in seconds.
 							'update' => false, // Do we want to auto update or not.
 							'form_avatar' => true,
-							'link_button' => true
+							'link_button' => true,
+							'quote_button' => true
 							);
 
 
@@ -42,6 +43,12 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				<label for="<?php $this->item_attrib( 'link_button' ); ?>">
 					<input type="checkbox" value="1" <?php checked( $options[ 'link_button' ], true );?> name="<?php $this->item_attrib( 'link_button', true ); ?>" id="<?php $this->item_attrib( 'link_button' ); ?>" />
 					<?php _e( 'Show the link button on comments.', SPEC_COMMENT_DOM ); ?>
+				</label>
+			</p>
+			<p>
+				<label for="<?php $this->item_attrib( 'quote_button' ); ?>">
+					<input type="checkbox" value="1" <?php checked( $options[ 'quote_button' ], true );?> name="<?php $this->item_attrib( 'quote_button', true ); ?>" id="<?php $this->item_attrib( 'quote_button' ); ?>" />
+					<?php _e( 'Allow the quote button.', SPEC_COMMENT_DOM ); ?>
 				</label>
 			</p> <?php
 		}
@@ -153,6 +160,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				$output[ 'update' ] = intval( $options[ 'update' ] ) == 1 ? true : false;
 				$output[ 'form_avatar' ] = intval( $options[ 'form_avatar' ] ) == 1 ? true : false;
 				$output[ 'link_button' ] = intval( $options[ 'link_button' ] ) == 1 ? true : false;
+				$output[ 'quote_button' ] = intval( $options[ 'quote_button' ] ) == 1 ? true : false;
 
 				$stylesheets = spec_stylesheet_find( );
 
