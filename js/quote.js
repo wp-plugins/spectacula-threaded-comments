@@ -23,7 +23,7 @@ jQuery( document ).ready( function( $ ) {
 
 	// Add the quote button to each comment.
 	function spec_add_quote_button( e ) {
-		$( e ).find( '.comment-buttons' ).append( $( '<a href="#" class="comment-button">' + specQuoteLn.button_text + '</a>' ).click( function( ) {
+		$( e ).children( '.comment-body' ).find( '.comment-buttons' ).append( $( '<a href="#" class="comment-button">' + specQuoteLn.button_text + '</a>' ).click( function( ) {
 			spec_quote_comment( this );
 			return false;
 		} ) );

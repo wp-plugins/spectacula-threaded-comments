@@ -191,7 +191,7 @@ addComment = {
 		jQuery( 'ul#commentlist, ul#trackback-list' ).find( '.rolledup' ).slideDown( 500, function( ){
 			// Our comment is in place, now let us scroll to it once unrolled.
 			if ( scroll_to )
-				jQuery.scrollTo( jQuery( '#comment-' + comment_ID ), { duration: 500, axis: 'y' } );
+				jQuery.scrollTo( '#comment-' + comment_ID, { duration: 500, axis: 'y' } );
 		} ).removeClass( 'rolledup' );
 
 		if ( comment_type !== 'comment' )
@@ -281,7 +281,7 @@ addComment = {
 				addComment.newComment( d.html, d.comment_ID, d.comment_parent, true, 'comment' );
 				// Kill anything in the comment form and reset the reply button
 				addComment.cancelReply( );
-				jQuery( '#comment-form #comment' ).val( '' );
+				jQuery( '#comment-form #comment' ).val( '' ).trigger( 'keyup' );
 			}
 		} );
 
@@ -304,7 +304,7 @@ addComment = {
 			}
 
 			if ( hidden === true )
-				jQuery( this ).hide( ).prev( 'div.toggle' ).addClass( 'hidden' );
+				jQuery( this ).hide( ).prev( 'div.toggle' ).addClass( 'kqofn-hidden' );
 
 			addComment.toggleToggleText( jQuery( this ).prev( 'div.toggle' ) );
 		} );
@@ -319,7 +319,7 @@ addComment = {
 			var poster_name = jQuery( this ).prev( 'div.comment-body' ).find( 'cite.fn' ).text( ),
 				reply_quant = jQuery( this ).next( 'ul.children' ).find( 'li.comment' ).length;
 
-			if ( jQuery( this ).hasClass( 'hidden' ) ) {
+			if ( jQuery( this ).hasClass( 'kqofn-hidden' ) ) {
 				jQuery( this ).html( reply_quant == 1 ? addComment.showOne : addComment.showMany );
 			} else {
 				jQuery( this ).html( reply_quant == 1 ? addComment.hideOne : addComment.hideMany );
@@ -448,13 +448,13 @@ addComment = {
 
 			// Add some code to the toggles added above.
 			$( '#commentlist div.toggle' ).live( 'click', function( ) {
-				if ( $( this ).hasClass( 'hidden' ) ) {
-					$( this ).removeClass( 'hidden' ).next( 'ul.children' ).slideDown( 'fast', function( ) {
+				if ( $( this ).hasClass( 'kqofn-hidden' ) ) {
+					$( this ).removeClass( 'kqofn-hidden' ).next( 'ul.children' ).slideDown( 'fast', function( ) {
 						// For some reason, don't ask me why, this stops IE8 from messing around with the margins on slide up/down.
 						$( this ).prev( 'div.toggle' ).css( { backgroundPosition: 'bottom right' } );
 					} );
 				} else {
-					$( this ).addClass( 'hidden' ).next( 'ul.children' ).slideUp( 'fast', function( ) {
+					$( this ).addClass( 'kqofn-hidden' ).next( 'ul.children' ).slideUp( 'fast', function( ) {
 						$( this ).prev( 'div.toggle' ).css( { backgroundPosition: 'top left' } )
 					} );
 				}
