@@ -78,7 +78,8 @@ jQuery( document ).ready( function( $ ) {
 			var txt = spec_get_selected_text( ),
 				a = $( e.currentTarget ), // Or originalTarget for the element clicked.
 				y = e.pageY,
-				x = a.offset( ).left + a.width( );
+				sx = e.pageX,
+				ex = a.offset( ).left + a.width( );
 
 			if ( txt ) {
 				$( '<div><span>' + specQuoteLn.button_text + '</span></div>' )
@@ -86,10 +87,11 @@ jQuery( document ).ready( function( $ ) {
 					.appendTo( 'body' )
 					.css( {
 						position: 'absolute',
-						left: x + 10,
+						left: sx + 1, // + 1 px to avoid an IE 6,7,8 & 9 bug with the redraw
 						top: y - ( $( '#quote-float' ).height( ) / 2 ) ,
 						zIndex: 1000
 					} )
+					.animate( { left: ex + 10 }, 500 )
 					.click( function( ) {
 						insert_at_carret( 'comment', '<blockquote>\n' + $.trim( txt ) + '\n</blockquote>\n' );
 						$( '#quote-float' ).remove( );
