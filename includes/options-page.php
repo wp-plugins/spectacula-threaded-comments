@@ -22,7 +22,9 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 							'update' => false, // Do we want to auto update or not.
 							'form_avatar' => true,
 							'link_button' => true,
-							'quote_button' => true
+							'quote_button' => true,
+							'quote_select' => true,
+							'quote_target' => '.hentry'
 							);
 
 
@@ -33,7 +35,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 			$this->add_stuff_box( array( 'title' => __( 'Titles and form', SPEC_COMMENT_DOM ), 'callback' => 'titles' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Stylesheet', SPEC_COMMENT_DOM ), 'callback' => 'stylesheet' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Comment update', SPEC_COMMENT_DOM ), 'callback' => 'polling' ) );
-			$this->add_stuff_box( array( 'title' => __( 'Comment buttons', SPEC_COMMENT_DOM ), 'callback' => 'buttons' ) );
+			$this->add_stuff_box( array( 'title' => __( 'Buttons', SPEC_COMMENT_DOM ), 'callback' => 'buttons' ) );
 			$this->add_stuff_box( array( 'title' => __( 'Our credit', SPEC_COMMENT_DOM ), 'callback' => 'credit' ) );
 		}
 
@@ -50,7 +52,20 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 					<input type="checkbox" value="1" <?php checked( $options[ 'quote_button' ], true );?> name="<?php $this->item_attrib( 'quote_button', true ); ?>" id="<?php $this->item_attrib( 'quote_button' ); ?>" />
 					<?php _e( 'Allow the quote button.', SPEC_COMMENT_DOM ); ?>
 				</label>
-			</p> <?php
+			</p>
+
+			<br/><p><?php _e( 'Enabling the following will let people quickly quote from your post. A quote button will pop up next to any text selected that falls inside the CSS selector defined in "Floating quote selector", pressing said button will populate the comment field with the selected text.', SPEC_COMMENT_DOM );?></p>
+			<p>
+				<label for="<?php $this->item_attrib( 'quote_select' ); ?>">
+					<input type="checkbox" value="1" <?php checked( $options[ 'quote_select' ], true );?> name="<?php $this->item_attrib( 'quote_select', true ); ?>" id="<?php $this->item_attrib( 'quote_select' ); ?>" />
+					<?php _e( 'Allow the floating quote button.', SPEC_COMMENT_DOM ); ?>
+				</label>
+			</p>
+
+			<p><label for="<?php $this->item_attrib( 'quote_target' ); ?>"><?php _e( 'Floating quote selector', SPEC_COMMENT_DOM ); ?></label></p>
+			<p><input style="width:98%" class="regular-text" type="text" value="<?php echo esc_attr( $options[ 'quote_target' ] );?>" name="<?php $this->item_attrib( 'quote_target', true ); ?>" id="<?php $this->item_attrib( 'quote_target' ); ?>" /></p>
+
+			<?php
 		}
 
 
@@ -161,6 +176,8 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				$output[ 'form_avatar' ] = intval( $options[ 'form_avatar' ] ) == 1 ? true : false;
 				$output[ 'link_button' ] = intval( $options[ 'link_button' ] ) == 1 ? true : false;
 				$output[ 'quote_button' ] = intval( $options[ 'quote_button' ] ) == 1 ? true : false;
+				$output[ 'quote_select' ] = intval( $options[ 'quote_select' ] ) == 1 ? true : false;
+				$output[ 'quote_target' ] = preg_match( '/^(\.|#)?[a-zA-Z0-9-_]+$/is', $options[ 'quote_target' ] ) ? $options[ 'quote_target' ] : $this->defaults[ 'quote_target' ];
 
 				$stylesheets = spec_stylesheet_find( );
 

@@ -234,7 +234,7 @@
 
 	-moz-box-shadow: 5px 5px 12px -8px rgba(0, 0, 0, 0.3) inset;
 	-webkit-box-shadow: 5px 5px 12px -8px rgba(0, 0, 0, 0.3) inset;
-	box-shadow: 5px 5px 12px -8px rgba(0, 0, 0, 0.3) inset;
+	box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1) inset;
 }
 
 #comments #respond .comment-form-row label {
@@ -502,4 +502,17 @@ ul#trackback-list {
 #comments ul#commentlist li.new > .comment-body {
 	/*border: 2px solid #337FBA;*/
 	background-color: #efefef;
+}
+
+#quote-float {
+	border: solid 1px #ccc;
+	background: url( 'arrow-left-alt.png') no-repeat left center #fff;
+	color: #333;
+	cursor: pointer;
+	-moz-border-radius: 3px;
+	-moz-box-shadow: 3px 3px 4px rgba( 0,0,0,0.3 );
+	padding: 3px 10px 3px 24px
+}
+
+#quote-float span {
 }

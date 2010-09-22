@@ -137,9 +137,15 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 				);
 
 
-				if ( spec_comment_option( 'quote_button' ) ) {
+				if ( spec_comment_option( 'quote_button' ) || spec_comment_option( 'quote_select' ) ) {
 					wp_enqueue_script( 'spec_quote_button', SPEC_COMMENT_URL . "/js/quote$prefix.js", array( 'jquery' ), '1.0.3', true );
-					wp_localize_script( 'spec_quote_button', 'specQuoteLn', array( 'button_text' => __( 'Quote', SPEC_COMMENT_DOM ) ) );
+					$quote_options = array(
+										   'button_text' => __( 'Quote', SPEC_COMMENT_DOM ),
+										   'quote_button' => spec_comment_option( 'quote_button' ),
+										   'quote_select' => spec_comment_option( 'quote_select' ),
+										   'quote_target' => spec_comment_option( 'quote_target' )
+										   );
+					wp_localize_script( 'spec_quote_button', 'specQuoteLn', $quote_options );
 				}
 
 				wp_enqueue_script( 'commenting', apply_filters( 'spec_comment_js', SPEC_COMMENT_URL . "/js/commenting$prefix.js" ), array( 'jquery', 'autogrow', 'jquery-form', 'json2', 'scrollto' ), '1.0.3', true );
