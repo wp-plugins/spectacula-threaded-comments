@@ -28,13 +28,16 @@ addComment = {
 
 		addComment.replying = commentID;
 
-		jQuery( '#comment-form #comment' ).focus( ).before( jQuery( '<blockquote class="reply-quote"><cite>' + to + '</cite><p>' + ( str.length > 130 ? str.substring( 0, 129 ) + '&hellip;' : str ) + '</p></blockquote>' ).hide( ) ).prev( '.reply-quote' ).slideDown( );
+		jQuery( '#comment-form #comment' ).before( jQuery( '<blockquote class="reply-quote"><cite>' + to + '</cite><p>' + ( str.length > 130 ? str.substring( 0, 129 ) + '&hellip;' : str ) + '</p></blockquote>' ).hide( ) ).prev( '.reply-quote' ).slideDown( );
 		jQuery( '#comment-form input#comment_parent' ).attr( { value: commentID } );
 		jQuery( '#' + belowID + ' > .comment-body ' ).find( '.comment-reply-link' ).hide( );
 		jQuery( '#comment-form #cancel-comment-reply-link' ).show( );
 
-		if ( typeof jQuery.scrollTo == 'function' )
-			jQuery.scrollTo( jQuery( '#respond' ), { duration: 500, axis: 'y' } );
+		if ( typeof jQuery.scrollTo == 'function' ) {
+			jQuery.scrollTo( '#respond', { duration: 500, axis: 'y', onAfter: function( e ){
+				jQuery( '#comment' ).focus( );
+			} } );
+		}
 
 		return false;
 	},

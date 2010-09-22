@@ -58,8 +58,10 @@ jQuery( document ).ready( function( $ ) {
 			t = e.value,
 			p = e.selectionStart !== undefined ? e.selectionStart : ie_carret_pos( e );
 
-		$( '#' + id ).val( t.substring( 0, p ) + txt + t.substring( p, t.length ) ).trigger( 'keyup' ).focus( );
-		$.scrollTo( '#' + id, { duration: 500, axis: 'y' } );
+		$( '#' + id ).val( t.substring( 0, p ) + txt + t.substring( p, t.length ) ).trigger( 'keyup' );
+		$.scrollTo( '#' + id, { duration: 500, axis: 'y', onAfter: function( e ){
+			jQuery( '#' + id ).focus( );
+		} } );
 	}
 
 
