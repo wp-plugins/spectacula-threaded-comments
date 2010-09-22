@@ -317,7 +317,8 @@
 }
 
 #comments a.prev, #comments a.next {
-	font-size: 200%;
+	font-size: 22px;
+	line-height: 26px;
 	vertical-align:top;
 }
 
@@ -347,7 +348,8 @@
 	text-decoration:none;
 }
 
-#comments #comment-pagination span.dots, #comment-pagination a.prev,
+#comments #comment-pagination span.dots,
+#comments #comment-pagination a.prev,
 #comments #comment-pagination a.next {
 	background-color:transparent;
 	color: #333;
@@ -509,10 +511,14 @@ ul#trackback-list {
 	background: url( 'arrow-left-alt.png') no-repeat left center #fff;
 	color: #333;
 	cursor: pointer;
+	padding: 3px 10px 3px 24px;
+
 	-moz-border-radius: 3px;
 	-moz-box-shadow: 3px 3px 4px rgba( 0,0,0,0.3 );
-	padding: 3px 10px 3px 24px
-}
+	-webkit-border-radius: 3px;
+	-webkit-box-shadow: 3px 3px 4px rgba( 0,0,0,0.3 );
+	border-radius: 3px;
+	box-shadow: 3px 3px 4px rgba( 0,0,0,0.3 );
 
-#quote-float span {
+
 }
