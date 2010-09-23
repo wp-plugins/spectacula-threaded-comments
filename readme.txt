@@ -4,14 +4,14 @@ Donate link: https://spectacu.la/signup/signup.php
 Tags: comments, jQuery, AJAX
 Requires at least: 2.7.0
 Tested up to: 3.0
-Stable tag: 2.0.1
+Stable tag: 2.1.1
 
 Spectacu.la Discussion adds threaded commenting with live AJAX comments
 to almost any WordPress Theme.
 
 == Description ==
 
-Ever found your theme doesn't support threaded comments?  Would you like to to
+Ever found your theme doesn't support threaded comments?  Would you like it to
 be able to have P2 style live commenting on your site?  Spectacu.la Discussion
 is a plugin that replaces the commenting code in your theme with a fully Ajaxed
 comments engine.
@@ -27,12 +27,12 @@ cases.  Read below for further instructions.
 
 Once installed this plug-in will replace your theme's comments template with its
 own fully Ajax comment template. This allows both submission and update of
-comments without the page refreshing letting your visitors use it more as a chat
-room than the more traditional comment system. You can also roll up replied
-which can be told to trigger at any depth you feel is best using the settings
-page. Also available on the plug-ins admin page is the option to use another or
-no stylesheet, toggle the live updating of comments and change the refresh
-period for live update.
+comments without a page refres letting your visitors use it more as a chat room
+than the more traditional comment system. You can also roll up replied which can
+be told to trigger at any depth you feel is best using the settings page. Also
+available on the plug-ins admin page is the option to use another or no
+stylesheet, toggle the live updating of comments and change the refresh period
+for live update.
 
 As of version 2 you can now easily add new stylesheets to the available list by
 either copying them into the plug-in's style folder with a comment at the top of
@@ -152,6 +152,21 @@ theme developer to change their theme.
 2.	The control interface for this plug-in.
 
 == Changelog ==
+
+= 2.1.1 =
+*	Added option to override the global option for auto comment update on a post
+	by post basis.
+	Added option to remove the link button from each comment.
+	Added a new quote button to each comment that lets you quickly cite another
+	comment in the discussion. There is also the option to disable it should you
+	not want it.
+	Added a new floating quote thingy that should, if set up right, pop up a
+	floating button next to any text selection in the post body. You'll need to
+	know the class or ID of your post content to set this up.
+	Numerous fixes.
+
+= 2.1.0 =
+*	Development release
 
 = 2.0.1 =
 *	Added an option to remove the avatar in the comment form.

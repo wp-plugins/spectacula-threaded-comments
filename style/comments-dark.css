@@ -23,8 +23,9 @@
 	text-decoration: none;
 	text-transform: none;
 	text-align: left;
-	clear: none;
 	text-shadow: 0 0;
+	text-indent: 0;
+	clear: none;
 	float: none;
 	color: #ddd;
 
@@ -130,9 +131,10 @@
 	zoom: 1;
 }
 
-#comments cite.fn,
+#comments cite,
 #comments div.toggle .poster-name {
 	font-weight: bold;
+	font-style: oblique;
 }
 
 #comments .trackback-toggle:hover,
@@ -204,10 +206,10 @@
 	color: #ddd
 }
 
-#comments .comment-buttons .disabled,
-#comments .comment-buttons .disabled:active,
-#comments .comment-buttons .disabled:focus,
-#comments .comment-buttons .disabled:hover {
+#comments #comment-form .comment-buttons input.disabled,
+#comments #comment-form .comment-buttons input.disabled:active,
+#comments #comment-form .comment-buttons input.disabled:focus,
+#comments #comment-form .comment-buttons input.disabled:hover {
 	background-color: #444;
 	cursor: wait;
 	color: #666;
@@ -215,12 +217,18 @@
 
 /* End Comment buttons */
 
+#comments #respond .comment-form-email,
+#comments #respond .comment-form-author,
+#comments #respond .comment-form-url,
 #comments .comment-form-row {
 	overflow: auto;
 	margin-bottom: 10px;
 	width: 100%;
 }
 
+#comments #respond .comment-form-email input,
+#comments #respond .comment-form-author input,
+#comments #respond .comment-form-url input,
 #comments #respond .comment-form-row input,
 #comments #comment-form .textarea-border {
 	border: dotted 1px #444;
@@ -240,6 +248,9 @@
 	width: 18%;
 }
 
+#comments #respond .comment-form-url input,
+#comments #respond .comment-form-author input,
+#comments #respond .comment-form-email input,
 #comments #respond .comment-form-row input {
 	width: 80%;
 	float: right;
@@ -273,6 +284,7 @@
 	margin: 0;
 	overflow-x: hidden;
 	overflow-y: auto;
+	display: block;
 }
 
 
@@ -314,7 +326,8 @@
 }
 
 #comments a.prev, #comments a.next {
-	font-size: 200%;
+	font-size: 22px;
+	line-height: 26px;
 	vertical-align:top;
 }
 
@@ -344,7 +357,8 @@
 	text-decoration:none;
 }
 
-#comments #comment-pagination span.dots, #comment-pagination a.prev,
+#comments #comment-pagination span.dots,
+#comments #comment-pagination a.prev,
 #comments #comment-pagination a.next {
 	background-color:transparent;
 	color: #ddd;
@@ -365,7 +379,7 @@
 	color:#666;
 }
 
-#comments ul#commentlist li .comment-body,
+.ie #comments ul#commentlist li .comment-body,
 .ie6 #comments .comment-buttons {
 	zoom: 1
 }
@@ -450,6 +464,7 @@ ul#trackback-list {
 
 .comment-link-display {
 	padding: 5px 10px;
+	color: #fff;
 	background-color: #333;
 	border: dotted 1px #444;
 	cursor: pointer;
@@ -492,9 +507,33 @@ ul#trackback-list {
 	width: 20px;
 	height: 20px;
 	background: url( badge-new.png ) no-repeat center center transparent;
+	margin-left: 8px;
 }
 
 #comments ul#commentlist li.new > .comment-body {
 	/*border: 2px solid #337FBA;*/
 	background-color: #333;
+}
+
+#quote-float {
+	border: solid 1px #333;
+	background: url( 'arrow-left-alt.png') no-repeat left center #000;
+	color: #ddd;
+	cursor: pointer;
+	padding: 3px 10px 3px 24px;
+
+	-moz-border-radius: 3px;
+	-moz-box-shadow: 3px 3px 4px rgba( 0,0,0,0.3 );
+	-webkit-border-radius: 3px;
+	-webkit-box-shadow: 3px 3px 4px rgba( 0,0,0,0.3 );
+	border-radius: 3px;
+	box-shadow: 3px 3px 4px rgba( 0,0,0,0.3 );
+}
+
+#comment-form span.required {
+	display: none;
+}
+
+#comments li#response-cont #respond {
+	overflow: hidden;
 }

@@ -35,7 +35,7 @@ jQuery( document ).ready( function( $ ) {
 			auth = $( e ).parents( '.comment-buttons' ).siblings( '.comment-meta' ).find( 'cite.fn' ).text( ),
 			resu = '';
 
-		resu = '<blockquote>\n<cite>' + $.trim( auth ) + '</cite>\n' + $.trim( text ) + '\n</blockquote>\n';
+		resu = '<blockquote cite="' + $.trim( auth ) + '">\n<cite>' + $.trim( auth ) + '</cite>\n' + $.trim( text ) + '\n</blockquote>\n';
 		insert_at_carret( 'comment', resu );
 	}
 

@@ -217,12 +217,18 @@
 
 /* End Comment buttons */
 
+#comments #respond .comment-form-email,
+#comments #respond .comment-form-author,
+#comments #respond .comment-form-url,
 #comments .comment-form-row {
 	overflow: auto;
 	margin-bottom: 10px;
 	width: 100%;
 }
 
+#comments #respond .comment-form-email input,
+#comments #respond .comment-form-author input,
+#comments #respond .comment-form-url input,
 #comments #respond .comment-form-row input,
 #comments #comment-form .textarea-border {
 	border: solid 1px #ccc;
@@ -242,6 +248,9 @@
 	width: 18%;
 }
 
+#comments #respond .comment-form-url input,
+#comments #respond .comment-form-author input,
+#comments #respond .comment-form-email input,
 #comments #respond .comment-form-row input {
 	width: 80%;
 	float: right;
@@ -370,7 +379,7 @@
 	color:#666;
 }
 
-#comments ul#commentlist li .comment-body,
+.ie #comments ul#commentlist li .comment-body,
 .ie6 #comments .comment-buttons {
 	zoom: 1
 }
@@ -519,6 +528,12 @@ ul#trackback-list {
 	-webkit-box-shadow: 3px 3px 4px rgba( 0,0,0,0.3 );
 	border-radius: 3px;
 	box-shadow: 3px 3px 4px rgba( 0,0,0,0.3 );
+}
 
+#comment-form span.required {
+	display: none;
+}
 
+#comments li#response-cont #respond {
+	overflow: hidden;
 }

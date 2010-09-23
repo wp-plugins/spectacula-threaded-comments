@@ -23,7 +23,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 							'form_avatar' => true,
 							'link_button' => true,
 							'quote_button' => true,
-							'quote_select' => true,
+							'quote_select' => false,
 							'quote_target' => '.hentry'
 							);
 
@@ -64,6 +64,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 
 			<p><label for="<?php $this->item_attrib( 'quote_target' ); ?>"><?php _e( 'Floating quote selector', SPEC_COMMENT_DOM ); ?></label></p>
 			<p><input style="width:98%" class="regular-text" type="text" value="<?php echo esc_attr( $options[ 'quote_target' ] );?>" name="<?php $this->item_attrib( 'quote_target', true ); ?>" id="<?php $this->item_attrib( 'quote_target' ); ?>" /></p>
+			<p><em><?php _e( 'This should be set to the HTML class or ID of your post content. To find this you will need to view the source code for your posts, search through it for your content and then make a note of the ID or class that is unique to the element that is wrapped around your content. It might look something like this.. &lt;div class="calss-name" id="id-name"&gt;{ Your post content...... }&lt;/div&gt;', SPEC_COMMENT_DOM )?></em></p>
 
 			<?php
 		}
@@ -169,15 +170,16 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				$output[ 'title' ] = html_entity_decode( stripcslashes( $options[ 'title' ] ) );
 				$output[ 'trackback' ] = html_entity_decode( stripcslashes( $options[ 'trackback' ] ) );
 				$output[ 'form_title' ] = html_entity_decode( stripcslashes( $options[ 'form_title' ] ) );
-				$output[ 'credit' ] = intval( $options[ 'credit' ] ) == 1 ? true : false;
 				$output[ 'comments_nest_depth' ] = intval( $options[ 'comments_nest_depth' ] ) >= 0 && intval( $options[ 'comments_nest_depth' ] ) <= 10 ? intval( $options[ 'comments_nest_depth' ] ) : $this->defaults[ 'comments_nest_depth' ];
 				$output[ 'polling' ] = intval( $options[ 'polling' ] ) >= 10 && intval( $options[ 'polling' ] ) <= 999 ? intval( $options[ 'polling' ] ) : $this->defaults[ 'polling' ];
-				$output[ 'update' ] = intval( $options[ 'update' ] ) == 1 ? true : false;
-				$output[ 'form_avatar' ] = intval( $options[ 'form_avatar' ] ) == 1 ? true : false;
-				$output[ 'link_button' ] = intval( $options[ 'link_button' ] ) == 1 ? true : false;
-				$output[ 'quote_button' ] = intval( $options[ 'quote_button' ] ) == 1 ? true : false;
-				$output[ 'quote_select' ] = intval( $options[ 'quote_select' ] ) == 1 ? true : false;
 				$output[ 'quote_target' ] = preg_match( '/^(\.|#)?[a-zA-Z0-9-_]+$/is', $options[ 'quote_target' ] ) ? $options[ 'quote_target' ] : $this->defaults[ 'quote_target' ];
+
+				$output[ 'credit' ] 		= isset( $options[ 'credit' ] )			? true : false;
+				$output[ 'update' ] 		= isset( $options[ 'update' ] )			? true : false;
+				$output[ 'form_avatar' ] 	= isset( $options[ 'form_avatar' ] )	? true : false;
+				$output[ 'link_button' ] 	= isset( $options[ 'link_button' ] )	? true : false;
+				$output[ 'quote_button' ] 	= isset( $options[ 'quote_button' ] )	? true : false;
+				$output[ 'quote_select' ] 	= isset( $options[ 'quote_select' ] )	? true : false;
 
 				$stylesheets = spec_stylesheet_find( );
 
@@ -186,7 +188,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				} else if ( isset( $stylesheets[ $options[ 'stylesheet' ] ][ 'url' ] ) ) {
 					$output[ 'stylesheet' ] = $stylesheets[ $options[ 'stylesheet' ] ][ 'url' ];
 				} else {
-					$output[ 'stylesheet' ] = $defaults[ 'stylesheet' ];
+					$output[ 'stylesheet' ] = $this->defaults[ 'stylesheet' ];
 				}
 
 				return $output;

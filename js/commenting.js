@@ -170,9 +170,9 @@ addComment = {
 				jQuery( '#trackback-list' ).append( jQuery( html ).hide( ).addClass( 'rolledup' ).trigger( 'newComment' ) );
 			} else {
 				if ( commentingL10n.order === 'desc' )
-					jQuery( 'li#respond' ).after( jQuery( html ).hide( ).addClass( 'rolledup' ).trigger( 'newComment' ) );
+					jQuery( 'li#response-cont' ).after( jQuery( html ).hide( ).addClass( 'rolledup' ).trigger( 'newComment' ) );
 				else
-					jQuery( 'li#respond' ).before( jQuery( html ).hide( ).addClass( 'rolledup' ).trigger( 'newComment' ) );
+					jQuery( 'li#response-cont' ).before( jQuery( html ).hide( ).addClass( 'rolledup' ).trigger( 'newComment' ) );
 			}
 
 			addComment.addToggles( );

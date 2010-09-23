@@ -159,14 +159,14 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 			if ( spec_comment_option( 'form_avatar' ) )
 				$avatar = get_avatar( isset( $current_user->user_email ) ? $current_user->user_email : $commenter[ 'comment_author_email' ], 64 ); ?>
 
-			<li class="depth-1<?php echo isset( $avatar ) && $avatar ? ' with-avatar' : ''?>" id="respond">
+			<li class="depth-1<?php echo isset( $avatar ) && $avatar ? ' with-avatar' : ''?>" id="response-cont">
 
 			<?php
 				$form_title = spec_comment_option( 'form_title' );
 				if ( $form_title != '' )
 					echo '<div class="comment-title">' . $form_title . '</div>'; ?>
 
-				<div class="comment-body"><?php
+				<div id="respond" class="comment-body"><?php
 					// Not logged in, then you're not getting the form.
 					if ( get_option( 'comment_registration' ) && ! $user_ID ) {
 
