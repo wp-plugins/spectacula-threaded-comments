@@ -4,7 +4,7 @@ Donate link: https://spectacu.la/signup/signup.php
 Tags: comments, jQuery, AJAX
 Requires at least: 2.7.0
 Tested up to: 3.0
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 
 Spectacu.la Discussion adds threaded commenting with live AJAX comments
 to almost any WordPress Theme.
@@ -152,6 +152,11 @@ theme developer to change their theme.
 2.	The control interface for this plug-in.
 
 == Changelog ==
+
+= 2.1.4 =
+*	Added two filters to control the avatar size for those that want or need to
+	roll their own layout. The filters are spec_avatar_size_large and
+	spec_avatar_size_small.
 
 = 2.1.3 =
 *	Adding Japanese translation provided by - Chestnut http://staff.blog.bng.net

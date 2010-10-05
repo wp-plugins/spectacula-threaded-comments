@@ -157,7 +157,7 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 				$commenter = wp_get_current_commenter( );
 
 			if ( spec_comment_option( 'form_avatar' ) )
-				$avatar = get_avatar( isset( $current_user->user_email ) ? $current_user->user_email : $commenter[ 'comment_author_email' ], 64 ); ?>
+				$avatar = get_avatar( isset( $current_user->user_email ) ? $current_user->user_email : $commenter[ 'comment_author_email' ], apply_filters( 'spec_avatar_size_large', 64 ) ); ?>
 
 			<li class="depth-1<?php echo isset( $avatar ) && $avatar ? ' with-avatar' : ''?>" id="response-cont">
 
@@ -272,7 +272,7 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 
 		// Avatar ( Still in glorious 2D :P )
 		if ( get_option( 'show_avatars' ) && $avatar_size != 0 ) {
-			$avatar = get_avatar( $comment, ( $depth == 1 ? 64 : 32 ) );
+			$avatar = get_avatar( $comment, ( $depth == 1 ? apply_filters( 'spec_avatar_size_large', 64 ): apply_filters( 'spec_avatar_size_small', 32 ) ) );
 		} ?>
 
 		<li id="comment-<?php comment_ID( ); ?>" <?php echo comment_class( $avatar ? 'with-avatar' : '', get_comment_ID( ), null, false ); ?>>
