@@ -162,6 +162,8 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 			<li class="depth-1<?php echo isset( $avatar ) && $avatar ? ' with-avatar' : ''?>" id="response-cont">
 
 			<?php
+				do_action( 'before_comment_respond', $post->ID );
+
 				$form_title = spec_comment_option( 'form_title' );
 				if ( $form_title != '' )
 					echo '<div class="comment-title">' . $form_title . '</div>'; ?>
@@ -179,10 +181,14 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 							<div class="comment-author-avatar">
 								<?php echo isset( $current_user->user_email ) || isset( $commenter[ 'comment_author_email' ] ) ? '<a href="http://gravatar.com/site/login" title="' . __( 'Change Your Avatar', SPEC_COMMENT_DOM ) . '">' . $avatar . '</a>' : $avatar; ?>
 							</div><?php
-						} ?>
+						}
+
+						do_action( 'before_comment_form', $post->ID ); ?>
 
 						<form action="<?php echo get_option( 'siteurl' )?>/wp-comments-post.php" method="post" id="comment-form">
 							<fieldset><?php
+
+							do_action( 'comment_form_start', $post->ID );
 
 							if ( $user_ID ) {?>
 								<div class="comment-meta">
@@ -220,7 +226,7 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 
 									if ( $user_ID ) { ?>
 
-									<a class="comment-button" href="<?php echo admin_url( 'profile.php' ); ?>"><?php _e( 'Edit profile' );?> </a>
+									<a class="comment-button" href="<?php echo admin_url( 'profile.php' ); ?>"><?php _e( 'Edit profile', SPEC_COMMENT_DOM );?> </a>
 									<a class="comment-button" href="<?php echo wp_logout_url( $_SERVER[ 'REQUEST_URI' ] );?>" title="<?php _e( 'Log out of this account', SPEC_COMMENT_DOM ) ?>"><?php _e( 'Log Out', SPEC_COMMENT_DOM )?></a><?php
 
 									} ?>
@@ -231,9 +237,14 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 								do_action( 'comment_form', $post->ID );?>
 							</fieldset>
 						</form><?php
+
+						do_action( 'after_comment_form', $post->ID );
+
 					}?>
 				</div>
 			</li><?php
+
+			do_action( 'after_comment_respond', $post->ID );
 		}
 	}
 }

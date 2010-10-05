@@ -5,12 +5,12 @@ msgstr ""
 "POT-Creation-Date: 2010-10-05 17:03-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Interconnect IT <admin@interconnectit.com>\n"
-"Language-Team: Interconnect IT\n"
+"Language-Team: BNG NET\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: UNITED KINGDOM\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: T:\\repositories\\wordpress\\spectacula-threaded-comments\n"
@@ -18,250 +18,248 @@ msgstr ""
 
 #: trunk/commenting.php:120
 msgid "Show trackbacks"
-msgstr "Show trackbacks"
+msgstr "トラックバックを表示する"
 
 #: trunk/commenting.php:121
 msgid "Hide trackbacks"
-msgstr "Hide trackbacks"
+msgstr "トラックバックを隠す"
 
 #: trunk/commenting.php:122
 msgid "Hide %count% replies to %name%'s comment"
-msgstr "Hide %count% replies to %name%'s comment"
+msgstr "%name%のコメントから%count%件の返信を隠す"
 
 #: trunk/commenting.php:123
 msgid "View %count% replies to %name%'s comment"
-msgstr "View %count% replies to %name%'s comment"
+msgstr "%name%のコメントに%count%件の返信を表示する"
 
 #: trunk/commenting.php:124
 msgid "Hide the reply to %name%'s comment"
-msgstr "Hide the reply to %name%'s comment"
+msgstr "%name%のコメントに対する返信を隠す"
 
 #: trunk/commenting.php:125
 msgid "View the reply to %name%'s comment"
-msgstr "View the reply to %name%'s comment"
+msgstr "%name%のコメントに対する返信を表示する"
 
 #: trunk/commenting.php:126
 #, php-format
 msgid "Trackback from: %s"
-msgstr "Trackback from: %s"
+msgstr "トラックバック: %s"
 
 #: trunk/commenting.php:127
 msgid "Missing some fields"
-msgstr "Missing some fields"
+msgstr "いくつかの項目が見当たりません"
 
 #: trunk/commenting.php:128
 msgid "Unknown commenter"
-msgstr "Unknown commenter"
+msgstr "不明なコメント"
 
 #: trunk/commenting.php:143
 msgid "Quote"
-msgstr "Quote"
+msgstr "引用"
 
 #: trunk/commenting.php:265
 #: trunk/commenting.php:269
 #, php-format
 msgid "Threaded commenting powered by %s code."
-msgstr "Threaded commenting powered by %s code."
+msgstr ""
 
 #: trunk/commenting.php:283
 #: trunk/commenting.php:286
 #: trunk/commenting.php:287
 msgid "Live Discussion"
-msgstr "Live Discussion"
+msgstr ""
 
 #: trunk/commenting.php:304
 msgid "Allow Live Discussion"
-msgstr "Allow Live Discussion"
+msgstr ""
 
 #: trunk/includes/functions.php:128
 #: trunk/includes/functions.php:135
 msgid "Theme styling"
-msgstr "Theme styling"
+msgstr "テーマスタイル"
 
 #: trunk/includes/functions.php:175
 msgid "You must be logged in to comment."
-msgstr "You must be logged in to comment."
+msgstr "最初にログインしてからコメントしてください。"
 
 #: trunk/includes/functions.php:182
 msgid "Change Your Avatar"
-msgstr "Change Your Avatar"
+msgstr "アバターを変更する"
 
 #: trunk/includes/functions.php:203
 msgid "Name"
-msgstr "Name"
+msgstr "名前"
 
 #: trunk/includes/functions.php:208
 msgid "Email"
-msgstr "Email"
+msgstr "メールアドレス"
 
 #: trunk/includes/functions.php:213
 msgid "Website"
-msgstr "Website"
+msgstr "ホームページ"
 
 #: trunk/includes/functions.php:224
 msgid "Post your comment"
-msgstr "Post your comment"
+msgstr "コメントを残す"
 
 #: trunk/includes/functions.php:225
 msgid "Cancel reply"
-msgstr "Cancel reply"
+msgstr "返信のキャンセル"
 
 #: trunk/includes/functions.php:229
 msgid "Edit profile"
-msgstr "Edit profile"
+msgstr "プロフィールの編集"
 
 #: trunk/includes/functions.php:230
 msgid "Log out of this account"
-msgstr "Log out of this account"
+msgstr "このアカウントからログアウトする"
 
 #: trunk/includes/functions.php:230
 msgid "Log Out"
-msgstr "Log Out"
+msgstr "ログアウト"
 
 #: trunk/includes/functions.php:289
 #, php-format
 msgid "%1$s at %2$s"
-msgstr "%1$s at %2$s"
+msgstr "%1$s %2$s"
 
 #: trunk/includes/functions.php:295
 msgid "Comment awaiting moderation."
-msgstr "Comment awaiting moderation."
+msgstr "コメントは現在モデレート待ちです。"
 
 #: trunk/includes/functions.php:301
 msgid "Reply"
-msgstr "Reply"
+msgstr "返信"
 
 #: trunk/includes/functions.php:303
 msgid "Edit"
-msgstr "Edit"
+msgstr "編集"
 
 #: trunk/includes/functions.php:305
 msgid "Link"
-msgstr "Link"
+msgstr "リンク"
 
 #: trunk/includes/options-page.php:34
 msgid "Rollup Depth"
-msgstr "Rollup Depth"
+msgstr "表示する階層"
 
 #: trunk/includes/options-page.php:35
 msgid "Titles and form"
-msgstr "Titles and form"
+msgstr "タイトルとフォーム"
 
 #: trunk/includes/options-page.php:36
 msgid "Stylesheet"
-msgstr "Stylesheet"
+msgstr "スタイルシート"
 
 #: trunk/includes/options-page.php:37
 msgid "Comment update"
-msgstr "Comment update"
+msgstr "コメントの更新"
 
 #: trunk/includes/options-page.php:38
 msgid "Buttons"
-msgstr "Buttons"
+msgstr "ボタン"
 
 #: trunk/includes/options-page.php:39
 msgid "Our credit"
-msgstr "Our credit"
+msgstr "クレジット"
 
 #: trunk/includes/options-page.php:47
 msgid "Show the link button on comments."
-msgstr "Show the link button on comments."
+msgstr "コメントにリンクボタンを表示する。"
 
 #: trunk/includes/options-page.php:53
 msgid "Allow the quote button."
-msgstr "Allow the quote button."
+msgstr "引用ボタンを許可する。"
 
 #: trunk/includes/options-page.php:57
 msgid "Enabling the following will let people quickly quote from your post. A quote button will pop up next to any text selected that falls inside the CSS selector defined in \"Floating quote selector\", pressing said button will populate the comment field with the selected text."
-msgstr "Enabling the following will let people quickly quote from your post. A quote button will pop up next to any text selected that falls inside the CSS selector defined in \"Floating quote selector\", pressing said button will populate the comment field with the selected text."
+msgstr "下の機能を有効化すると、記事から簡単に引用できるようになります。記事中で任意のテキストを選択すると、そのすぐ隣に引用ボタンがポップアップし、「浮動引用セレクタ」で定義したCSSセレクタの適用対象となります。「said」ボタンを押せば、コメント欄に選択したテキストが挿入されます。"
 
 #: trunk/includes/options-page.php:61
 msgid "Allow the floating quote button."
-msgstr "Allow the floating quote button."
+msgstr "浮動引用ボタンを許可する。"
 
 #: trunk/includes/options-page.php:65
 msgid "Floating quote selector"
-msgstr "Floating quote selector"
+msgstr "浮動引用セレクタ"
 
 #: trunk/includes/options-page.php:67
 msgid "This should be set to the HTML class or ID of your post content. To find this you will need to view the source code for your posts, search through it for your content and then make a note of the ID or class that is unique to the element that is wrapped around your content. It might look something like this.. &lt;div class=\"calss-name\" id=\"id-name\"&gt;{ Your post content...... }&lt;/div&gt;"
-msgstr "This should be set to the HTML class or ID of your post content. To find this you will need to view the source code for your posts, search through it for your content and then make a note of the ID or class that is unique to the element that is wrapped around your content. It might look something like this.. &lt;div class=\"calss-name\" id=\"id-name\"&gt;{ Your post content...... }&lt;/div&gt;"
+msgstr "これは、記事内容のHTMLクラスまたはIDに設定します。それを見つけるには、記事のソースコードを見渡して、記事内容箇所を囲っているエレメント固有のIDまたはクラスを探します。エレメントはたいてい、&lt;div class=\"クラス名\" id=\"ID名\"&gt;{記事内容...}&lt;/div&gt;の形式になっているはずです。"
 
 #: trunk/includes/options-page.php:77
 msgid "Auto update comments"
-msgstr "Auto update comments"
+msgstr "コメントの自動更新"
 
 #: trunk/includes/options-page.php:82
 msgid "Frequency of comment update in seconds ( minimum 10 seconds )"
-msgstr "Frequency of comment update in seconds ( minimum 10 seconds )"
+msgstr "コメントの更新間隔 ( 最低 10秒 )"
 
 #: trunk/includes/options-page.php:91
 msgid "Comments title"
-msgstr "Comments title"
+msgstr "コメントのタイトル"
 
 #: trunk/includes/options-page.php:94
 msgid "Trackback title"
-msgstr "Trackback title"
+msgstr "トラックバックのタイトル"
 
 #: trunk/includes/options-page.php:97
 msgid "Comment form title"
-msgstr "Comment form title"
+msgstr "コメントフォームのタイトル"
 
 #: trunk/includes/options-page.php:101
 msgid "We will attempt to show, next to the comment form, the avatar of the logged in user, the user found in the cookie or a default avatar. Some plug-ins can get in the way of this and cause problems if that happens to you your best option is to not show this avatar."
-msgstr "We will attempt to show, next to the comment form, the avatar of the logged in user, the user found in the cookie or a default avatar. Some plug-ins can get in the way of this and cause problems if that happens to you your best option is to not show this avatar."
+msgstr "コメントフォームの隣に登録ユーザやクッキー内で見つかったユーザのアバターあるいはデフォルトのアバターを可能な限り表示します。プラグインの中には、この機能によって不具合を生じるものがありますので、万一問題が発生したときは、このアバター表示機能をオフにしてください。"
 
 #: trunk/includes/options-page.php:105
 msgid "Show form avatar"
-msgstr "Show form avatar"
+msgstr "フォームにアバターを表示する"
 
 #: trunk/includes/options-page.php:114
 msgid "Choose the stylesheet you want to use for the comments."
-msgstr "Choose the stylesheet you want to use for the comments."
+msgstr "コメントに使用するスタイルシートの選択"
 
 #: trunk/includes/options-page.php:117
 #: trunk/includes/options-page.php:147
 msgid "Disable"
-msgstr "Disable"
+msgstr "無効"
 
 #: trunk/includes/options-page.php:126
 msgid "If you want to customise the look of the comments you can do, however avoid making changes to the original CSS files as changes could be wiped out by any update. You can copy the comments.css from the style folder within this plug-in to your theme folder, make changes to it there then select the \"theme style\" option from the drop down above. You can also make a copy of it in the style folder, change the comment \"comment style: xxxxxx\" at the top of the file and then select that name from the drop down. You can also disable the inbuilt style system if you want to roll your comment CSS into your theme CSS."
-msgstr "If you want to customise the look of the comments you can do, however avoid making changes to the original CSS files as changes could be wiped out by any update. You can copy the comments.css from the style folder within this plug-in to your theme folder, make changes to it there then select the \"theme style\" option from the drop down above. You can also make a copy of it in the style folder, change the comment \"comment style: xxxxxx\" at the top of the file and then select that name from the drop down. You can also disable the inbuilt style system if you want to roll your comment CSS into your theme CSS."
+msgstr "コメントの表示方法はカスタマイズできますが、更新ごとに修正内容が消失してしまうため、オリジナルのCSSファイルは修正しないでください。このプラグインのスタイルフォルダからあなたが利用しているテーマのフォルダに comments.css をコピーし、それをカスタマイズします。カスタマイズが終了したら、上のドロップダウンから「theme style」オプションを選択します。スタイルフォルダの中でコピーを作り、ファイルの先頭にあるコメントの「comment style: xxxxxx」を変更してからドロップダウンでその名前を選択することもできます。コメントCSSを利用しているテーマのCSSに統合したければ、このプラグインのスタイルシステムを無効にすることもできます。"
 
 #: trunk/includes/options-page.php:137
 msgid "Show our credit link at the bottom of the comments form."
-msgstr "Show our credit link at the bottom of the comments form."
+msgstr "コメントフォームの下にクレジットを表示する。"
 
 #: trunk/includes/options-page.php:140
 msgid "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
-msgstr "If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work."
+msgstr "クレジットリンクを隠すことにした方は、「お願いですから」我々のサイトへの登録を検討してください。さもないと、これまでの労力が報われません。"
 
 #: trunk/includes/options-page.php:155
 msgid "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
-msgstr "This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them."
+msgstr "階層化されたコメントのうち、クリックしないと返信が表示されない階層のことです。指定した階層より深いコメントはJavaScriptで隠し、クリックする毎に表示したり隠したりします。"
 
 #: trunk/includes/options-page.php:213
 msgid "Spectacu.la Discussion"
-msgstr "Spectacu.la Discussion"
+msgstr "Spectacu.la ディスカッション"
 
 #: trunk/includes/options-page.php:274
 msgid "Spectacu.la Discussion Options"
-msgstr "Spectacu.la Discussion Options"
+msgstr "Spectacu.la ディスカッションのオプション"
 
 #: trunk/includes/options-page.php:281
 msgid "Save settings"
-msgstr "Save settings"
+msgstr "設定の保存"
 
 #: trunk/includes/options-page.php:283
 msgid "This will reset all options to their to defaults if checked when saved."
-msgstr "This will reset all options to their to defaults if checked when saved."
+msgstr "ここをチェックして保存すると、すべてのオプションをデフォルトに戻します。"
 
 #: trunk/includes/options-page.php:289
 msgid "Save"
-msgstr "Save"
+msgstr "保存"
 
-#~ msgid "Titles"
-#~ msgstr "Titles"
 #~ msgid "Ajax comments"
 #~ msgstr "Ajax comments"
 #~ msgid "Comment Options"

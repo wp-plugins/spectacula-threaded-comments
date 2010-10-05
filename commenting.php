@@ -3,7 +3,7 @@
  Plugin Name: Spectacu.la Discussion
  Plugin URI: http://spectacu.la/
  Description: Make it easy to add fully ajax threaded comments to any theme.
- Version: 2.1.2
+ Version: 2.1.3
  Author: James R Whitehead
  Author URI: http://www.interconnectit.com/
 */
@@ -262,11 +262,11 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 		function our_credit( ){
 
 			if ( spec_comment_option( 'credit' ) ) {
-				echo '<p class="spectacula-credit"><small>Threaded commenting powered by <a href="http://spectacu.la/">Spectacu.la</a> code.</small></p>';
+				echo '<p class="spectacula-credit"><small>' . sprintf( __( 'Threaded commenting powered by %s code.', SPEC_COMMENT_DOM ), '<a href="http://spectacu.la/">Spectacu.la</a>' ) . '</small></p>';
 			} else {
 				// If you've unticked the show our credit link we'll just have it as an HTML comment instead.
 				// Nothing to stop you removing this line too. But please don't.
-				echo "\n<!-- Threaded commenting powered by http://Spectacu.la/ code. -->\n";
+				echo "\n<!-- " . sprintf( __( 'Threaded commenting powered by %s code.', SPEC_COMMENT_DOM ), 'http://spectacu.la/' ) . " -->\n";
 			}
 		}
 
