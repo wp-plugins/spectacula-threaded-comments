@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-05 17:03-0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Interconnect IT <admin@interconnectit.com>\n"
+"Last-Translator: BNG NET <webmaster@bng.net>\n"
 "Language-Team: BNG NET\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,17 +61,17 @@ msgstr "引用"
 #: trunk/commenting.php:269
 #, php-format
 msgid "Threaded commenting powered by %s code."
-msgstr ""
+msgstr "このブログのコメントは%sによりスレッド化しています。"
 
 #: trunk/commenting.php:283
 #: trunk/commenting.php:286
 #: trunk/commenting.php:287
 msgid "Live Discussion"
-msgstr ""
+msgstr "ライブディスカッション"
 
 #: trunk/commenting.php:304
 msgid "Allow Live Discussion"
-msgstr ""
+msgstr "ライブディスカッションを許可する"
 
 #: trunk/includes/functions.php:128
 #: trunk/includes/functions.php:135
@@ -262,20 +262,27 @@ msgstr "保存"
 
 #~ msgid "Ajax comments"
 #~ msgstr "Ajax comments"
+
 #~ msgid "Comment Options"
 #~ msgstr "Comment Options"
+
 #~ msgid "Use the stylesheet that came with this plug-in. "
 #~ msgstr "Use the stylesheet that came with this plug-in. "
+
 #~ msgid "Use the dark theme CSS file. "
 #~ msgstr "Use the dark theme CSS file. "
+
 #~ msgid "Use the included javaScript. "
 #~ msgstr "Use the included javaScript. "
+
 #~ msgid "Leave a Reply to %s"
 #~ msgstr "Leave a Reply to %s"
+
 #~ msgid "Logged in as"
 #~ msgstr "Logged in as"
+
 #~ msgid "(required)"
 #~ msgstr "(required)"
+
 #~ msgid "Mail (will not be published)"
 #~ msgstr "Mail (will not be published)"
-
