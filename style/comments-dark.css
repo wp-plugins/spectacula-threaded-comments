@@ -221,7 +221,7 @@
 #comments #respond .comment-form-author,
 #comments #respond .comment-form-url,
 #comments .comment-form-row {
-	overflow: auto;
+	overflow: hidden;
 	margin-bottom: 10px;
 	width: 100%;
 }
