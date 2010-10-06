@@ -180,7 +180,7 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 		 @return null;
 		*/
 		function css( ){
-			if ( is_singular( ) && spec_comment_option( 'stylesheet' ) != '' ) { ?>
+			if ( is_singular( ) && strtolower( spec_comment_option( 'stylesheet' ) ) != 'disabled' ) { ?>
 				<link rel="stylesheet" href="<?php echo apply_filters( 'spec_comment_css', spec_comment_option( 'stylesheet' ) . '?ver=2.0.0' ); ?>" type="text/css" media="screen" /><?php
 			}
 		}
