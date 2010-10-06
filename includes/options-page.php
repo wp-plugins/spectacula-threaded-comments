@@ -114,7 +114,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 			<p><label for="<?php $this->item_attrib( 'stylesheet', true ); ?>"><?php _e( 'Choose the stylesheet you want to use for the comments.', SPEC_COMMENT_DOM ) ?></label></p>
 			<p>
 				<select name="<?php $this->item_attrib( 'stylesheet', true ); ?>" id="<?php $this->item_attrib( 'stylesheet', true ); ?>" style="width:200px;">
-					<option value="0"<?php selected( $options[ 'stylesheet' ], '' ) ?>><?php _e( 'Disable', SPEC_COMMENT_DOM );?></option><?php
+					<option value="disabled"<?php selected( $options[ 'stylesheet' ], 'disabled' ) ?>><?php _e( 'Disable', SPEC_COMMENT_DOM );?></option><?php
 
 					$stylesheets = spec_stylesheet_find( );
 					foreach( ( array ) $stylesheets as $name => $stylesheet ) {?>
@@ -183,8 +183,8 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 
 				$stylesheets = spec_stylesheet_find( );
 
-				if ( $options[ 'stylesheet' ] === 0 ) {
-					$output[ 'stylesheet' ] = '';
+				if ( strtolower( $options[ 'stylesheet' ] ) === 'disabled' ) {
+					$output[ 'stylesheet' ] = 'disabled';
 				} else if ( isset( $stylesheets[ $options[ 'stylesheet' ] ][ 'url' ] ) ) {
 					$output[ 'stylesheet' ] = $stylesheets[ $options[ 'stylesheet' ] ][ 'url' ];
 				} else {
@@ -305,7 +305,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 		}
 	}
 
-	$spec_options_page  = new spec_options_page ;
+	$spec_options_page = new spec_options_page( );
 
 	if ( ! function_exists( 'spec_comment_option' ) ) {
 		function spec_comment_option( $option_name ) {

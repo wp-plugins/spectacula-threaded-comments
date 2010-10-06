@@ -153,6 +153,12 @@ theme developer to change their theme.
 
 == Changelog ==
 
+= 2.1.5 =
+*	Added new version of the Japanese translation which covers the three missing
+	string.
+	Fixed issue with the stylesheet selection drop not remembering your choice
+	if you picked "disabled".
+
 = 2.1.4 =
 *	Added two filters to control the avatar size for those that want or need to
 	roll their own layout. The filters are spec_avatar_size_large and
