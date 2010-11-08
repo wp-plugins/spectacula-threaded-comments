@@ -137,7 +137,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 					<?php _e( 'Show our credit link at the bottom of the comments form.', SPEC_COMMENT_DOM ); ?>
 				</label>
 			</p>
-			<p><?php _e( 'If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work.', SPEC_COMMENT_DOM );?> <img src="<?php bloginfo( 'home' )?>/wp-includes/images/smilies/icon_cry.gif" alt=":( "/><br/><a href="https://spectacu.la/signup/signup.php">Spectacu.la</a></p><?php
+			<p><?php _e( 'If you choose to hide our credit link &lsquo;please&rsquo; think about signing up at our site otherwise we get no rewards for our good work.', SPEC_COMMENT_DOM );?> <img src="<?php echo home_url( ); ?>/wp-includes/images/smilies/icon_cry.gif" alt=":( "/><br/><a href="https://spectacu.la/signup/signup.php">Spectacu.la</a></p><?php
 		}
 
 

@@ -131,7 +131,7 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 					'update' => $this->check_live( $post->ID ) && comments_open( $post->ID ) ? 1 : 0,
 					'time' => current_time( 'mysql', false ),
 					'post_id' => $post->ID,
-					'ajax_url' => trailingslashit( get_bloginfo( 'home' ) ),
+					'ajax_url' => trailingslashit( home_url( ) ),
 					'nest_depth' => spec_comment_option( 'comments_nest_depth' ),
 					'max_depth' => get_option( 'thread_comments_depth' )
 				);

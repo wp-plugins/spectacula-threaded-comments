@@ -312,4 +312,13 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 			</div>
 		<?php
 	}
-}?>
+}
+
+/*
+ For WP older than 3.0
+*/
+if ( ! function_exists( 'home_url' ) ) {
+	function home_url( ){
+		return get_bloginfo( 'home' );
+	}
+} ?>
