@@ -279,8 +279,10 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 			global $wp_version;
 			if ( version_compare( $wp_version, '3.0', 'ge' ) ) {
 				// WordPress 3.0 and above.
-				foreach( ( array ) get_post_types( array( 'show_ui' => 1 ) ) as $post_type )
-					add_meta_box( 'spec_live_toggle', __( 'Live Discussion', SPEC_COMMENT_DOM ), array( &$this, 'metabox_live_toggle' ), $post_type, 'advanced', 'default' );
+				foreach( ( array ) get_post_types( array( 'show_ui' => 1 ) ) as $post_type ) {
+					if( post_type_supports( $post_type, 'comments' ) )
+						add_meta_box( 'spec_live_toggle', __( 'Live Discussion', SPEC_COMMENT_DOM ), array( &$this, 'metabox_live_toggle' ), $post_type, 'advanced', 'default' );
+				}
 			} else {
 				// Add to post and page for older versions of WordPress.
 				add_meta_box( 'spec_live_toggle', __( 'Live Discussion', SPEC_COMMENT_DOM ), array( &$this, 'metabox_live_toggle' ), 'post', 'advanced', 'default' );
