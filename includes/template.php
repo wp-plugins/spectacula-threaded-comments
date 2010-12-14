@@ -11,7 +11,7 @@ if ( ( comments_open( ) || get_comments_number( ) > 0 ) && ( is_single( ) || is_
 	<div id="comments"<?php echo isset( $section_class ) ? $section_class : '';?>>
 		<?php
 		if ( have_comments( ) || comments_open( ) ) {
-			if ( spec_comment_option( 'title' ) != '' ) {
+			if ( spec_comment_option( 'title' ) != '' && have_comments( ) ) {
 				echo '<div class="comment-title">' . spec_comment_option( 'title' ) . '</div>';
 			}?>
 			<ul id="commentlist">

@@ -17,7 +17,7 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 							'credit' => true,
 							'title' => 'Comments',
 							'trackback' => 'Trackbacks',
-							'form_title' => '',
+							'form_title' => 'Post a comment',
 							'polling' => 30, // Frequency to poll the server for new comments in seconds.
 							'update' => false, // Do we want to auto update or not.
 							'form_avatar' => true,
