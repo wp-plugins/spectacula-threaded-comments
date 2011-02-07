@@ -99,9 +99,9 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 			global $wp_scripts, $post;
 
 			// Quick check that this post_type supports comments.
-			$post_type_supports = function_exists( 'post_type_supports' ) ? post_type_supports( $post->post_type, 'comments' ) && comments_open( $post->ID ) : true;
+			$post_type_supports = function_exists( 'post_type_supports' ) ? post_type_supports( $post->post_type, 'comments' ) : true;
 
-			if( function_exists( 'wp_list_comments' ) && is_singular( ) && $post_type_supports ) {
+			if( function_exists( 'wp_list_comments' ) && is_singular( ) && $post_type_supports && comments_open( $post->ID ) ) {
 
 				$prefix = ! defined( 'SCRIPT_DEBUG' ) || ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) ? '.min' : '';
 
