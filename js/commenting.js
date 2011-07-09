@@ -53,7 +53,7 @@ addComment = {
 			jQuery( '#commentlist' ).find( '.comment-reply-link' ).show( );
 		}
 		// Make sure the submit button is still around.
-		jQuery( '#comment-form .submit' ).attr( { disabled: '' } ).removeClass( 'disabled' );
+		jQuery( '#comment-form .submit' ).removeAttr( 'disabled' ).removeClass( 'disabled' );
 		addComment.startInterval( true );
 	},
 
