@@ -156,7 +156,7 @@ theme developer to change their theme.
 = 2.1.6 =
 *   Added a check to see if the current post_type supports comments and that
     comments are open before adding the JS.
-	Fixed JS issue with the disbled attribute on the submit button.
+	Fixed JS issue with the disabled attribute on the submit button.
 
 = 2.1.5 =
 *	Added new version of the Japanese translation which covers the three missing
