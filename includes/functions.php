@@ -275,14 +275,14 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 			$avatar = get_avatar( $comment, ( $depth == 1 ? apply_filters( 'spec_avatar_size_large', 64 ): apply_filters( 'spec_avatar_size_small', 32 ) ) );
 		} ?>
 
-		<li id="comment-<?php comment_ID( ); ?>" <?php echo comment_class( $avatar ? 'with-avatar' : '', get_comment_ID( ), null, false ); ?>>
+		<li id="comment-<?php comment_ID( ); ?>" <?php echo comment_class( ! empty( $avatar ) ? 'with-avatar' : '', get_comment_ID( ), null, false ); ?>>
 
 			<div id="div-comment-<?php comment_ID( ) ?>" class="comment-body">
 				<?php //echo $comment->comment_date; ?>
 
 				<?php
 
-				echo $avatar && ! $tb ? '<div class="comment-author-avatar">' . $avatar . '<span class="avatar-overlay"></span></div>' : ''; ?>
+				echo ! empty( $avatar ) && ! $tb ? '<div class="comment-author-avatar">' . $avatar . '<span class="avatar-overlay"></span></div>' : ''; ?>
 				<div class="comment-content">
 					<div class="comment-meta">
 						<cite class="fn"><?php comment_author_link( ); ?></cite>
