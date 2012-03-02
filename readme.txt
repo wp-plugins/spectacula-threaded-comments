@@ -1,10 +1,10 @@
 === Plugin Name ===
-Contributors: interconnectit, spectacula
+Contributors: interconnectit, spectacula, TJNowell
 Donate link: https://spectacu.la/signup/signup.php
 Tags: comments, jQuery, AJAX
 Requires at least: 2.7.0
-Tested up to: 3.0
-Stable tag: 2.1.6
+Tested up to: 3.3
+Stable tag: 2.1.7
 
 Spectacu.la Discussion adds threaded commenting with live AJAX comments
 to almost any WordPress Theme.
@@ -152,6 +152,9 @@ theme developer to change their theme.
 2.	The control interface for this plug-in.
 
 == Changelog ==
+
+= 2.1.7 =
+*   The default options are now passed through a filter
 
 = 2.1.6 =
 *   Added a check to see if the current post_type supports comments and that

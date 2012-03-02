@@ -223,6 +223,8 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 			if ( !defined( 'SPEC_COMMENT_DOM' ) )
 				define ( 'SPEC_COMMENT_DOM', 'spectacula-threaded-comments' );
 
+			$this->defaults = apply_filters( 'spec_discussion_defaults', $this->defaults );
+
 			foreach( $this->defaults as $key => $value ) {
 				if ( is_string( $value ) )
 					$this->defaults[ $key ] = sprintf( $value, get_bloginfo( 'template_url' ), get_template_directory( ), SPEC_COMMENT_URL, SPEC_COMMENT_PTH );
