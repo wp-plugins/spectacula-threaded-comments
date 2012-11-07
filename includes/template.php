@@ -21,6 +21,8 @@ if ( ( comments_open( ) || get_comments_number( ) > 0 ) && ( is_single( ) || is_
 				if ( $order == 'desc' )
 					spec_comments_form( );
 
+				global $wp_query;
+
 				wp_list_comments( array( 'type' => ( commenting_by_type( ) ? 'comment' : 'all' ), 'callback' => 'spec_comment_layout' ) );
 
 				if ( $order != 'desc' )
@@ -46,4 +48,4 @@ if ( ( comments_open( ) || get_comments_number( ) > 0 ) && ( is_single( ) || is_
 			}
 		}?>
 	</div><?php
-}?>
+}

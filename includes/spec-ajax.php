@@ -1,4 +1,5 @@
 <?php
+
 class spectacula_ajax {
 
 	/*
@@ -61,7 +62,6 @@ class spectacula_ajax {
 		die( json_encode( $json ) );
 	}
 
-
 	function get_comment_changes( ) {
 		global $spec_comment_log, $wpdb;
 
@@ -79,41 +79,88 @@ class spectacula_ajax {
 				 the collect_comments data but this is mostly for the deletion
 				 of comments.
 				*/
-				$comment_ids[ ] = intval( $comment->comment_id );
-				$json[ $comment->comment_id ][ 'action' ] = $comment->action_taken;
-				$json[ $comment->comment_id ][ 'action_id' ] = $comment->id;
-				$json[ $comment->comment_id ][ 'post' ] = $comment->post_id;
-				$json[ $comment->comment_id ][ 'comment_ID' ] = $comment->comment_id;
-				$json[ $comment->comment_id ][ 'log_date' ] = $comment->date;
+				//if($comment->action_taken != 'unapprove'){
+					$comment_ids[ ] = intval( $comment->comment_id );
+					$json[ $comment->comment_id ][ 'action' ] = $comment->action_taken;
+					$json[ $comment->comment_id ][ 'action_id' ] = $comment->id;
+					$json[ $comment->comment_id ][ 'post' ] = $comment->post_id;
+					$json[ $comment->comment_id ][ 'comment_ID' ] = $comment->comment_id;
+					$json[ $comment->comment_id ][ 'log_date' ] = $comment->date;
+				//}
 			}
 
-			$comment_data = $spec_comment_log->collect_comments( $comment_ids );
+			if(!empty($comment_ids)){
 
-			foreach( $comment_data as  $comment ) {
-				// We don't know the depth, we'll work that out when we insert it then add the right depth then.
-				$depth = $comment->comment_parent > 0 ? 2 : 1;
-				$post_id = intval( $comment->comment_post_ID );
+				// note: collect_comments only grabs approved comments, so unapproved comments won't have all the extra data
+				$comment_data = $spec_comment_log->collect_comments( $comment_ids );
 
-				ob_start( );
-					// Render the content using the same function as we would normally.
-					$args = array( 'avatar_size' => 32, 'tag' => 'li', 'post_id' => $post_id );
-					spec_comment_layout( $comment, $args, $depth );
-					$html = ob_get_contents( );
-				ob_end_clean( );
+				if(!empty($comment_data)){
 
-				$json[ $comment->comment_ID ][ 'depth' ] = $depth;
-				$json[ $comment->comment_ID ][ 'post' ] = $post_id;
-				$json[ $comment->comment_ID ][ 'comment_date' ] = $comment->comment_date;
-				$json[ $comment->comment_ID ][ 'comment_ID' ] = $comment->comment_ID;
-				$json[ $comment->comment_ID ][ 'comment_parent' ] = $comment->comment_parent;
-				$json[ $comment->comment_ID ][ 'comment_type' ] = empty( $comment->comment_type ) ? 'comment' : $comment->comment_type;
-				$json[ $comment->comment_ID ][ 'comment_post_ID' ] = $comment->comment_post_ID;
-				$json[ $comment->comment_ID ][ 'comment_approved' ] = $comment->comment_approved;
-				$json[ $comment->comment_ID ][ 'html' ] = $html;
+					foreach( $comment_data as  $comment ) {
+						// We don't know the depth, we'll work that out when we insert it then add the right depth then.
+						$depth = $comment->comment_parent > 0 ? 2 : 1;
+						$post_id = intval( $comment->comment_post_ID );
+
+						ob_start( );
+							// Render the content using the same function as we would normally.
+							$args = array( 'avatar_size' => 32, 'tag' => 'li', 'post_id' => $post_id );
+							spec_comment_layout( $comment, $args, $depth );
+							$html = ob_get_contents( );
+						ob_end_clean( );
+
+						$json[ $comment->comment_ID ][ 'depth' ] = $depth;
+						$json[ $comment->comment_ID ][ 'post' ] = $post_id;
+						$json[ $comment->comment_ID ][ 'comment_date' ] = $comment->comment_date;
+						$json[ $comment->comment_ID ][ 'comment_ID' ] = $comment->comment_ID;
+						$json[ $comment->comment_ID ][ 'comment_parent' ] = $comment->comment_parent;
+						$json[ $comment->comment_ID ][ 'comment_type' ] = empty( $comment->comment_type ) ? 'comment' : $comment->comment_type;
+						$json[ $comment->comment_ID ][ 'comment_post_ID' ] = $comment->comment_post_ID;
+						$json[ $comment->comment_ID ][ 'comment_approved' ] = $comment->comment_approved;
+						$json[ $comment->comment_ID ][ 'html' ] = $html;
+					}
+				}
 			}
 
 		}
 		echo json_encode( $json );
 		die;
 	}
-}?>
+
+	private function can_do_comment_stuff(){
+		if(!current_user_can('moderate_comments')){
+			echo "You're not allowed to do that.";
+			return false;
+		}
+		return true;
+	}
+
+	function approve_comment(){
+		if(!$this->can_do_comment_stuff()){
+			die;
+		}
+		$comment_id = $_POST['comment_id'];
+		spec_comment_approve_comment($comment_id);
+		echo "done";
+		die;
+	}
+
+	function spam_comment(){
+		if(!$this->can_do_comment_stuff()){
+			die;
+		}
+		$comment_id = $_POST['comment_id'];
+		spec_comment_spam_comment($comment_id);
+		echo "done";
+		die;
+	}
+
+	function delete_comment(){
+		if(!$this->can_do_comment_stuff()){
+			die;
+		}
+		$comment_id = $_POST['comment_id'];
+		spec_comment_delete_comment($comment_id);
+		echo "done";
+		die;
+	}
+}

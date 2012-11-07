@@ -352,7 +352,7 @@ addComment = {
 			action_id: addComment.action_id,
 			time: commentingL10n.time,
 			post_id: commentingL10n.post_id
-		}
+		};
 
 		jQuery.post( commentingL10n.ajax_url, data, function( r ) {
 			var d, i;
@@ -372,7 +372,7 @@ addComment = {
 					commentingL10n.time = d[i].log_date !== null ? d[i].log_date : d[i].comment_date;
 					addComment.action_id = d[i].action_id !== null ? d[i].action_id : 0;
 
-					if ( d[i].action === 'approve' && d[i].html !== undefined && d[i].html !== null && d[i].html !== '' ) {
+					if ( /*d[i].action === 'approve' &&*/ d[i].html !== undefined && d[i].html !== null && d[i].html !== '' ) {
 						addComment.newComment( d[i].html, d[i].comment_ID, d[i].comment_parent, false, d[i].comment_type );
 					} else {
 						addComment.deleteComment( d[i].comment_ID, d[i].action );

@@ -158,11 +158,13 @@
 
 /* Comment buttons */
 
+#comments .moderation-buttons,
 #comments .comment-buttons {
 	margin-top: 9px;
 	overflow: hidden;
 }
 
+#comments .moderation-buttons a,
 #comments .comment-buttons .comment-button,
 #comments .comment-buttons a ,
 #comments #respond .comment-buttons input {
@@ -201,7 +203,9 @@
 #comments .comment-buttons input:hover, #comments .comment-buttons a:active,
 #comments .comment-buttons a:focus, #comments .comment-buttons a:hover,
 #comments .comment-button:active, #comments .comment-button:focus,
-#comments .comment-button:hover {
+#comments .comment-button:hover,
+#comments .moderation-buttons a:focus,
+#comments .moderation-buttons a:hover {
 	background-color: #333;
 	color: #fff
 }

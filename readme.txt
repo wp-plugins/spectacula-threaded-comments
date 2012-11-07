@@ -3,7 +3,7 @@ Contributors: interconnectit, spectacula, TJNowell
 Donate link: https://spectacu.la/signup/signup.php
 Tags: comments, jQuery, AJAX
 Requires at least: 2.7.0
-Tested up to: 3.3
+Tested up to: 3.4.2
 Stable tag: 2.1.7
 
 Spectacu.la Discussion adds threaded commenting with live AJAX comments
@@ -152,6 +152,10 @@ theme developer to change their theme.
 2.	The control interface for this plug-in.
 
 == Changelog ==
+
+= 2.2 =
+*   Added frontend moderation tools for Live Discussion
+*   Added a Comment Moderator role, same privilledges as a subscriber, but with the additional ability to approve/spam/trash comments
 
 = 2.1.7 =
 *   The default options are now passed through a filter

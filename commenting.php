@@ -3,10 +3,11 @@
  Plugin Name: Spectacu.la Discussion
  Plugin URI: http://spectacu.la/
  Description: Make it easy to add fully ajax threaded comments to any theme.
- Version: 2.1.7
- Author: James R Whitehead
+ Version: 2.2
+ Author: James R Whitehead, Tom J Nowell
  Author URI: http://www.interconnectit.com/
 */
+
 
 if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 	/*
@@ -64,14 +65,20 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 			if ( get_template( ) != get_option( 'template' ) )
 				return;
 
+			$this->add_moderator_role();
+
 			// If we're requesting ajax stuff we'll hand over control to spec ajax then die.
 			if ( isset( $_REQUEST[ '_spec_ajax' ] ) ) {
 				new spectacula_ajax( );
 			}
 
+			$this->comment_moderation_calls();
+
 			add_filter( 'body_class', array( &$this, 'get_agent_body_class' ) );
 			add_action( 'wp_head', array( &$this, 'css' ) );
 			add_action( 'wp', array( &$this, 'before_headers' ) );
+
+
 
 			add_action( 'comment_form', array( &$this, 'our_credit' ) );
 			add_filter( 'comments_template', array( &$this, 'comment_template_hijack' ) );
@@ -80,6 +87,16 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 			// a post by post basis.
 			add_action( 'admin_init', array( &$this, 'add_meta_boxes' ) );
 			add_action( 'save_post', array( &$this, 'save_metabox_toggle_status' ), 100, 2 );
+
+			add_filter( 'comments_array', array( &$this, 'comment_query_hijack'));
+		}
+
+		function add_moderator_role(){
+			$result = add_role('spec_comment_moderator', 'Comment Moderator', array(
+			    'read' => true, // True allows that capability
+			    'moderate_comments' => true
+			));
+			error_log($result);
 		}
 
 
@@ -174,6 +191,39 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 				return SPEC_COMMENT_TMP;
 			else
 				return $passed;
+		}
+
+		/**
+		 * Hijack the comments and redo it if the current user can moderate comments so they can see them all
+		 **/
+		function comment_query_hijack($comments){
+			if(current_user_can('moderate_comments')){
+				global $post;
+				$comments = get_comments( array('post_id' => $post->ID, 'status' => '', 'order' => 'ASC') );
+			}
+			return $comments;
+		}
+
+		function comment_moderation_calls(){
+			if(current_user_can('moderate_comments')){
+				if(isset($_GET['p']) && (
+					isset($_GET['approvecomment'])
+					|| isset($_GET['spamcomment'])
+					|| isset($_GET['deletecomment'])
+				)){
+					$post_id = $_GET['p'];
+					if(isset($_GET['approvecomment'])){
+						$comment_id = $_GET['approvecomment'];
+						spec_comment_approve_comment($comment_id);
+					} else if(isset($_GET['spamcomment'])){
+						$comment_id = $_GET['spamcomment'];
+						spec_comment_spam_comment($comment_id);
+					} else if(isset($_GET['deletecomment'])){
+						$comment_id = $_GET['deletecomment'];
+						spec_comment_delete_comment($comment_id);
+					}
+				}
+			}
 		}
 
 

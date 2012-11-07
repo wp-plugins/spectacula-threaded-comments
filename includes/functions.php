@@ -249,6 +249,33 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 	}
 }
 
+function spec_comment_moderation_link($moderation_action,$post_id,$comment_id){
+	$url = get_permalink($post_id);
+
+	global $wp_rewrite;
+
+	$rewrite = $wp_rewrite->wp_rewrite_rules();
+
+	if ( ! empty($rewrite) ) {
+		$url .= '?'.$moderation_action.'comment='.$comment_id;
+	} else {
+		$url .= '&'.$moderation_action.'comment='.$comment_id;
+	}
+	//
+	return $url;
+}
+
+function spec_comment_approve_link($post_id,$comment_id){
+	return spec_comment_moderation_link('approve',$post_id,$comment_id);
+}
+
+function spec_comment_delete_link($post_id,$comment_id){
+	return spec_comment_moderation_link('delete',$post_id,$comment_id);
+}
+
+function spec_comment_spam_link($post_id,$comment_id){
+	return spec_comment_moderation_link('spam',$post_id,$comment_id);
+}
 /*
  Comment layout function used by WP27 walker .
  @return null
@@ -292,7 +319,25 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 					<div class="comment-text">
 						<?php
 						comment_text( );
-						$comment->comment_approved == 0 ? printf( '<span class="moderation">%s</span>', __( 'Comment awaiting moderation.', SPEC_COMMENT_DOM ) ) : '';?>
+						if($comment->comment_approved == 0){
+							// comment is awaiting approval!
+							?>
+							<span class="moderation">
+								<?php echo __( 'Comment awaiting moderation.', SPEC_COMMENT_DOM );
+								if(current_user_can('moderate_comments')){
+									?>
+									<div class="moderation-buttons">
+										<a class="spec_moderation_button_approve" data-comment="<?php echo get_comment_ID(); ?>" href="<?php echo spec_comment_approve_link($post->ID,get_comment_ID()); ?>">Approve</a>
+										<a class="spec_moderation_button_delete" data-comment="<?php echo get_comment_ID(); ?>" href="<?php echo spec_comment_delete_link($post->ID,get_comment_ID()); ?>">Delete</a>
+										<a class="spec_moderation_button_spam" data-comment="<?php echo get_comment_ID(); ?>" href="<?php echo spec_comment_spam_link($post->ID,get_comment_ID()); ?>">Spam</a>
+									</div>
+									<?php 
+								}
+								?>
+							</span>
+							<?php
+						}
+						?>
 					</div>
 
 					<?php
@@ -321,4 +366,20 @@ if ( ! function_exists( 'home_url' ) ) {
 	function home_url( ){
 		return get_bloginfo( 'home' );
 	}
-} ?>
+}
+
+function spec_comment_approve_comment($comment_id){
+	wp_set_comment_status( $comment_id, 'approve' );
+}
+
+function spec_comment_unapprove_comment($comment_id){
+	wp_set_comment_status( $comment_id, 'unapprove' );
+}
+
+function spec_comment_spam_comment($comment_id){
+	wp_spam_comment($comment_id);
+}
+
+function spec_comment_delete_comment($comment_id){
+	wp_trash_comment($comment_id);
+}

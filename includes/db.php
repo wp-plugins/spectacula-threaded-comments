@@ -194,13 +194,19 @@ if ( ! class_exists( 'spec_comment_log' ) ) {
 				$comment_ids = array_filter( array_map( 'intval', $comment_ids ) );
 
 				$in = ( implode( ',', $comment_ids ) );
+
+				$approved = "AND comment_approved = '1'";
+				if(current_user_can('moderate_comments')){
+					$approved = "AND (comment_approved = '1' OR comment_approved = '0')";
+				}
 				// We order by comment parent so as to get all root comments in first.
-				$query = "SELECT * FROM $wpdb->comments WHERE comment_ID IN( $in ) AND comment_approved = '1' ORDER BY comment_parent ASC, comment_date_gmt DESC";
+				$query = "SELECT * FROM $wpdb->comments WHERE comment_ID IN( $in ) $approved ORDER BY comment_parent ASC, comment_date_gmt DESC";
 				$comments = $wpdb->get_results( $query );
 			}
 
 			return $comments;
 		}
+
 	}
 }
 
