@@ -96,7 +96,6 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 			    'read' => true, // True allows that capability
 			    'moderate_comments' => true
 			));
-			error_log($result);
 		}
 
 
