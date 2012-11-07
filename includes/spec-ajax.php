@@ -131,6 +131,14 @@ class spectacula_ajax {
 			echo "You're not allowed to do that.";
 			return false;
 		}
+		if(!isset($_REQUEST['comment_id'])){
+			echo 'No comment ID was specified';
+			die;
+		}
+		if(!is_numeric($_REQUEST['comment_id'])){
+			echo 'comment_id must be numeric';
+			die;
+		}
 		return true;
 	}
 
@@ -138,7 +146,7 @@ class spectacula_ajax {
 		if(!$this->can_do_comment_stuff()){
 			die;
 		}
-		$comment_id = $_POST['comment_id'];
+		$comment_id = intval($_REQUEST['comment_id']);
 		spec_comment_approve_comment($comment_id);
 		echo "done";
 		die;
@@ -148,7 +156,7 @@ class spectacula_ajax {
 		if(!$this->can_do_comment_stuff()){
 			die;
 		}
-		$comment_id = $_POST['comment_id'];
+		$comment_id = intval($_REQUEST['comment_id']);
 		spec_comment_spam_comment($comment_id);
 		echo "done";
 		die;
@@ -158,7 +166,7 @@ class spectacula_ajax {
 		if(!$this->can_do_comment_stuff()){
 			die;
 		}
-		$comment_id = $_POST['comment_id'];
+		$comment_id = intval($_REQUEST['comment_id']);
 		spec_comment_delete_comment($comment_id);
 		echo "done";
 		die;
