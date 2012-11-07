@@ -16,7 +16,7 @@ be able to have P2 style live commenting on your site?  Spectacu.la Discussion
 is a plugin that replaces the commenting code in your theme with a fully Ajaxed
 comments engine.
 
-The plugin uses memory tables for fast cacheing within the database (no pesky
+The plugin uses memory tables for fast caching within the database (no pesky
 permission setting for you to worry about here) and adjustible polling times to
 suit a wide range of server performance.
 
