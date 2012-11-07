@@ -2,9 +2,9 @@
 Contributors: interconnectit, spectacula, TJNowell
 Donate link: https://spectacu.la/signup/signup.php
 Tags: comments, jQuery, AJAX
-Requires at least: 2.7.0
+Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 2.1.7
+Stable tag: 2.2
 
 Spectacu.la Discussion adds threaded commenting with live AJAX comments
 to almost any WordPress Theme.

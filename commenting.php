@@ -25,7 +25,7 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 
 	define( 'SPEC_COMMENT_PTH', dirname( __FILE__ ) );
 	define( 'SPEC_COMMENT_DOM', 'spectacula-threaded-comments' ); // Translation domain
-	define( 'SPEC_COMMENT_VER', '2.7' ); // Min version of wordpress this will work with.
+	define( 'SPEC_COMMENT_VER', '3.0' ); // Min version of wordpress this will work with.
 	define( 'SPEC_COMMENT_OPT', 'spectacula_threaded_comments' );
 	define( 'SPEC_COMMENT_TMP', SPEC_COMMENT_PTH . '/includes/template.php' );
 	define( 'SPEC_COMMENT_DON', true ); // Set a toggle so we don't come back
