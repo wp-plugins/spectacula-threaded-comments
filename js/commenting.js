@@ -8,17 +8,23 @@
 addComment = {
 
 	interval:	0,
-	replying: 	0,	// The ID of the comment we're replying to.
+	/**
+	 * The ID of the comment we're replying to.
+	 * @type {Number}
+	 */
+	replying:	0,
 	action_id:	0,
-	showOne: 	commentingL10n.rpl_show_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
-	hideOne: 	commentingL10n.rpl_hide_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
+	showOne:	commentingL10n.rpl_show_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
+	hideOne:	commentingL10n.rpl_hide_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
 	showMany:	commentingL10n.rpl_show_2.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
 	hideMany:	commentingL10n.rpl_hide_2.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
 
-	// We won't move the form to under the comment, it's messy and I don't like
-	// it. Instead we'll take some content from the comment we're replying to
-	// and show that next to the form. This is called moveForm to match WP's
-	// function.
+	/**
+	 * We won't move the form to under the comment, it's messy and I don't like
+	 * it. Instead we'll take some content from the comment we're replying to
+	 * and show that next to the form. This is called moveForm to match WP's
+	 * function.
+	 */
 	moveForm: function( belowID, commentID, formID, postID ) {
 		var str = jQuery( '#' + belowID + ' > .comment-body .comment-meta' ).next( ).text( ),
 			to = jQuery( '#' + belowID + ' > .comment-body cite.fn' ).text( );
@@ -42,6 +48,11 @@ addComment = {
 		return false;
 	},
 
+	/**
+	 * [cancelReply description]
+	 * @param  {[type]}  [description]
+	 * @return {[type]}  [description]
+	 */
 	cancelReply: function( ) {
 		if ( addComment.replying !== 0 ) {
 			addComment.replying = 0;
@@ -57,7 +68,11 @@ addComment = {
 		addComment.startInterval( true );
 	},
 
-	// Take the depth class assigned to the comment and turn into an int.
+	/**
+	 * Take the depth class assigned to the comment and turn into an int.
+	 * @param  {[type]} id [description]
+	 * @return {[type]}    [description]
+	 */
 	commentDepth: function( id ) {
 		var c;
 		if ( id ) {
@@ -69,6 +84,11 @@ addComment = {
 		}
 	},
 
+	/**
+	 * [error description]
+	 * @param  {[type]} msg [description]
+	 * @return {[type]}     [description]
+	 */
 	error: function( msg ) {
 		if ( typeof msg !== 'string' )
 			return false;
@@ -92,7 +112,12 @@ addComment = {
 		return true;
 	},
 
-	// Rather than remove all the mark up for a deleted comment we'll just fold it up and empty it.
+	/**
+	 * Rather than remove all the mark up for a deleted comment we'll just fold it up and empty it.
+	 * @param  {[type]} comment_ID [description]
+	 * @param  {[type]} action     [description]
+	 * @return {[type]}            [description]
+	 */
 	deleteComment: function( comment_ID, action ) {
 		var comment_exists = jQuery( 'ul#commentlist li#comment-' + comment_ID + ', #trackback-list li#comment-' + comment_ID  ).length;
 
@@ -109,6 +134,15 @@ addComment = {
 		return true;
 	},
 
+	/**
+	 * [newComment description]
+	 * @param  {[type]} html         [description]
+	 * @param  {[type]} comment_ID   [description]
+	 * @param  {[type]} parent_ID    [description]
+	 * @param  {[type]} scroll_to    [description]
+	 * @param  {[type]} comment_type [description]
+	 * @return {[type]}              [description]
+	 */
 	newComment: function( html, comment_ID, parent_ID, scroll_to, comment_type ) {
 		var comment_exists = jQuery( 'ul#commentlist li#comment-' + comment_ID + ', #trackback-list li#comment-' + comment_ID ).length, depth_class;
 
@@ -195,12 +229,16 @@ addComment = {
 		} ).removeClass( 'rolledup' );
 
 		if ( comment_type !== 'comment' )
-			addComment.trackbackToggle( 400 )
+			addComment.trackbackToggle( 400 );
 
 		return true;
 	},
 
-	// Send the comment to WP for processing
+	/**
+	 * Send the comment to WP for processing
+	 * @param  {[type]} v [description]
+	 * @return {[type]}   [description]
+	 */
 	submit: function( v ) {
 		var blankFields = false;
 
@@ -288,7 +326,10 @@ addComment = {
 		return false;
 	},
 
-	// Scan through looking for missing toggles and add them.
+	/**
+	 * Scan through looking for missing toggles and add them.
+	 * @param {[type]} hidden [description]
+	 */
 	addToggles: function( hidden ) {
 		jQuery( '#commentlist li.depth-' + commentingL10n.nest_depth + ' > ul.children' ).each( function( ) {
 
@@ -310,7 +351,11 @@ addComment = {
 		} );
 	},
 
-	// Change the text between the 4 possible states based on the position of the toggle passed
+	/**
+	 * Change the text between the 4 possible states based on the position of the toggle passed
+	 * @param  {[type]} obj [description]
+	 * @return {[type]}     [description]
+	 */
 	toggleToggleText: function( obj ) {
 		if ( typeof obj !== 'object' && typeof obj === 'string' )
 			obj = jQuery( obj );
@@ -332,12 +377,16 @@ addComment = {
 		return true;
 	},
 
+	/**
+	 * Sets up the AJAX polling by calling the respective functions responsible at polling intervals
+	 * @param  boolean on Is AJAX polling turned on
+	 */
 	startInterval: function( on ) {
 
 		if ( on === true ) {
 			if ( undefined !== commentingL10n.update && commentingL10n.update == 1 ) {
 				addComment.interval = setInterval( function( ) {
-					addComment.getCommentUpdates( );
+					addComment.getUpdates( );
 				}, parseInt( commentingL10n.polling, 10 ) >= 10 ? commentingL10n.polling * 1000 : 10000 );
 			}
 		} else {
@@ -345,6 +394,15 @@ addComment = {
 		}
 	},
 
+	getUpdates: function(){
+		addComment.getCommentUpdates( );
+	},
+
+	/**
+	 * Retrieves the comment updates via AJAX
+	 * @param  {[type]}  [description]
+	 * @return {[type]}  [description]
+	 */
 	getCommentUpdates: function( ) {
 		var data = {
 			_spec_ajax: 'Why is everyone looking at me', // As you can guess this can be anything at all just need to be there. :D
@@ -376,6 +434,46 @@ addComment = {
 						addComment.newComment( d[i].html, d[i].comment_ID, d[i].comment_parent, false, d[i].comment_type );
 					} else {
 						addComment.deleteComment( d[i].comment_ID, d[i].action );
+					}
+				}
+			}
+		} );
+	},
+
+	/**
+	 * Similar to getCommentUpdates but with comments requiring moderation, makes an AJAX request calling for new moderated comments
+	 */
+	getModerationUpdates: function( ) {
+		var data = {
+			_spec_ajax: 'Why is everyone looking at me', // As you can guess this can be anything at all just need to be there. :D
+			action: 'get_moderation_changes',
+			action_id: addComment.action_id,
+			time: commentingL10n.time,
+			post_id: commentingL10n.post_id
+		};
+
+		jQuery.post( commentingL10n.ajax_url, data, function( r ) {
+			var d, i, comment;
+			try {
+				d = JSON.parse( r );
+			} catch ( e ) {
+				if ( typeof r === 'string' ) {
+					addComment.error( r );
+				} else {
+					addComment.error( 'Oops!' );
+				}
+				return;
+			}
+
+			if ( d !== null && d !== undefined ) {
+				for ( i in d ) {
+					comment = d[i];
+					commentingL10n.time = comment.log_date !== null ? comment.log_date : comment.comment_date;
+					addComment.action_id = comment.action_id !== null ? comment.action_id : 0;
+
+					if ( /*d[i].action === 'approve' &&*/ comment.html !== undefined && comment.html !== null && comment.html !== '' ) {
+						//console.log("new comment needs approving: " + comment.html);
+						addComment.newComment( comment.html, comment.comment_ID, comment.comment_parent, false, comment.comment_type );
 					}
 				}
 			}
@@ -420,6 +518,67 @@ addComment = {
 		} );
 	},
 
+	approveComment: function(commentEl, comment_id){
+		//commentingL10n.post_id
+		var data = {
+			_spec_ajax: 'Why is everyone looking at me', // As you can guess this can be anything at all just need to be there. :D
+			action: 'approve_comment',
+			action_id: addComment.action_id,
+			time: commentingL10n.time,
+			post_id: commentingL10n.post_id,
+			comment_id: comment_id
+		};
+
+		jQuery.post( commentingL10n.ajax_url, data, function( r ) {
+			if(r == "done"){
+				commentEl.text("Approval sent, verifying...");
+				addComment.getCommentUpdates( );
+			} else {
+				addComment.error(r);
+			}
+		} );
+	},
+	spamComment: function(commentEl, comment_id){
+		//commentingL10n.post_id
+		var data = {
+			_spec_ajax: 'Why is everyone looking at me', // As you can guess this can be anything at all just need to be there. :D
+			action: 'spam_comment',
+			action_id: addComment.action_id,
+			time: commentingL10n.time,
+			post_id: commentingL10n.post_id,
+			comment_id: comment_id
+		};
+
+		jQuery.post( commentingL10n.ajax_url, data, function( r ) {
+			if(r == "done"){
+				commentEl.text("Spam req sent, verifying...");
+				addComment.getCommentUpdates( );
+			} else {
+				addComment.error(r);
+			}
+		} );
+	},
+	trashComment: function(commentEl, comment_id){
+		//commentingL10n.post_id
+		var data = {
+			_spec_ajax: 'Why is everyone looking at me', // As you can guess this can be anything at all just need to be there. :D
+			action: 'delete_comment',
+			action_id: addComment.action_id,
+			time: commentingL10n.time,
+			post_id: commentingL10n.post_id,
+			comment_id: comment_id
+		};
+
+		jQuery.post( commentingL10n.ajax_url, data, function( r ) {
+			if(r == "done"){
+				commentEl.text("Deletion sent, verifying...");
+				addComment.getCommentUpdates( );
+			} else {
+				addComment.error(r);
+			}
+		} );
+	},
+
 	_init: function( ) {
 
 		jQuery( document ).ready( function( $ ) {
@@ -438,10 +597,28 @@ addComment = {
 			} );
 
 			// Make sure the cancel comment button does what it should
-			$( '#cancel-comment-reply-link' ).click( function( ){
+			$( '#cancel-comment-reply-link' ).live( 'click', function( ){
 				addComment.cancelReply( );
 				return false;
 			} );
+
+			$('.spec_moderation_button_approve').live( 'click', function(){
+				var comment_id = $(this).attr('data-comment');
+				addComment.approveComment($(this),comment_id);
+				return false;
+			});
+
+			$('.spec_moderation_button_spam').live( 'click', function(){
+				var comment_id = $(this).attr('data-comment');
+				addComment.spamComment($(this),comment_id);
+				return false;
+			});
+
+			$('.spec_moderation_button_delete').live( 'click', function(){
+				var comment_id = $(this).attr('data-comment');
+				addComment.trashComment($(this),comment_id);
+				return false;
+			});
 
 			// Add some toggles to hide comments
 			addComment.addToggles( true );
@@ -455,7 +632,7 @@ addComment = {
 					} );
 				} else {
 					$( this ).addClass( 'kqofn-hidden' ).next( 'ul.children' ).slideUp( 'fast', function( ) {
-						$( this ).prev( 'div.toggle' ).css( { backgroundPosition: 'top left' } )
+						$( this ).prev( 'div.toggle' ).css( { backgroundPosition: 'top left' } );
 					} );
 				}
 
@@ -501,7 +678,7 @@ addComment = {
 				this.select( );
 			} );
 
-//			 Add some tags to the body to target ie6 - 9
+//			Add some tags to the body to target ie6 - 9
 			$.each( $.browser, function( i, val ) {
 				if( i == 'msie' && val === true ) {
 					switch ( parseInt( $.browser.version.substr( 0, 1 ), 10 ) ) {
