@@ -4,7 +4,7 @@ Donate link: https://spectacu.la/signup/signup.php
 Tags: comments, jQuery, AJAX
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 
 Spectacu.la Discussion adds threaded commenting with live AJAX comments
 to almost any WordPress Theme.
@@ -152,6 +152,10 @@ theme developer to change their theme.
 2.	The control interface for this plug-in.
 
 == Changelog ==
+
+= 2.2.2 =
+*	Fixed issue with approve/delete/spam buttons on recently loaded comments.
+*	Minified the JS again.
 
 = 2.2.1 =
 *   Fixed a bug on some sites with certain versions of jQuery that prevented the comment ID being sent correctly
