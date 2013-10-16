@@ -133,7 +133,6 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 				global $post;
 
 				$time = current_time( 'mysql', false );
-				error_log( 'setting time to: '.$time );
 
 				$localisation = array(
 					'tb_show' => __( 'Show trackbacks', SPEC_COMMENT_DOM ),
