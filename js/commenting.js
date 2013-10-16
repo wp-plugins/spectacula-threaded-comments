@@ -427,13 +427,19 @@ addComment = {
 
 			if ( d !== null && d !== undefined ) {
 				for ( i in d ) {
-					commentingL10n.time = d[i].log_date !== null ? d[i].log_date : d[i].comment_date;
-					addComment.action_id = d[i].action_id !== null ? d[i].action_id : 0;
+					comment = d[i];
+					if ( comment !== undefined ) {
+						var time = comment.log_date !== null ? comment.log_date : comment.comment_date;
+						if ( time !== null ) {
+							commentingL10n.time = time;
+						}
+						addComment.action_id = comment.action_id !== null ? comment.action_id : 0;
 
-					if ( /*d[i].action === 'approve' &&*/ d[i].html !== undefined && d[i].html !== null && d[i].html !== '' ) {
-						addComment.newComment( d[i].html, d[i].comment_ID, d[i].comment_parent, false, d[i].comment_type );
-					} else {
-						addComment.deleteComment( d[i].comment_ID, d[i].action );
+						if ( /*d[i].action === 'approve' &&*/ comment.html !== undefined && d[i].html !== null && comment.html !== '' ) {
+							addComment.newComment( comment.html, comment.comment_ID, comment.comment_parent, false, comment.comment_type );
+						} else {
+							addComment.deleteComment( comment.comment_ID, comment.action );
+						}
 					}
 				}
 			}
@@ -468,12 +474,16 @@ addComment = {
 			if ( d !== null && d !== undefined ) {
 				for ( i in d ) {
 					comment = d[i];
-					commentingL10n.time = comment.log_date !== null ? comment.log_date : comment.comment_date;
-					addComment.action_id = comment.action_id !== null ? comment.action_id : 0;
+					if ( comment !== undefined ) {
+						var time = comment.log_date !== null ? comment.log_date : comment.comment_date;
+						if ( time !== null ) {
+							commentingL10n.time = time;
+						}
+						addComment.action_id = comment.action_id !== null ? comment.action_id : 0;
 
-					if ( /*d[i].action === 'approve' &&*/ comment.html !== undefined && comment.html !== null && comment.html !== '' ) {
-						//console.log("new comment needs approving: " + comment.html);
-						addComment.newComment( comment.html, comment.comment_ID, comment.comment_parent, false, comment.comment_type );
+						if ( /*d[i].action === 'approve' &&*/ comment.html !== undefined && comment.html !== null && comment.html !== '' ) {
+							addComment.newComment( comment.html, comment.comment_ID, comment.comment_parent, false, comment.comment_type );
+						}
 					}
 				}
 			}
@@ -597,24 +607,24 @@ addComment = {
 			} );
 
 			// Make sure the cancel comment button does what it should
-			$( '#cancel-comment-reply-link' ).live( 'click', function( ){
+			$( '#cancel-comment-reply-link' ).on( 'click', function( ){
 				addComment.cancelReply( );
 				return false;
 			} );
 
-			$('.spec_moderation_button_approve').live( 'click', function(){
+			$('.spec_moderation_button_approve').on( 'click', function(){
 				var comment_id = $(this).attr('data-comment');
 				addComment.approveComment($(this),comment_id);
 				return false;
 			});
 
-			$('.spec_moderation_button_spam').live( 'click', function(){
+			$('.spec_moderation_button_spam').on( 'click', function(){
 				var comment_id = $(this).attr('data-comment');
 				addComment.spamComment($(this),comment_id);
 				return false;
 			});
 
-			$('.spec_moderation_button_delete').live( 'click', function(){
+			$('.spec_moderation_button_delete').on( 'click', function(){
 				var comment_id = $(this).attr('data-comment');
 				addComment.trashComment($(this),comment_id);
 				return false;
@@ -624,7 +634,7 @@ addComment = {
 			addComment.addToggles( true );
 
 			// Add some code to the toggles added above.
-			$( '#commentlist div.toggle' ).live( 'click', function( ) {
+			$( '#commentlist div.toggle' ).on( 'click', function( ) {
 				if ( $( this ).hasClass( 'kqofn-hidden' ) ) {
 					$( this ).removeClass( 'kqofn-hidden' ).next( 'ul.children' ).slideDown( 'fast', function( ) {
 						// For some reason, don't ask me why, this stops IE8 from messing around with the margins on slide up/down.
@@ -645,7 +655,7 @@ addComment = {
 			addComment.trackbackToggle( 400 );
 
 			// Change the link button to a pop up element that has the link in it.
-			$( '#commentlist .comment-link' ).live( 'click', function( ) {
+			$( '#commentlist .comment-link' ).on( 'click', function( ) {
 				var val = $( this ).attr( 'href' ),
 					text = $( this ).text( ),
 					box = $( '<div class="comment-link-display"><span>' + text + '</span><input type="text" value="' + val + '" /></div>' );
@@ -674,7 +684,7 @@ addComment = {
 
 			} );
 
-			$( '.comment-link-display input' ).live( 'focus', function( ){
+			$( '.comment-link-display input' ).on( 'focus', function( ){
 				this.select( );
 			} );
 

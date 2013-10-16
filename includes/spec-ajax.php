@@ -14,7 +14,7 @@ class spectacula_ajax {
 		if ( isset( $_REQUEST[ '_spec_ajax' ] ) && isset( $_REQUEST[ 'action' ] ) ) {
 			$action = isset( $_GET[ 'action' ] ) ? $_GET[ 'action' ] : $_POST[ 'action' ];
 			if ( $action && $action != __FUNCTION__ && method_exists( $this, $action ) && is_callable( array( $this, $action ) ) ) {
-				call_user_func( array( &$this, $action ) );
+				call_user_func( array( $this, $action ) );
 			} else {
 				die( '-1' );
 			}
@@ -29,7 +29,7 @@ class spectacula_ajax {
 	 in it ( _spec_ajax & action this function name. )
 	*/
 	function new_comment_added( ){
-		add_filter( 'comment_post_redirect', array( &$this, 'redirect_new_comment' ), 10, 2 );
+		add_filter( 'comment_post_redirect', array( $this, 'redirect_new_comment' ), 10, 2 );
 	}
 
 
@@ -50,7 +50,7 @@ class spectacula_ajax {
 			$html = ob_get_contents( );
 		ob_end_clean( );
 
-		$json = array ( );
+		$json = array();
 		$json[ 'depth' ] = $depth;
 		$json[ 'post' ] = $post_id;
 		$json[ 'comment_ID' ] = $comment->comment_ID;
@@ -62,16 +62,42 @@ class spectacula_ajax {
 		die( json_encode( $json ) );
 	}
 
-	function get_comment_changes( ) {
-		global $spec_comment_log, $wpdb;
+	function get_comment_changes() {
+		global $spec_comment_log, $current_user;
 
-		$comment_log = $spec_comment_log->find( $_POST[ 'post_id' ], $_POST[ 'time' ], isset( $_POST[ 'action_id' ] ) ? $_POST[ 'action_id' ] : 0 );
-		$json = array( );
-		$comment_ids = array( );
+		$user_roles = $current_user->roles;
+		$role = array_shift( $user_roles );
+
+		$action_id = 0;
+		if ( isset( $_POST[ 'action' ] ) ) {
+			$action_id = $_POST[ 'action' ];
+		}
+
+		$time = '';
+		if ( isset( $_POST[ 'time' ] ) ) {
+			$time = $_POST[ 'time' ];
+		}
+		$post_id = $_POST[ 'post_id' ];
+
+		$cachekey = 'icit_spec_disc_'.$post_id.'_'.$action_id.'_'.$role;
+		$encoded_json = get_transient( $cachekey );
+		if ( empty( $encoded_json ) ){
+			$encoded_json = $this->grab_changedcomments_json( $spec_comment_log, $post_id, $time, $action_id );
+
+			// we have a transient return/assign the results
+			set_transient( $cachekey, $encoded_json, 20 );
+		}
+		echo $encoded_json;
+		die;
+	}
+
+	private function grab_changedcomments_json( spec_comment_log $spec_comment_log, $post_id, $time, $action_id ) {
+		$comment_log = $spec_comment_log->find( $post_id, $time, $action_id );
+		$json = array();
+		$comment_ids = array();
 
 		if ( isset( $comment_log ) && ! empty( $comment_log ) ) {
-
-			foreach( $comment_log as $comment ) {
+			foreach ( $comment_log as $comment ) {
 				/*
 				 Step through the log creating an array of ids and adding stuff
 				 to the json output so we know what to do with the comment once
@@ -79,24 +105,20 @@ class spectacula_ajax {
 				 the collect_comments data but this is mostly for the deletion
 				 of comments.
 				*/
-				//if($comment->action_taken != 'unapprove'){
-					$comment_ids[ ] = intval( $comment->comment_id );
-					$json[ $comment->comment_id ][ 'action' ] = $comment->action_taken;
-					$json[ $comment->comment_id ][ 'action_id' ] = $comment->id;
-					$json[ $comment->comment_id ][ 'post' ] = $comment->post_id;
-					$json[ $comment->comment_id ][ 'comment_ID' ] = $comment->comment_id;
-					$json[ $comment->comment_id ][ 'log_date' ] = $comment->date;
-				//}
+				$comment_ids[] = intval( $comment->comment_id );
+				$json[ $comment->comment_id ][ 'action' ] = $comment->action_taken;
+				$json[ $comment->comment_id ][ 'action_id' ] = $comment->id;
+				$json[ $comment->comment_id ][ 'post' ] = $comment->post_id;
+				$json[ $comment->comment_id ][ 'comment_ID' ] = $comment->comment_id;
+				$json[ $comment->comment_id ][ 'log_date' ] = $comment->date;
 			}
 
-			if(!empty($comment_ids)){
-
+			if ( !empty( $comment_ids ) ) {
 				// note: collect_comments only grabs approved comments, so unapproved comments won't have all the extra data
 				$comment_data = $spec_comment_log->collect_comments( $comment_ids );
 
-				if(!empty($comment_data)){
-
-					foreach( $comment_data as  $comment ) {
+				if ( !empty( $comment_data ) ) {
+					foreach ( $comment_data as  $comment ) {
 						// We don't know the depth, we'll work that out when we insert it then add the right depth then.
 						$depth = $comment->comment_parent > 0 ? 2 : 1;
 						$post_id = intval( $comment->comment_post_ID );
@@ -120,22 +142,21 @@ class spectacula_ajax {
 					}
 				}
 			}
-
 		}
-		echo json_encode( $json );
-		die;
+		$encoded_json = json_encode( $json );
+		return $encoded_json;
 	}
 
 	private function can_do_comment_stuff(){
-		if(!current_user_can('moderate_comments')){
+		if ( !current_user_can( 'moderate_comments' ) ) {
 			echo "You're not allowed to do that.";
 			return false;
 		}
-		if(!isset($_REQUEST['comment_id'])){
+		if ( !isset( $_REQUEST['comment_id'] ) ) {
 			echo 'No comment ID was specified';
 			die;
 		}
-		if(!is_numeric($_REQUEST['comment_id'])){
+		if ( !is_numeric( $_REQUEST['comment_id'] ) ) {
 			echo 'comment_id must be numeric';
 			die;
 		}
@@ -143,32 +164,32 @@ class spectacula_ajax {
 	}
 
 	function approve_comment(){
-		if(!$this->can_do_comment_stuff()){
+		if ( !$this->can_do_comment_stuff() ) {
 			die;
 		}
-		$comment_id = intval($_REQUEST['comment_id']);
-		spec_comment_approve_comment($comment_id);
-		echo "done";
+		$comment_id = intval( $_REQUEST['comment_id'] );
+		spec_comment_approve_comment( $comment_id );
+		echo 'done';
 		die;
 	}
 
 	function spam_comment(){
-		if(!$this->can_do_comment_stuff()){
+		if ( !$this->can_do_comment_stuff() ) {
 			die;
 		}
-		$comment_id = intval($_REQUEST['comment_id']);
-		spec_comment_spam_comment($comment_id);
-		echo "done";
+		$comment_id = intval( $_REQUEST['comment_id'] );
+		spec_comment_spam_comment( $comment_id );
+		echo 'done';
 		die;
 	}
 
 	function delete_comment(){
-		if(!$this->can_do_comment_stuff()){
+		if ( !$this->can_do_comment_stuff() ) {
 			die;
 		}
-		$comment_id = intval($_REQUEST['comment_id']);
-		spec_comment_delete_comment($comment_id);
-		echo "done";
+		$comment_id = intval( $_REQUEST['comment_id'] );
+		spec_comment_delete_comment( $comment_id );
+		echo 'done';
 		die;
 	}
 }

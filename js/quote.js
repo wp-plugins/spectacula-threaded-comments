@@ -69,7 +69,7 @@ jQuery( document ).ready( function( $ ) {
 		// Bind to my custom new comment event
 		$( '.comment' ).each( function( ) {
 			spec_add_quote_button( this );
-		} ).live( 'newComment', function( ){
+		} ).on( 'newComment', function( ){
 			spec_add_quote_button( this );
 		} );
 	}

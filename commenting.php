@@ -3,7 +3,7 @@
  Plugin Name: Spectacu.la Discussion
  Plugin URI: http://spectacu.la/
  Description: Make it easy to add fully ajax threaded comments to any theme.
- Version: 2.2.2
+ Version: 2.3
  Author: James R Whitehead, Tom J Nowell
  Author URI: http://www.interconnectit.com/
 */
@@ -56,8 +56,8 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 
 		function spec_commenting( ) {
 
-			if ( version_compare( $GLOBALS[ 'wp_version' ], SPEC_COMMENT_VER, 'ge' ) && version_compare( PHP_VERSION, '5.0.0', 'ge' ) )
-				add_action( 'init', array( & $this, '_init' ), 1 );
+			if ( version_compare( $GLOBALS[ 'wp_version' ], SPEC_COMMENT_VER, 'ge' ) && version_compare( PHP_VERSION, '5.2.4', 'ge' ) )
+				add_action( 'init', array( $this, '_init' ), 1 );
 		}
 
 		function _init ( ) {
@@ -74,27 +74,27 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 
 			$this->comment_moderation_calls();
 
-			add_filter( 'body_class', array( &$this, 'get_agent_body_class' ) );
-			add_action( 'wp_head', array( &$this, 'css' ) );
-			add_action( 'wp', array( &$this, 'before_headers' ) );
+			add_filter( 'body_class', array( $this, 'get_agent_body_class' ) );
+			add_action( 'wp_head', array( $this, 'css' ) );
+			add_action( 'wp', array( $this, 'before_headers' ) );
 
 
 
-			add_action( 'comment_form', array( &$this, 'our_credit' ) );
-			add_filter( 'comments_template', array( &$this, 'comment_template_hijack' ) );
+			add_action( 'comment_form', array( $this, 'our_credit' ) );
+			add_filter( 'comments_template', array( $this, 'comment_template_hijack' ) );
 
 			// The live comment toggle metabox. Lets you toggle live comments on
 			// a post by post basis.
-			add_action( 'admin_init', array( &$this, 'add_meta_boxes' ) );
-			add_action( 'save_post', array( &$this, 'save_metabox_toggle_status' ), 100, 2 );
+			add_action( 'admin_init', array( $this, 'add_meta_boxes' ) );
+			add_action( 'save_post', array( $this, 'save_metabox_toggle_status' ), 100, 2 );
 
-			add_filter( 'comments_array', array( &$this, 'comment_query_hijack'));
+			add_filter( 'comments_array', array( $this, 'comment_query_hijack'));
 		}
 
 		function add_moderator_role(){
 			$result = add_role('spec_comment_moderator', 'Comment Moderator', array(
-			    'read' => true, // True allows that capability
-			    'moderate_comments' => true
+				'read' => true, // True allows that capability
+				'moderate_comments' => true
 			));
 		}
 
@@ -114,8 +114,8 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 
 		 @return null;
 		*/
-		function before_headers( ) {
-			global $wp_scripts, $post;
+		function before_headers() {
+			global $post;
 
 			// Quick check that this post_type supports comments.
 			$post_type_supports = function_exists( 'post_type_supports' ) && is_object( $post ) ? post_type_supports( $post->post_type, 'comments' ) : true;
@@ -128,15 +128,12 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 				wp_register_script( 'autogrow', SPEC_COMMENT_URL . "/js/jquery.autogrow-textarea$prefix.js", array( 'jquery' ), 1.04, true );
 				wp_register_script( 'scrollto', SPEC_COMMENT_URL . "/js/jquery.scrollTo-1.4.2-min.js", array( 'jquery' ), '1.4.2', true );
 
-				// Make sure we have jQuery version 1.3.2 or better
-				if ( isset( $wp_scripts->registered[ 'jquery' ]->ver ) && version_compare( $wp_scripts->registered[ 'jquery' ]->ver, '1.3.2', '<' ) ){
-					wp_deregister_script( 'jquery' );
-					wp_register_script( 'jquery', SPEC_COMMENT_URL . "/js/jquery.js", array( ), '1.3.2', true );
-				}
-
 				wp_deregister_script( 'comment-reply' ); // dealt with by the included jQuery
 
 				global $post;
+
+				$time = current_time( 'mysql', false );
+				error_log( 'setting time to: '.$time );
 
 				$localisation = array(
 					'tb_show' => __( 'Show trackbacks', SPEC_COMMENT_DOM ),
@@ -151,22 +148,21 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 					'order' => get_option( 'comment_order' ),
 					'polling' => spec_comment_option( 'polling' ),
 					'update' => $this->check_live( $post->ID ) && comments_open( $post->ID ) ? 1 : 0,
-					'time' => current_time( 'mysql', false ),
+					'time' => $time,
 					'post_id' => $post->ID,
 					'ajax_url' => trailingslashit( home_url( ) ),
 					'nest_depth' => spec_comment_option( 'comments_nest_depth' ),
 					'max_depth' => get_option( 'thread_comments_depth' )
 				);
 
-
 				if ( spec_comment_option( 'quote_button' ) || spec_comment_option( 'quote_select' ) ) {
 					wp_enqueue_script( 'spec_quote_button', SPEC_COMMENT_URL . "/js/quote$prefix.js", array( 'jquery' ), '1.0.3', true );
 					$quote_options = array(
-										   'button_text' => __( 'Quote', SPEC_COMMENT_DOM ),
-										   'quote_button' => spec_comment_option( 'quote_button' ),
-										   'quote_select' => spec_comment_option( 'quote_select' ),
-										   'quote_target' => spec_comment_option( 'quote_target' )
-										   );
+						'button_text' => __( 'Quote', SPEC_COMMENT_DOM ),
+						'quote_button' => spec_comment_option( 'quote_button' ),
+						'quote_select' => spec_comment_option( 'quote_select' ),
+						'quote_target' => spec_comment_option( 'quote_target' )
+					);
 					wp_localize_script( 'spec_quote_button', 'specQuoteLn', $quote_options );
 				}
 
