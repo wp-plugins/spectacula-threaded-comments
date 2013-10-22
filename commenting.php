@@ -8,7 +8,6 @@
  Author URI: http://www.interconnectit.com/
 */
 
-
 if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 	/*
 	 Define the url at the top of your functions.php before a require/include
@@ -17,9 +16,9 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 	*/
 	if ( ! defined( 'SPEC_COMMENT_URL' ) ) {
 		if ( version_compare( $GLOBALS[ 'wp_version' ], '2.8', 'ge' ) ) {
-			define( 'SPEC_COMMENT_URL', plugins_url( '', __FILE__ ) );
+			define( 'SPEC_COMMENT_URL', set_url_scheme( plugins_url( '', __FILE__ ), is_ssl() ? 'https' : 'http' ) );
 		} else {
-			define( 'SPEC_COMMENT_URL', plugins_url( 'spectacula-threaded-comments' ) );
+			define( 'SPEC_COMMENT_URL', set_url_scheme( plugins_url( 'spectacula-threaded-comments' ), is_ssl() ? 'https' : 'http' ) );
 		}
 	}
 
@@ -54,11 +53,12 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 		 make sure we can go on.
 		*/
 
-		function spec_commenting( ) {
+		function __construct( ) {
 
 			if ( version_compare( $GLOBALS[ 'wp_version' ], SPEC_COMMENT_VER, 'ge' ) && version_compare( PHP_VERSION, '5.2.4', 'ge' ) )
 				add_action( 'init', array( $this, '_init' ), 1 );
 		}
+
 
 		function _init ( ) {
 			// Something has changed the template, I'm guessing an alternative theme for mobile scenarios.
@@ -89,7 +89,23 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 			add_action( 'save_post', array( $this, 'save_metabox_toggle_status' ), 100, 2 );
 
 			add_filter( 'comments_array', array( $this, 'comment_query_hijack'));
+
+			// Make sure the stylesheet has the correct schema
+			add_filter( 'spec_comment_css', array( $this, 'set_stylesheet_schema' ), 1000 );
 		}
+
+
+		/**
+		 * Make sure the stylesheet is called with the correct schema.
+		 *
+		 * @param string $stylesheet The URL
+		 *
+		 * @return string    The corrected URL.
+		 */
+		public function set_stylesheet_schema( $stylesheet = '' ) {
+			return set_url_scheme( $stylesheet, is_ssl() ? 'https' : 'http' );
+		}
+
 
 		function add_moderator_role(){
 			$result = add_role('spec_comment_moderator', 'Comment Moderator', array(
