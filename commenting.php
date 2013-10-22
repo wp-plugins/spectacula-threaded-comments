@@ -328,11 +328,11 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 		function our_credit( ){
 
 			if ( spec_comment_option( 'credit' ) ) {
-				echo '<p class="spectacula-credit"><small>' . sprintf( __( 'Threaded commenting powered by %s code.', SPEC_COMMENT_DOM ), '<a href="http://spectacu.la/">Spectacu.la</a>' ) . '</small></p>';
+				echo '<p class="spectacula-credit"><small>' . sprintf( __( 'Threaded commenting powered by %s code.', SPEC_COMMENT_DOM ), '<a href="http://interconnectit.com/">interconnect/it</a>' ) . '</small></p>';
 			} else {
 				// If you've unticked the show our credit link we'll just have it as an HTML comment instead.
 				// Nothing to stop you removing this line too. But please don't.
-				echo "\n<!-- " . sprintf( __( 'Threaded commenting powered by %s code.', SPEC_COMMENT_DOM ), 'http://spectacu.la/' ) . " -->\n";
+				echo "\n<!-- " . sprintf( __( 'Threaded commenting powered by %s code.', SPEC_COMMENT_DOM ), 'http://interconnectit.com' ) . " -->\n";
 			}
 		}
 
