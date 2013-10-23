@@ -153,6 +153,11 @@ theme developer to change their theme.
 
 == Changelog ==
 
+= 2.3 =
+*	Fixed problems with SSL URLs.
+*	Added caching to the Ajax update requests if you a caching plug-in installed.
+*	Added front end moderation.
+
 = 2.2.2 =
 *	Fixed issue with approve/delete/spam buttons on recently loaded comments.
 *	Minified the JS again.

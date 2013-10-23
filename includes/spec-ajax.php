@@ -79,13 +79,14 @@ class spectacula_ajax {
 		}
 		$post_id = $_POST[ 'post_id' ];
 
-		$cachekey = 'icit_spec_disc_'.$post_id.'_'.$action_id.'_'.$role;
-		$encoded_json = get_transient( $cachekey );
+		// Get the details from cache
+		$cachekey = 'icit_spec_discus_' . $post_id . '_' . $action_id . '_' . $role;
+		$encoded_json = wp_cache_get( $cachekey, 'spec_discussion' );
 		if ( empty( $encoded_json ) ){
 			$encoded_json = $this->grab_changedcomments_json( $spec_comment_log, $post_id, $time, $action_id );
 
-			// we have a transient return/assign the results
-			set_transient( $cachekey, $encoded_json, 20 );
+			// The details weren't in cache lets add it now.
+			wp_cache_set( $cachekey, $encoded_json, 'spec_discussion', 20 );
 		}
 		echo $encoded_json;
 		die;
