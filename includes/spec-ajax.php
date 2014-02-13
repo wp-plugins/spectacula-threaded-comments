@@ -69,8 +69,8 @@ class spectacula_ajax {
 		$role = array_shift( $user_roles );
 
 		$action_id = 0;
-		if ( isset( $_POST[ 'action' ] ) ) {
-			$action_id = $_POST[ 'action' ];
+		if ( isset( $_POST[ 'action_id' ] ) ) {
+			$action_id = absint( $_POST[ 'action_id' ] );
 		}
 
 		$time = '';

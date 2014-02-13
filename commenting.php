@@ -3,7 +3,7 @@
  Plugin Name: Spectacu.la Discussion
  Plugin URI: http://spectacu.la/
  Description: Make it easy to add fully ajax threaded comments to any theme.
- Version: 2.3
+ Version: 2.3.1
  Author: James R Whitehead, Tom J Nowell
  Author URI: http://www.interconnectit.com/
 */
