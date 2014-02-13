@@ -3,8 +3,8 @@ Contributors: interconnectit, spectacula, TJNowell
 Donate link: https://spectacu.la/signup/signup.php
 Tags: comments, jQuery, AJAX
 Requires at least: 3.0
-Tested up to: 3.6.1
-Stable tag: 2.3
+Tested up to: 3.8.1
+Stable tag: 2.3.1
 
 Spectacu.la Discussion adds threaded commenting with live AJAX comments
 to almost any WordPress Theme.
@@ -152,6 +152,18 @@ theme developer to change their theme.
 2.	The control interface for this plug-in.
 
 == Changelog ==
+
+= 2.3.1 =
+*	Fixed: During the find process the action_id was always zero and not the ID
+    of the last action that was retrieved. This meant that you would grab all
+	rows since your last page load time. Not a huge problem but it did mean
+	somethings were being done more than once which caused problems from the
+	front end moderation and deletes.
+*	Changed: The link on the admin page pointed to something that no longer
+    exists and hasn't existed in a long time.
+*	Fixed: Typo in function name, it was consistent throughout the code so
+    wasn't a problem but it was ugly.
+
 
 = 2.3 =
 *	Fixed problems with SSL URLs.
