@@ -3,7 +3,7 @@
  Plugin Name: Spectacu.la Discussion
  Plugin URI: http://spectacu.la/
  Description: Make it easy to add fully ajax threaded comments to any theme.
- Version: 2.3.1
+ Version: 2.3.2
  Author: James R Whitehead, Tom J Nowell
  Author URI: http://www.interconnectit.com/
 */
@@ -142,7 +142,7 @@ if ( ! class_exists( 'spec_commenting' ) && ! defined( 'SPEC_COMMENT_DON' ) ) {
 
 				wp_register_script( 'json2', SPEC_COMMENT_URL . "/js/json2.js", array( ), '20090817', true );
 				wp_register_script( 'autogrow', SPEC_COMMENT_URL . "/js/jquery.autogrow-textarea$prefix.js", array( 'jquery' ), 1.04, true );
-				wp_register_script( 'scrollto', SPEC_COMMENT_URL . "/js/jquery.scrollTo-1.4.2-min.js", array( 'jquery' ), '1.4.2', true );
+				wp_register_script( 'scrollto', SPEC_COMMENT_URL . "/js/jquery.scrollTo-master/jquery.scrollTo.min.js", array( 'jquery' ), '1.4.11', true );
 
 				wp_deregister_script( 'comment-reply' ); // dealt with by the included jQuery
 
