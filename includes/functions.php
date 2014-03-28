@@ -185,7 +185,7 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 
 						do_action( 'before_comment_form', $post->ID ); ?>
 
-						<form action="<?php echo get_option( 'siteurl' )?>/wp-comments-post.php" method="post" id="comment-form">
+						<form action="<?php echo home_url( 'wp-comments-post.php' )?>" method="post" id="comment-form">
 							<fieldset><?php
 
 							do_action( 'comment_form_start', $post->ID );
@@ -331,7 +331,7 @@ if ( ! function_exists( 'spec_comment_layout' ) ) {
 										<a class="spec_moderation_button_delete" data-comment="<?php echo get_comment_ID(); ?>" href="<?php echo spec_comment_delete_link($post->ID,get_comment_ID()); ?>">Delete</a>
 										<a class="spec_moderation_button_spam" data-comment="<?php echo get_comment_ID(); ?>" href="<?php echo spec_comment_spam_link($post->ID,get_comment_ID()); ?>">Spam</a>
 									</div>
-									<?php 
+									<?php
 								}
 								?>
 							</span>
