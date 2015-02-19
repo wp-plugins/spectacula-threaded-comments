@@ -19,6 +19,7 @@
 			hideOne:	commentingL10n.rpl_hide_1.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
 			showMany:	commentingL10n.rpl_show_2.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
 			hideMany:	commentingL10n.rpl_hide_2.replace( '%name%', '<span class="poster-name"></span>' ).replace( '%count%', '<span class="post-count">&nbsp;</span>' ),
+			scrollOff: 	parseInt( commentingL10n.scroll_off, 10 ),
 
 			/**
 			 * We won't move the form to under the comment, it's messy and I don't like
@@ -41,7 +42,7 @@
 				$( '#comment-form #cancel-comment-reply-link' ).show( );
 
 				if ( typeof $.scrollTo == 'function' ) {
-					$.scrollTo( '#respond', { duration: 500, axis: 'y', onAfter: function( e ){
+					$.scrollTo( '#respond', { offset: addComment.scrollOff, duration: 500, axis: 'y', onAfter: function( e ){
 						$( '#comment' ).focus( );
 					} } );
 				}
@@ -231,7 +232,7 @@
 				$( 'ul#commentlist, ul#trackback-list' ).find( '.rolledup' ).slideDown( 500, function( ){
 					// Our comment is in place, now let us scroll to it once unrolled.
 					if ( scroll_to )
-						$.scrollTo( '#comment-' + comment_ID, { duration: 500, axis: 'y' } );
+						$.scrollTo( '#comment-' + comment_ID, { offset: addComment.scrollOff, duration: 500, axis: 'y' } );
 				} ).removeClass( 'rolledup' );
 
 				if ( comment_type !== 'comment' )

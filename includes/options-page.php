@@ -24,7 +24,8 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 							'link_button' => true,
 							'quote_button' => true,
 							'quote_select' => false,
-							'quote_target' => '.hentry'
+							'quote_target' => '.hentry',
+							'tc_scroll_offset' => 0
 							);
 
 
@@ -154,7 +155,11 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				<label for="<?php $this->item_attrib( 'comments_nest_depth', true ); ?>">
 				<?php _e( 'This is the depth at which comments require a click to see replies. JavaScript is used to hide comments greater than this depth and replaces them with a toggle to click on to show them.', SPEC_COMMENT_DOM );  ?>
 				</label>
-			</p><?php
+			</p>
+
+			<p><label for="<?php $this->item_attrib( 'tc_scroll_offset' ); ?>"><?php _e( 'Scroll to offset', SPEC_COMMENT_DOM ); ?></label></p>
+			<p><input class="regular-text" type="number" value="<?php echo esc_attr( $options[ 'tc_scroll_offset' ] );?>" name="<?php $this->item_attrib( 'tc_scroll_offset', true ); ?>" id="<?php $this->item_attrib( 'tc_scroll_offset' ); ?>" /></p>
+			<?php
 		}
 
 
@@ -173,6 +178,8 @@ if ( ! class_exists( 'spec_options_page' ) ) {
 				$output[ 'comments_nest_depth' ] = intval( $options[ 'comments_nest_depth' ] ) >= 0 && intval( $options[ 'comments_nest_depth' ] ) <= 10 ? intval( $options[ 'comments_nest_depth' ] ) : $this->defaults[ 'comments_nest_depth' ];
 				$output[ 'polling' ] = intval( $options[ 'polling' ] ) >= 10 && intval( $options[ 'polling' ] ) <= 999 ? intval( $options[ 'polling' ] ) : $this->defaults[ 'polling' ];
 				$output[ 'quote_target' ] = preg_match( '/^(\.|#)?[a-zA-Z0-9-_]+$/is', $options[ 'quote_target' ] ) ? $options[ 'quote_target' ] : $this->defaults[ 'quote_target' ];
+				$output[ 'tc_scroll_offset' ] = isset( $options[ 'tc_scroll_offset' ] ) && is_numeric( $options[ 'tc_scroll_offset' ] ) ?
+						$options[ 'tc_scroll_offset' ] : 0;
 
 				$output[ 'credit' ] 		= isset( $options[ 'credit' ] )			? true : false;
 				$output[ 'update' ] 		= isset( $options[ 'update' ] )			? true : false;

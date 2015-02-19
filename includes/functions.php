@@ -185,7 +185,7 @@ if ( ! function_exists( 'spec_comments_form' ) ) {
 
 						do_action( 'before_comment_form', $post->ID ); ?>
 
-						<form action="<?php echo home_url( 'wp-comments-post.php' )?>" method="post" id="comment-form">
+						<form action="<?php echo site_url( '/wp-comments-post.php' )?>" method="post" id="comment-form">
 							<fieldset><?php
 
 							do_action( 'comment_form_start', $post->ID );
